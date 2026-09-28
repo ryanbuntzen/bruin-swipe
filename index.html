@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bruin Swipe Card</title>
+<meta name="description" content="Calories and macros for every UCLA dining hall, by the portion you actually take.">
+<meta name="theme-color" content="#14202c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#e9edf2;
+  --card:#ffffff;
+  --card-2:#f4f7fa;
+  --ink:#14202c;
+  --ink-2:#556879;
+  --ink-3:#8496a5;
+  --line:#d3dde6;
+  --line-soft:#e4ebf1;
+  --accent:#9a5c0a;
+  --accent-soft:#f7ead6;
+  --blue:#1f5379;
+  --flag:#9c3226;
+  --flag-soft:#f7e2de;
+  --ok:#2c6249;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0e151d;
+    --card:#161f29;
+    --card-2:#1c2733;
+    --ink:#e7edf3;
+    --ink-2:#9dafbd;
+    --ink-3:#71838f;
+    --line:#2a3743;
+    --line-soft:#212d38;
+    --accent:#e5a75a;
+    --accent-soft:#3a2c17;
+    --blue:#7db3d8;
+    --flag:#e08a7c;
+    --flag-soft:#37211d;
+    --ok:#74bb9b;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0e151d;
+  --card:#161f29;
+  --card-2:#1c2733;
+  --ink:#e7edf3;
+  --ink-2:#9dafbd;
+  --ink-3:#71838f;
+  --line:#2a3743;
+  --line-soft:#212d38;
+  --accent:#e5a75a;
+  --accent-soft:#3a2c17;
+  --blue:#7db3d8;
+  --flag:#e08a7c;
+  --flag-soft:#37211d;
+  --ok:#74bb9b;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%;
+}
+.wrap{max-width:580px;margin:0 auto;padding:18px 14px 150px;display:flex;flex-direction:column;gap:14px}
+
+h1{
+  font-family:"Barlow Condensed",Impact,sans-serif;
+  font-weight:700;font-size:38px;line-height:.95;margin:0;
+  text-transform:uppercase;text-wrap:balance;
+}
+h1 span{color:var(--accent)}
+/* hall switcher */
+.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--card);
+  border:1px solid var(--line);padding:4px;border-radius:3px}
+.tab{
+  appearance:none;border:0;background:transparent;cursor:pointer;
+  font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:14px;
+  letter-spacing:.045em;text-transform:uppercase;color:var(--ink-2);
+  padding:8px 3px;border-radius:2px;line-height:1.1;
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+}
+.tab .w{font-family:"IBM Plex Sans",sans-serif;font-size:10px;letter-spacing:.03em;
+  text-transform:none;color:var(--ink-3)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--card)}
+.tab[aria-selected="true"] .w{color:var(--card);opacity:.7}
+.tab:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* hall header */
+.hallhead{border-bottom:2px solid var(--ink);padding-bottom:7px}
+.hallhead h2{
+  font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:26px;margin:0;
+  text-transform:uppercase;letter-spacing:.02em;line-height:1;
+}
+.hallnote{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{font-size:11.5px;letter-spacing:.02em;padding:2px 8px;border-radius:2px;
+  border:1px solid var(--ok);color:var(--ok);white-space:nowrap}
+.chip.bad{border-color:var(--flag);color:var(--flag)}
+
+/* meal */
+.meal{background:var(--card);border:1px solid var(--line);border-radius:3px;overflow:hidden}
+.meal > header{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  padding:9px 12px 8px;border-bottom:1px solid var(--line-soft);background:var(--card-2);
+}
+.meal h3{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:18px;margin:0;
+  text-transform:uppercase;letter-spacing:.05em}
+.station{font-size:11.5px;color:var(--ink-2);margin-top:1px}
+.mealkcal{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:21px;
+  font-variant-numeric:tabular-nums;color:var(--accent);white-space:nowrap;line-height:1}
+.mealkcal small{display:block;text-align:right;font-size:10.5px;font-weight:600;
+  letter-spacing:.07em;color:var(--ink-3);text-transform:uppercase;margin-top:2px}
+
+ul.items{list-style:none;margin:0;padding:0}
+ul.items li{border-top:1px solid var(--line-soft)}
+ul.items li:first-child{border-top:0}
+.row{
+  width:100%;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start;
+  padding:10px 12px;background:transparent;border:0;text-align:left;cursor:pointer;
+  color:inherit;font:inherit;
+}
+.row:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.nm{font-size:15px;font-weight:500;line-height:1.28}
+.eye{
+  display:block;font-size:12.5px;color:var(--blue);margin-top:2px;line-height:1.35;
+}
+.meta{display:block;font-size:11px;color:var(--ink-3);margin-top:2px}
+.meta .canola{color:var(--flag);background:var(--flag-soft);border-radius:2px;
+  padding:0 4px;margin-left:2px;font-size:10px}
+.kc{font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:16px;
+  font-variant-numeric:tabular-nums;color:var(--ink-2);white-space:nowrap;text-align:right;line-height:1.2}
+.kc em{display:block;font-style:normal;font-size:10.5px;color:var(--ink-3);
+  font-family:"IBM Plex Sans",sans-serif;margin-top:1px}
+li.pick .row{background:var(--accent-soft)}
+li.pick .nm{color:var(--accent)}
+li.pick .eye{color:var(--ink-2)}
+.row[data-done="1"] .nm,.row[data-done="1"] .eye{text-decoration:line-through}
+.row[data-done="1"]{opacity:.4}
+.upcard{border-style:dashed}
+.upcard > header{background:transparent}
+
+/* sticky tally */
+.total{position:fixed;left:0;right:0;bottom:0;background:var(--ink);color:var(--paper)}
+.total .inner{max-width:580px;margin:0 auto;padding:9px 16px 11px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px}
+.total .big{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:30px;
+  line-height:1;font-variant-numeric:tabular-nums}
+.total .big small{font-size:11.5px;font-weight:600;letter-spacing:.1em;opacity:.6;margin-left:5px}
+.tallylbl{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.6;margin-bottom:2px}
+.macros{display:flex;gap:12px;font-variant-numeric:tabular-nums}
+.macros div{text-align:right}
+.macros .v{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:18px;line-height:1}
+.macros .l{font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;opacity:.6;margin-top:2px}
+.bar{height:3px;background:rgba(255,255,255,.16);position:relative;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .18s ease}
+.bar b{position:absolute;top:0;bottom:0;width:1px;background:rgba(255,255,255,.55)}
+.reset{appearance:none;background:transparent;border:1px solid rgba(255,255,255,.28);
+  color:inherit;font:inherit;font-size:11px;padding:2px 8px;border-radius:2px;cursor:pointer;margin-top:4px}
+.reset:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <h1>Bruin <span>Swipe</span> Card</h1>
+  </header>
+
+  <div class="tabs" role="tablist" aria-label="Dining hall"></div>
+
+  <div class="hallhead">
+    <h2 id="hallName"></h2>
+    <div class="hallnote" id="hallNote"></div>
+  </div>
+
+  <div id="meals" style="display:flex;flex-direction:column;gap:12px"></div>
+
+
+</div>
+
+<div class="bar" style="position:fixed;left:0;right:0;bottom:74px;z-index:2"><i id="barFill"></i><b id="barMark"></b></div>
+<div class="total">
+  <div class="inner">
+    <div>
+      <div class="tallylbl">Ticked today</div>
+      <div class="big"><span id="tKcal">0</span><small>KCAL</small></div>
+      <button class="reset" id="reset" type="button">Clear</button>
+    </div>
+    <div class="macros">
+      <div><div class="v" id="tP">0g</div><div class="l">Protein</div></div>
+      <div><div class="v" id="tF">0g</div><div class="l">Fat</div></div>
+      <div><div class="v" id="tC">0g</div><div class="l">Carb</div></div>
+    </div>
+  </div>
+</div>
+
+<script>
+// [name, eyeball portion, station/meta, kcal, P, F, C, canola, isPick]
+var HALLS = [
+{ key:"De Neve", w:"eggs + grill", name:"De Neve Dining",
+  note:['eggs daily','white rice daily','burgers daily','weekend eggs at lunch'],
+  meals:[
+    { m:"Breakfast", s:"The Kitchen · Market Salads & Fruit", kcal:990, p:48, items:[
+      ["Fried Eggs","5 eggs — ask for five, they plate it","The Kitchen",505,31,39,2,1,0],
+      ["Pork Sausage","2 links (they come 1oz each)","The Kitchen · no seed oil",289,8,29,0,0,0],
+      ["Fruit bowl","a full small bowl ≈ 2 cups melon + pineapple","Market Salads & Fruit · 8oz",100,1,0,25,0,0],
+      ["Lowfat Milk","1 glass","Beverages · 8oz",96,8,2,11,0,0],
+      ["Orange Juice","1 glass","Beverages · 8oz",107,2,0,27,0,0]
+    ]},
+    { m:"Lunch", s:"The Grill · Harvest Kitchen · Field Greens", kcal:991, p:53, items:[
+      ["Bruin Cheeseburger","the whole burger","The Grill · daily",492,36,23,36,1,0],
+      ["White rice","2 scoops ≈ 1 cup ≈ a tennis ball","Harvest Kitchen",205,4,0,44,0,0],
+      ["Shredded carrots","one tongs pull ≈ ½ cup","Field Greens Bar · 2oz",23,0,0,6,0,0],
+      ["Fruit bowl","a full small bowl ≈ 2 cups","Market Salads & Fruit · 8oz",100,1,0,25,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0]
+    ]},
+    { m:"Dinner", s:"The Grill · Harvest Kitchen", kcal:1070, p:54, items:[
+      ["Bruin Cheeseburger","the whole burger","The Grill · daily",492,36,23,36,1,0],
+      ["White rice","3 scoops ≈ 1½ cups","Harvest Kitchen",308,6,1,67,0,0],
+      ["Fruit bowl","a full small bowl ≈ 2 cups","Market Salads & Fruit · 8oz",100,1,0,25,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0]
+    ]}
+  ]},
+{ key:"Sproul", w:"best dairy", name:"Sproul Dining",
+  note:['eggs daily','best dairy','no white rice'],
+  meals:[
+    { m:"Breakfast", s:"Harvest · Yogurt Bar · Fruit", kcal:1002, p:58, items:[
+      ["Scrambled Eggs","5 eggs’ worth ≈ 2½ spoodles, heaped","Harvest · 8oz",392,28,29,2,1,0],
+      ["Turkey Bacon","3 strips","Harvest · no seed oil",100,5,8,2,0,0],
+      ["Lowfat Cottage Cheese","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",92,13,2,5,0,0],
+      ["Cantaloupe","≈ 8 bite cubes · ¾ cup","Fruit · 4oz",40,1,0,9,0,0],
+      ["Pineapple","≈ 11 chunks · 1 cup","Fruit · 6oz",86,1,0,22,0,0],
+      ["Kiwi + mango","1 whole kiwi + a small spoonful","Fruit · 4oz",70,1,0,17,0,0],
+      ["Lowfat Milk","1 glass","Beverages · 8oz",96,8,2,11,0,0],
+      ["Banana","1 medium","Fruit",126,2,0,32,0,0],
+      ["Orange Juice","1 glass","Beverages · 8oz",107,2,0,27,0,0]
+    ]},
+    { m:"Lunch", s:"Freshly Bowled · Farmstand · Yogurt Bar", kcal:973, p:53, items:[
+      ["PICK: red meat of the day","a palm and a half ≈ 1½ spoodles · ~5oz","tri-tip bowls, flank steak, pork — rotates",320,24,20,10,0,1],
+      ["Brown Calrose Rice","3 scoops ≈ 1 cup","Farmstand · 6oz",315,7,2,66,0,0],
+      ["Fruit bowl","a full small bowl ≈ 2 cups","Fruit · 8oz",100,1,0,25,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",67,12,0,4,0,0]
+    ]},
+    { m:"Dinner", s:"Freshly Bowled · Farmstand · Yogurt Bar", kcal:1045, p:54, items:[
+      ["PICK: red meat of the day","a palm and a half ≈ 1½ spoodles · ~5oz","tri-tip, lamb, pork — rotates",320,24,20,10,0,1],
+      ["Brown Calrose Rice","3 scoops ≈ 1 cup","Farmstand · 6oz",315,7,2,66,0,0],
+      ["Kiwi + mango","1 whole kiwi + a small spoonful","Fruit · 4oz",70,1,0,17,0,0],
+      ["Fuji Apple","1 medium","Fruit",102,0,0,24,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",67,12,0,4,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0]
+    ]}
+  ]},
+{ key:"B-Plate", w:"no grill", name:"Bruin Plate",
+  note:['eggs daily','no grill','no white rice'],
+  meals:[
+    { m:"Breakfast", s:"Harvest · Yogurt Bar · Fruit", kcal:1002, p:58, items:[
+      ["Scrambled Eggs","5 eggs’ worth ≈ 2½ spoodles, heaped","Harvest · 8oz",392,28,29,2,1,0],
+      ["Turkey Bacon","3 strips","Harvest · no seed oil",100,5,8,2,0,0],
+      ["Lowfat Cottage Cheese","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",92,13,2,5,0,0],
+      ["Cantaloupe","≈ 8 bite cubes · ¾ cup","Fruit · 4oz",40,1,0,9,0,0],
+      ["Pineapple","≈ 11 chunks · 1 cup","Fruit · 6oz",86,1,0,22,0,0],
+      ["Kiwi + mango","1 whole kiwi + a small spoonful","Fruit · 4oz",70,1,0,17,0,0],
+      ["Lowfat Milk","1 glass","Beverages · 8oz",96,8,2,11,0,0],
+      ["Banana","1 medium","Fruit",126,2,0,32,0,0],
+      ["Orange Juice","1 glass","Beverages · 8oz",107,2,0,27,0,0]
+    ]},
+    { m:"Lunch", s:"Simply Grilled · Farmstand · Fruit", kcal:975, p:53, items:[
+      ["PICK: red meat of the day","a palm and a half · ~5oz — take 2 scoops, theirs are small","tri-tip flatbread, pork tenderloin, lamb bowl",320,24,20,10,0,1],
+      ["Brown Calrose Rice","3 scoops ≈ 1 cup","Farmstand · 6oz",315,7,2,66,0,0],
+      ["Fuji Apple","1 medium","Fruit",102,0,0,24,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",67,12,0,4,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0]
+    ]},
+    { m:"Dinner", s:"Simply Grilled · Harvest · Farmstand", kcal:993, p:54, items:[
+      ["PICK: red meat of the day","a palm and a half · ~5oz · e.g. 3 pork medallions + a scoop","spiced pork tenderloin, tri-tip, lamb",320,24,20,10,0,1],
+      ["Brown Calrose Rice","3 scoops ≈ 1 cup","Farmstand · 6oz",315,7,2,66,0,0],
+      ["Cantaloupe","≈ 8 bite cubes · ¾ cup","Fruit · 4oz",40,1,0,9,0,0],
+      ["Green Grapes","≈ 22 grapes · one cupped handful","Fruit · 4oz",80,1,0,20,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",67,12,0,4,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0]
+    ]}
+  ]},
+{ key:"Epicuria", w:"Covel · L+D", name:"Epicuria at Covel",
+  note:['no breakfast','rice rotates','no milk'],
+  meals:[
+    { m:"Lunch", s:"Psistaris · Alimenti · Mezze", kcal:998, p:51, items:[
+      ["PICK: red meat of the day","a palm and a half ≈ 1½ spoodles · ~5oz","harissa pork ribs, beef stew, meatballs",320,24,20,10,0,1],
+      ["Rice of the day","3 scoops ≈ 1½ cups — whatever rice is out","saffron, herbed, cilantro — rotates",329,5,7,60,0,0],
+      ["Roasted carrots & pepper","1 spoodle ≈ ¾ cup","Greek style · 3oz",85,1,6,7,1,0],
+      ["Grated Parmesan","4 tbsp · a heavy shake","1oz",95,9,5,0,0,0],
+      ["Fuji Apple","1 medium","Sides",102,0,0,24,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",67,12,0,4,0,0]
+    ]},
+    { m:"Dinner", s:"Psistaris · Alimenti · Yogurt Bar", kcal:1039, p:51, items:[
+      ["PICK: red meat of the day","a palm and a half ≈ 1½ spoodles · ~5oz","beef barley, pork ribs, beef gyro",320,24,20,10,0,1],
+      ["Rice of the day","3 scoops ≈ 1½ cups","rotates daily",329,5,7,60,0,0],
+      ["Grated Parmesan","4 tbsp · a heavy shake","1oz",95,9,5,0,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","Yogurt Bar · 4oz",67,12,0,4,0,0],
+      ["Banana","1 medium","Sides",126,2,0,32,0,0],
+      ["Fuji Apple","1 medium","Sides",102,0,0,24,0,0]
+    ]}
+  ]},
+{ key:"Feast", w:"Rieber · L+D", name:"Feast at Rieber",
+  note:['no breakfast','sticky rice daily','no dairy'],
+  meals:[
+    { m:"Lunch", s:"Wok · Rice well", kcal:1012, p:44, items:[
+      ["PICK: red meat of the day","two palms · ~7oz · e.g. 5 pork riblets","pork riblets, beef hayashi, BBQ roast pork",480,36,30,15,0,1],
+      ["Sticky Rice","3 scoops ≈ 1½ cups","Rice well · daily",305,6,0,67,0,0],
+      ["Fuji Apple","1 medium","Fruit",102,0,0,24,0,0],
+      ["Banana","1 medium","Fruit",126,2,0,32,0,0]
+    ]},
+    { m:"Dinner", s:"Wok · Rice well", kcal:1012, p:44, items:[
+      ["PICK: red meat of the day","two palms · ~7oz · e.g. 5 pork riblets","pork riblets, tonjiru, Chinese sausage",480,36,30,15,0,1],
+      ["Sticky Rice","3 scoops ≈ 1½ cups","Rice well · daily",305,6,0,67,0,0],
+      ["Fuji Apple","1 medium","Fruit",102,0,0,24,0,0],
+      ["Banana","1 medium","Fruit",126,2,0,32,0,0]
+    ]}
+  ]},
+{ key:"Rendez", w:"same daily", name:"Rendezvous",
+  note:['no breakfast','same menu daily','sticky rice'],
+  meals:[
+    { m:"Lunch", s:"Chinese Freestyle Bowl", kcal:1020, p:57, items:[
+      ["Sticky Rice (base)","ask for a double base ≈ 2½ cups","Base pick",508,10,0,111,0,0],
+      ["BBQ Roast Pork","1 spoodle ≈ 3oz","Entrée 1 · no seed oil",165,16,10,2,0,0],
+      ["Beef & Broccoli","1 spoodle, take the beef","Entrée 2",110,9,5,9,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup — if the bar is out","4oz",67,12,0,4,0,0]
+    ]},
+    { m:"Dinner", s:"Chinese Freestyle Bowl · same menu", kcal:1020, p:57, items:[
+      ["Sticky Rice (base)","ask for a double base ≈ 2½ cups","Base pick",508,10,0,111,0,0],
+      ["BBQ Roast Pork","1 spoodle ≈ 3oz","Entrée 1 · no seed oil",165,16,10,2,0,0],
+      ["Beef & Broccoli","1 spoodle, take the beef","Entrée 2",110,9,5,9,0,0],
+      ["Chocolate Milk","1 glass","Beverages · 8oz",171,10,2,27,0,0],
+      ["Greek Yogurt","1 ladle ≈ ½ cup","4oz",67,12,0,4,0,0]
+    ]}
+  ]}
+];
+
+var UPSIZE = [
+  ["White rice","2 scoops ≈ 1 cup","",205,4,0,44,0,0],
+  ["Chocolate Milk","1 glass","",171,10,2,27,0,0],
+  ["Banana","1 medium","",126,2,0,32,0,0],
+  ["Greek Yogurt","1 ladle ≈ ½ cup","",67,12,0,4,0,0]
+];
+
+var tabsEl = document.querySelector(".tabs");
+var mealsEl = document.getElementById("meals");
+var active = 0, done = {};
+
+try { done = JSON.parse(localStorage.getItem("swipecard2") || "{}"); } catch (e) { done = {}; }
+function save(){ try { localStorage.setItem("swipecard2", JSON.stringify(done)); } catch (e) {} }
+
+HALLS.forEach(function(h, i){
+  var b = document.createElement("button");
+  b.className = "tab"; b.type = "button"; b.setAttribute("role","tab");
+  b.innerHTML = h.key + '<span class="w">' + h.w + '</span>';
+  b.addEventListener("click", function(){ active = i; render(); window.scrollTo(0,0); });
+  tabsEl.appendChild(b);
+});
+
+function tally(){
+  var k=0,p=0,f=0,c=0;
+  HALLS.forEach(function(h){
+    h.meals.concat([{ items:UPSIZE, id:"up" }]).forEach(function(m, mi){
+      m.items.forEach(function(it, ii){
+        if (done[h.key + "-" + (m.id || mi) + "-" + ii]) { k+=it[3]; p+=it[4]; f+=it[5]; c+=it[6]; }
+      });
+    });
+  });
+  document.getElementById("tKcal").textContent = k.toLocaleString();
+  document.getElementById("tP").textContent = Math.round(p) + "g";
+  document.getElementById("tF").textContent = Math.round(f) + "g";
+  document.getElementById("tC").textContent = Math.round(c) + "g";
+  document.getElementById("barFill").style.width = Math.min(100, k / 3200 * 100) + "%";
+  document.getElementById("barMark").style.left = (3000 / 3200 * 100) + "%";
+}
+
+function buildMeal(hallKey, mi, meal){
+  var sec = document.createElement("section");
+  sec.className = "meal";
+  var mk = 0, mp = 0;
+  meal.items.forEach(function(it){ mk += it[3]; mp += it[4]; });
+  var head = document.createElement("header");
+  head.innerHTML =
+    '<div><h3>' + meal.m + '</h3><div class="station">' + meal.s + '</div></div>' +
+    '<div class="mealkcal">' + mk.toLocaleString() + '<small>kcal · ' + mp + 'g P</small></div>';
+  sec.appendChild(head);
+
+  var ul = document.createElement("ul");
+  ul.className = "items";
+  meal.items.forEach(function(it, ii){
+    var id = hallKey + "-" + mi + "-" + ii;
+    var li = document.createElement("li");
+    if (it[8]) li.className = "pick";
+    var btn = document.createElement("button");
+    btn.type = "button"; btn.className = "row";
+    btn.dataset.done = done[id] ? "1" : "0";
+    btn.setAttribute("aria-pressed", done[id] ? "true" : "false");
+    btn.innerHTML =
+      '<span><span class="nm">' + it[0] + '</span>' +
+        '<span class="eye">' + it[1] + '</span>' +
+        (it[2] ? '<span class="meta">' + it[2] + (it[7] ? '<span class="canola">canola</span>' : '') + '</span>' : '') +
+      '</span>' +
+      '<span class="kc">' + it[3] + '<em>P' + it[4] + ' F' + it[5] + ' C' + it[6] + '</em></span>';
+    btn.addEventListener("click", function(){
+      done[id] = !done[id];
+      btn.dataset.done = done[id] ? "1" : "0";
+      btn.setAttribute("aria-pressed", done[id] ? "true" : "false");
+      save(); tally();
+    });
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+  sec.appendChild(ul);
+  return sec;
+}
+
+function render(){
+  var h = HALLS[active];
+  Array.prototype.forEach.call(tabsEl.children, function(b, i){
+    b.setAttribute("aria-selected", i === active ? "true" : "false");
+  });
+  document.getElementById("hallName").textContent = h.name;
+  document.getElementById("hallNote").innerHTML = h.note.map(function(n){
+    var bad = /^no |rotates/.test(n);
+    return '<span class="chip' + (bad ? ' bad' : '') + '">' + n + '</span>';
+  }).join("");
+
+  mealsEl.textContent = "";
+  h.meals.forEach(function(meal, mi){
+    mealsEl.appendChild(buildMeal(h.key, mi, meal));
+  });
+  var up = buildMeal(h.key, "up", { m:"Weekend +", s:"add to each of your 2 meals", items:UPSIZE });
+  up.classList.add("upcard");
+  mealsEl.appendChild(up);
+  tally();
+}
+
+document.getElementById("reset").addEventListener("click", function(){
+  done = {}; save(); render();
+});
+
+render();
+</script>
+
+</body></html>
