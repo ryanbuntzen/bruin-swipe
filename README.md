@@ -22,7 +22,23 @@ an eyeball portion — *5 eggs, ask for five, they plate it*; *3 scoops ≈ 1 cu
   *no breakfast* — because that's what decides where you walk
 - Items fried in canola are flagged, and a "Weekend +" card covers two-meal days
 
-State is saved to `localStorage`, so ticks survive a refresh and never leave the device.
+## Per person
+
+On first open it asks who's eating, a daily calorie target and any diet
+restrictions. The progress bar runs against that target instead of a fixed one.
+
+Several people can share a device: each gets their own target, diet and ticks,
+and the chip in the header switches between them. Diets available are
+vegetarian, no pork, no red meat and no dairy; matching items are hidden and the
+meal totals recompute around them, with a count of what was hidden.
+
+Diet tags are derived from each item's own name and station rather than
+hand-tagged across 250 rows, so "Turkey Bacon" survives a no-pork filter but not
+a vegetarian one. The rotating "red meat of the day" rows are tagged red meat,
+which is always true, and never pork, which is only true some days.
+
+State is saved to `localStorage`, so ticks survive a refresh and never leave the
+device. Nothing is sent anywhere and there are no accounts.
 
 ## Running it
 

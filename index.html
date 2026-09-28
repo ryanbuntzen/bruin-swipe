@@ -166,14 +166,51 @@ li.pick .eye{color:var(--ink-2)}
   color:inherit;font:inherit;font-size:11px;padding:2px 8px;border-radius:2px;cursor:pointer;margin-top:4px}
 .reset:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+
+/* profile + setup */
+.who{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink-2);
+  font:inherit;font-size:12px;padding:3px 10px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.who:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;
+  justify-content:center;padding:24px 14px;overflow:auto;z-index:10}
+.sheet[hidden]{display:none}
+.card2{background:var(--card);border:1px solid var(--line);border-radius:3px;
+  width:100%;max-width:430px;padding:16px}
+.card2 h2{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:22px;margin:0 0 3px;
+  text-transform:uppercase;letter-spacing:.03em}
+.card2 p.sub{margin:0 0 14px;font-size:12.5px;color:var(--ink-2)}
+.fld{margin-bottom:13px}
+.fld label{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--ink-3);margin-bottom:4px}
+.fld input{width:100%;font:inherit;font-size:15px;padding:7px 9px;border-radius:2px;
+  border:1px solid var(--line);background:var(--card-2);color:var(--ink)}
+.fld input:focus-visible{outline:2px solid var(--accent);outline-offset:-1px}
+.diets{display:flex;flex-wrap:wrap;gap:6px}
+.diets label{display:inline-flex;align-items:center;gap:5px;font-size:13px;text-transform:none;
+  letter-spacing:0;color:var(--ink);border:1px solid var(--line);border-radius:2px;
+  padding:5px 9px;cursor:pointer;margin:0}
+.diets input{width:auto;margin:0}
+.btns{display:flex;gap:8px;justify-content:space-between;align-items:center;margin-top:16px}
+.btn{appearance:none;font:inherit;font-size:14px;padding:8px 16px;border-radius:2px;cursor:pointer;
+  border:1px solid var(--ink);background:var(--ink);color:var(--card)}
+.btn.ghost{background:transparent;color:var(--ink-2);border-color:var(--line)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.people{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:13px}
+.people button{appearance:none;font:inherit;font-size:13px;padding:5px 10px;cursor:pointer;
+  border:1px solid var(--line);background:var(--card-2);color:var(--ink);border-radius:2px}
+.people button.on{background:var(--ink);color:var(--card);border-color:var(--ink)}
+li.off{display:none}
+.hid{font-size:11.5px;color:var(--ink-3);padding:8px 12px;border-top:1px solid var(--line-soft)}
 </style>
 
 </head>
 <body>
 
 <div class="wrap">
-  <header>
+  <header class="head">
     <h1>Bruin <span>Swipe</span> Card</h1>
+    <button class="who" id="who" type="button"></button>
   </header>
 
   <div class="tabs" role="tablist" aria-label="Dining hall"></div>
@@ -188,12 +225,36 @@ li.pick .eye{color:var(--ink-2)}
 
 </div>
 
+<div class="sheet" id="setup" hidden>
+  <div class="card2" role="dialog" aria-modal="true" aria-labelledby="setupTitle">
+    <h2 id="setupTitle">Who's eating?</h2>
+    <p class="sub">Saved on this device only. Nothing leaves your browser.</p>
+    <div class="people" id="people"></div>
+    <div class="fld">
+      <label for="fName">Name</label>
+      <input id="fName" type="text" autocomplete="off" placeholder="Ryan">
+    </div>
+    <div class="fld">
+      <label for="fGoal">Daily calorie target</label>
+      <input id="fGoal" type="number" inputmode="numeric" min="800" max="8000" step="50" placeholder="2400">
+    </div>
+    <div class="fld">
+      <label>Diet</label>
+      <div class="diets" id="fDiets"></div>
+    </div>
+    <div class="btns">
+      <button class="btn ghost" id="setupDel" type="button">Delete</button>
+      <button class="btn" id="setupSave" type="button">Save</button>
+    </div>
+  </div>
+</div>
+
 <div class="bar" style="position:fixed;left:0;right:0;bottom:74px;z-index:2"><i id="barFill"></i><b id="barMark"></b></div>
 <div class="total">
   <div class="inner">
     <div>
       <div class="tallylbl">Ticked today</div>
-      <div class="big"><span id="tKcal">0</span><small>KCAL</small></div>
+      <div class="big"><span id="tKcal">0</span><small>/ <span id="tGoal">2,400</span> KCAL</small></div>
       <button class="reset" id="reset" type="button">Clear</button>
     </div>
     <div class="macros">
@@ -356,10 +417,64 @@ var UPSIZE = [
 
 var tabsEl = document.querySelector(".tabs");
 var mealsEl = document.getElementById("meals");
-var active = 0, done = {};
+var active = 0, done = {}, people = {}, who = null;
 
-try { done = JSON.parse(localStorage.getItem("swipecard2") || "{}"); } catch (e) { done = {}; }
-function save(){ try { localStorage.setItem("swipecard2", JSON.stringify(done)); } catch (e) {} }
+// Diets are derived from the item text rather than hand-tagged on 250 rows.
+// "PICK: red meat of the day" rotates between tri-tip, pork and lamb, so it is
+// tagged redmeat (always true) but never pork (only some days) -- see NOTE below.
+var DIETS = [
+  { k:"veg",     label:"Vegetarian",
+    re:/sausage|bacon|pork|beef|burger|steak|lamb|tri-?tip|riblet|rib\b|gyro|meatball|red meat|hayashi|tonjiru|turkey|chicken|fish|shrimp|salmon|tuna/ },
+  { k:"nopork",  label:"No pork",
+    re:/pork|riblet|rib\b|ribs|tonjiru|bacon|ham\b|chinese sausage/, no:/turkey bacon|turkey/ },
+  { k:"nored",   label:"No red meat",
+    re:/pork|beef|lamb|tri-?tip|steak|burger|gyro|meatball|riblet|rib\b|red meat|hayashi|tonjiru/ },
+  { k:"nodairy", label:"No dairy",
+    re:/milk|cheese|yogurt|cottage|parmesan/ }
+];
+
+function load(){
+  try { people = JSON.parse(localStorage.getItem("swipe:people") || "{}"); } catch (e) { people = {}; }
+  who = null;
+  try { who = localStorage.getItem("swipe:who"); } catch (e) {}
+  if (who && !people[who]) who = null;
+  if (!who) { var names = Object.keys(people); who = names.length ? names[0] : null; }
+  done = {};
+  if (who) { try { done = JSON.parse(localStorage.getItem("swipe:done:" + who) || "{}"); } catch (e) { done = {}; } }
+}
+function save(){
+  if (!who) return;
+  try {
+    localStorage.setItem("swipe:done:" + who, JSON.stringify(done));
+    localStorage.setItem("swipe:people", JSON.stringify(people));
+    localStorage.setItem("swipe:who", who);
+  } catch (e) {}
+}
+function me(){ return people[who] || { goal:2400, diets:[] }; }
+
+// carry over the single-user ticks from before profiles existed
+function migrate(){
+  var old = null;
+  try { old = localStorage.getItem("swipecard2"); } catch (e) {}
+  if (!old || Object.keys(people).length) return;
+  people["Me"] = { goal:2400, diets:[] };
+  who = "Me";
+  try { done = JSON.parse(old) || {}; } catch (e) { done = {}; }
+  save();
+  try { localStorage.removeItem("swipecard2"); } catch (e) {}
+}
+
+// true when this item is off the current diet
+function blocked(it){
+  var d = me().diets || [];
+  if (!d.length) return false;
+  var txt = (it[0] + " " + (it[2] || "")).toLowerCase();
+  for (var i = 0; i < DIETS.length; i++) {
+    var D = DIETS[i];
+    if (d.indexOf(D.k) > -1 && D.re.test(txt) && !(D.no && D.no.test(txt))) return true;
+  }
+  return false;
+}
 
 HALLS.forEach(function(h, i){
   var b = document.createElement("button");
@@ -374,7 +489,7 @@ function tally(){
   HALLS.forEach(function(h){
     h.meals.concat([{ items:UPSIZE, id:"up" }]).forEach(function(m, mi){
       m.items.forEach(function(it, ii){
-        if (done[h.key + "-" + (m.id || mi) + "-" + ii]) { k+=it[3]; p+=it[4]; f+=it[5]; c+=it[6]; }
+        if (done[h.key + "-" + (m.id || mi) + "-" + ii] && !blocked(it)) { k+=it[3]; p+=it[4]; f+=it[5]; c+=it[6]; }
       });
     });
   });
@@ -382,15 +497,20 @@ function tally(){
   document.getElementById("tP").textContent = Math.round(p) + "g";
   document.getElementById("tF").textContent = Math.round(f) + "g";
   document.getElementById("tC").textContent = Math.round(c) + "g";
-  document.getElementById("barFill").style.width = Math.min(100, k / 3200 * 100) + "%";
-  document.getElementById("barMark").style.left = (3000 / 3200 * 100) + "%";
+  var goal = me().goal || 2400;
+  document.getElementById("tGoal").textContent = goal.toLocaleString();
+  document.getElementById("barFill").style.width = Math.min(100, k / goal * 100) + "%";
+  document.getElementById("barMark").style.left = "100%";
 }
 
 function buildMeal(hallKey, mi, meal){
   var sec = document.createElement("section");
   sec.className = "meal";
-  var mk = 0, mp = 0;
-  meal.items.forEach(function(it){ mk += it[3]; mp += it[4]; });
+  var mk = 0, mp = 0, hidden = 0;
+  meal.items.forEach(function(it){
+    if (blocked(it)) { hidden++; return; }
+    mk += it[3]; mp += it[4];
+  });
   var head = document.createElement("header");
   head.innerHTML =
     '<div><h3>' + meal.m + '</h3><div class="station">' + meal.s + '</div></div>' +
@@ -403,6 +523,7 @@ function buildMeal(hallKey, mi, meal){
     var id = hallKey + "-" + mi + "-" + ii;
     var li = document.createElement("li");
     if (it[8]) li.className = "pick";
+    if (blocked(it)) { li.className += " off"; ul.appendChild(li); return; }
     var btn = document.createElement("button");
     btn.type = "button"; btn.className = "row";
     btn.dataset.done = done[id] ? "1" : "0";
@@ -423,6 +544,12 @@ function buildMeal(hallKey, mi, meal){
     ul.appendChild(li);
   });
   sec.appendChild(ul);
+  if (hidden) {
+    var n = document.createElement("div");
+    n.className = "hid";
+    n.textContent = hidden + (hidden === 1 ? " item" : " items") + " hidden by your diet";
+    sec.appendChild(n);
+  }
   return sec;
 }
 
@@ -436,6 +563,10 @@ function render(){
     var bad = /^no |rotates/.test(n);
     return '<span class="chip' + (bad ? ' bad' : '') + '">' + n + '</span>';
   }).join("");
+
+  var d = me().diets || [];
+  document.getElementById("who").textContent =
+    (who || "Set up") + (d.length ? " \u00b7 " + d.length + " filter" + (d.length > 1 ? "s" : "") : "");
 
   mealsEl.textContent = "";
   h.meals.forEach(function(meal, mi){
@@ -451,7 +582,101 @@ document.getElementById("reset").addEventListener("click", function(){
   done = {}; save(); render();
 });
 
+/* ---- profiles ---- */
+var setupEl = document.getElementById("setup");
+var fName = document.getElementById("fName");
+var fGoal = document.getElementById("fGoal");
+var fDiets = document.getElementById("fDiets");
+var peopleEl = document.getElementById("people");
+var editing = null;   // the profile being edited, or null for a new one
+
+DIETS.forEach(function(d){
+  var l = document.createElement("label");
+  l.innerHTML = '<input type="checkbox" value="' + d.k + '"> ' + d.label;
+  fDiets.appendChild(l);
+});
+
+function openSetup(name){
+  editing = name || null;
+  var prof = name ? people[name] : null;
+  fName.value = name || "";
+  fGoal.value = prof ? prof.goal : "";
+  Array.prototype.forEach.call(fDiets.querySelectorAll("input"), function(cb){
+    cb.checked = !!(prof && prof.diets && prof.diets.indexOf(cb.value) > -1);
+  });
+  document.getElementById("setupDel").style.visibility =
+    (name && Object.keys(people).length > 1) ? "visible" : "hidden";
+  // saying which it is, because typing over the name of an existing person renames them
+  document.getElementById("setupSave").textContent = editing ? "Save" : "Add person";
+  document.getElementById("setupTitle").textContent = editing ? editing : "Who's eating?";
+  peopleEl.textContent = "";
+  Object.keys(people).forEach(function(n){
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = n;
+    if (n === editing) b.className = "on";
+    b.addEventListener("click", function(){ openSetup(n); });
+    peopleEl.appendChild(b);
+  });
+  if (Object.keys(people).length) {
+    var add = document.createElement("button");
+    add.type = "button"; add.textContent = "+ New";
+    if (!editing) add.className = "on";
+    add.addEventListener("click", function(){ openSetup(null); });
+    peopleEl.appendChild(add);
+  }
+  setupEl.hidden = false;
+  fName.focus();
+}
+
+document.getElementById("setupSave").addEventListener("click", function(){
+  var name = (fName.value || "").trim() || "Me";
+  var goal = parseInt(fGoal.value, 10);
+  if (!goal || goal < 800 || goal > 8000) goal = 2400;
+  var diets = [];
+  Array.prototype.forEach.call(fDiets.querySelectorAll("input"), function(cb){
+    if (cb.checked) diets.push(cb.value);
+  });
+  if (editing && editing !== name) {          // renamed: carry the ticks across
+    people[name] = people[editing];
+    delete people[editing];
+    try {
+      var old = localStorage.getItem("swipe:done:" + editing);
+      if (old !== null) localStorage.setItem("swipe:done:" + name, old);
+      localStorage.removeItem("swipe:done:" + editing);
+    } catch (e) {}
+  }
+  people[name] = { goal: goal, diets: diets };
+  if (who !== name) {                          // switching people swaps the ticks
+    who = name;
+    done = {};
+    try { done = JSON.parse(localStorage.getItem("swipe:done:" + name) || "{}"); } catch (e) { done = {}; }
+  }
+  save();
+  setupEl.hidden = true;
+  render();
+});
+
+document.getElementById("setupDel").addEventListener("click", function(){
+  if (!editing || Object.keys(people).length < 2) return;
+  delete people[editing];
+  try { localStorage.removeItem("swipe:done:" + editing); } catch (e) {}
+  who = Object.keys(people)[0];
+  done = {};
+  try { done = JSON.parse(localStorage.getItem("swipe:done:" + who) || "{}"); } catch (e) { done = {}; }
+  save();
+  setupEl.hidden = true;
+  render();
+});
+
+document.getElementById("who").addEventListener("click", function(){ openSetup(who); });
+setupEl.addEventListener("click", function(e){
+  if (e.target === setupEl && who) setupEl.hidden = true;   // no escape before the first profile
+});
+
+load();
+migrate();
 render();
+if (!who) openSetup(null);
 </script>
 
 </body></html>
