@@ -194,6 +194,8 @@ ul.items li{border-top:1px solid var(--line-soft)}
   font:inherit;font-size:13px;width:28px;height:28px;border-radius:2px;cursor:pointer}
 .empty{font-size:13px;color:var(--ink-3);padding:14px 0}
 
+.nowpill{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--card);
+  background:var(--blue);border-radius:2px;padding:1px 5px;margin-left:6px;vertical-align:2px}
 .skipbtn{appearance:none;font:inherit;font-size:13px;margin:0 6px 6px 0;padding:6px 10px;
   border:1px solid var(--line);background:var(--card-2);color:var(--ink);border-radius:2px;cursor:pointer}
 .skipbtn.on{background:var(--blue);border-color:var(--blue);color:var(--card)}
@@ -360,6 +362,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
+var BUILD = "2026-09-29c";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -418,7 +421,7 @@ var DIETS = [
   // over `allow`, which is how a vegetable dish that happens to name a meat -- chicken
   // tortilla soup, beef and broccoli -- still gets filtered out.
   {k:"animalfruit", n:"Meat, eggs, dairy, fruit",
-   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr|blueberr|raspberr|blackberr|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam)\b/i,
+   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr|blueberr|raspberr|blackberr|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam|honey)\b/i,
    owner:true,
    deny:/(broccoli|kale|spinach|cauliflower|brussels|asparagus|zucchini|eggplant|mushroom|arugula|chard|collard|cabbage|celery|cucumber|lettuce|tomato|avocado|olive|quinoa|lentil|chickpea|garbanzo|hummus|tofu|seitan|tempeh|\bbeans?\b|\bpeas?\b|\bcorn\b|pasta|noodle|ramen|spaghetti|penne|lasagna|macaroni|fettuccine|linguine|rigatoni|ravioli|gnocchi|orzo|udon|soba|bread|bagel|\bbun\b|toast|muffin|cookie|cake|pie\b|brownie|blondie|donut|doughnut|pastry|croissant|danish|fritter|scone|tart|cobbler|crisp\b|pudding|eclair|waffle|pancake|crepe|\boat|granola|cereal|pizza|sandwich|panini|\bsub\b|wrap|burrito|quesadilla|soup|chowder|bisque|stew|curry|chili|pilaf|couscous|farro|barley|bulgur|dressing|vinaigrette|boba|vegan|vegetarian|beyond|impossible|chips|cupcake|frosting|churro|flan|turnover|fudge|veggie|plant|strudel|parfait|compote|jam|syrup|sorbet|gelato|mousse|almond|peanut|cashew|walnut|pecan|pistachio|hazelnut|macadamia|tahini|sesame|coconut|nutella|gianduja|praline|marzipan|granola|seed|sunflower|pumpkin seed|chia|flax|hemp|dressing|aioli|pesto|salsa|chutney|relish|marinade|glaze|gravy|broth|stock|puree|sauce|mochi|cacao|dulce|caramel|ice cream|soft serve|pearl|popping|crouton|cracker|pretzel|ziti|dumpling|nachos|pita|pho\b|sinigang|spanakopita|chilaquiles|cream of wheat|boba|smoothie|spritzer|horchata|latte|mocha|frappe|shake)/i}];
 var DIET_BY_KEY = {};
@@ -720,76 +723,103 @@ function jitter(str, seed){          // stable pseudo-random so a plate does not
   return ((h >>> 0) % 1000) / 1000;
 }
 
-function suggestPlate(rows, seed){
+// A plate is a template with slots, not an optimiser. The hand-built plans read well
+// because they said "five eggs, two sausage links, a fruit bowl, a glass of milk" --
+// so fill those same slots from whatever is on the menu today.
+var SLOTS = {
+  Breakfast: [
+    {n:"eggs",   re:/\b(fried egg|scrambled egg|hard cooked egg|poached egg|omelet|^egg)/i, q:5, cap:6,
+     avoid:/white|vegan|plant|substitute/i},   // whole eggs win on density, not just protein
+    {n:"meat",   re:/\b(bacon|sausage|chorizo|ham|links|steak|carnitas|tri.?tip)\b/i,       q:2, cap:4},
+    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4},
+    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                    q:1, cap:2}
+  ],
+  Main: [
+    {n:"main",   re:/\b(beef|steak|tri.?tip|sirloin|brisket|burger|patty|lamb|pork|riblet|carnitas|chorizo|ribs|meatball|gyudon|carne)\b/i, q:1, cap:3},
+    {n:"second", re:/\b(chicken|turkey|salmon|fish|shrimp|tuna|katsu|cod)\b/i,               q:1, cap:3},
+    {n:"starch", re:/\b(rice|sweet potato|yam|potato)\b/i,                                   q:2, cap:4},
+    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4},
+    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                     q:1, cap:2}
+  ],
+  Late: [
+    {n:"main",   re:/\b(beef|steak|burger|patty|chicken|pork|bacon|sausage|egg|salmon|shrimp)\b/i, q:1, cap:3},
+    {n:"starch", re:/\b(rice|sweet potato|yam|potato)\b/i,                                   q:1, cap:3},
+    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                     q:1, cap:2}
+  ]
+};
+// Which meal you could walk into right now. Dining halls run breakfast until about
+// 10:30, lunch to 4, dinner to 9, and anything later is the late-night counter.
+function currentMeal(){
+  var d = new Date(), h = d.getHours() + d.getMinutes() / 60;
+  if (h < DAY_START_HOUR) return "Late";
+  if (h < 10.5) return "Breakfast";
+  if (h < 16) return "Lunch";
+  if (h < 21) return "Dinner";
+  return "Late";
+}
+function mealMatchesNow(meal){
+  var now = currentMeal();
+  if (now === "Late") return /late|night|all ?day/i.test(meal);
+  return new RegExp(now === "Breakfast" ? "break|brunch" : now, "i").test(meal);
+}
+
+function slotsFor(meal){
+  if (/break|brunch/i.test(meal)) return SLOTS.Breakfast;
+  if (/late|night/i.test(meal)) return SLOTS.Late;
+  return SLOTS.Main;
+}
+
+function suggestPlate(rows, seed, meal){
   var gl = gaps();
-  var pool = [];
-  var seen = {};
+  var pool = [], seen = {};
   rows.forEach(function(row){
     var rid = row[1], it = D.items[rid];
     if (!it || !it.v || !it.v[0] || seen[rid] || it.batch || blocked(it)) return;
     seen[rid] = 1;
-    pool.push({id: rid, it: it, cat: catOf(it.n), station: row[0]});
+    pool.push({id: rid, it: it, station: row[0]});
   });
   if (!pool.length) return null;
 
   var goal = me().goal || 2000;
   var tK = goal / 3;
-  // The FDA's 50 g/day is a floor, not a plan; a plate is aimed at about 18% of its
-  // calories from protein, which is where the hand-built meals landed.
-  var tP = Math.max((targets().protein || 50) / 3, tK * 0.18 / 4);
-  var picks = [], kcal = 0, prot = 0, used = {};
+  var slots = slotsFor(meal || "");
+  var picks = [], kcal = 0, used = {};
 
-  function take(cat, wantK){
+  slots.forEach(function(slot){
     var best = null, bs = -Infinity;
     pool.forEach(function(p){
-      if (used[p.id] || p.cat !== cat) return;
-      if (kcal + p.it.v[0] > tK * 1.25) return;
-      var sc = cat === "protein"
-        ? get(p.it.v, "protein") / Math.max(1, p.it.v[0] / 120)
-        : -Math.abs(p.it.v[0] - wantK) / 50;
-      sc += scoreItem(p.it, gl) * 2;          // nudge toward today's shortfalls
-      sc += jitter(p.id, seed);               // and let the shuffle button matter
+      if (used[p.id] || !slot.re.test(p.it.n)) return;
+      if (kcal + p.it.v[0] * slot.q > tK * 1.3) return;
+      // within a slot, prefer the denser option, nudged by today's gaps and the shuffle
+      var sc = get(p.it.v, "protein") / Math.max(1, p.it.v[0] / 100)
+             + scoreItem(p.it, gl) * 2 + jitter(p.id, seed);
+      if (slot.avoid && slot.avoid.test(p.it.n)) sc -= 5;
       if (sc > bs) { bs = sc; best = p; }
     });
-    if (best) { used[best.id] = 1; picks.push(best); kcal += best.it.v[0]; prot += get(best.it.v, "protein"); }
-    return !!best;
-  }
-
-  take("protein");
-  take("carb", tK * 0.3);
-  take("fruit", 90);
-  take("dairy", 110);
-  while (prot < tP * 0.7 && picks.length < 5) if (!take("protein")) break;
-  while (kcal < tK * 0.6 && picks.length < 6) if (!take("carb", tK * 0.2) && !take("other", 150)) break;
+    if (!best) return;
+    used[best.id] = 1;
+    best.q = slot.q;
+    best.slot = slot;
+    picks.push(best);
+    kcal += best.it.v[0] * best.q;
+  });
   if (!picks.length) return null;
 
-  // Nobody eats one serving of everything. The old paper plans worked because they said
-  // "5 eggs, 3 scoops of rice", so scale the protein and starch up to the target the way
-  // you would actually fill a tray -- small items take the most repeats.
-  picks.forEach(function(p){ p.q = 1; });
-  for (var guard = 0; guard < 40 && kcal < tK * 0.95; guard++) {
-    var needProtein = prot < tP;
-    var best = null, bs = -Infinity;
+  // top up toward the calorie target, respecting each slot's own ceiling
+  for (var guard = 0; guard < 30 && kcal < tK * 0.92; guard++) {
+    var pick = null, ps = -Infinity;
     picks.forEach(function(p){
-      if (p.cat === "protein" && !needProtein) return;   // enough protein: fill with starch and fruit
       var cals = p.it.v[0];
-      if (cals <= 0 || kcal + cals > tK * 1.12) return;
-      // a realistic number of repeats: five eggs yes, five chicken breasts no
-      var cap = p.cat === "dairy" ? 2                 // two slices of swiss, not four
-              : cals > 220 ? 2 : (cals > 110 ? 3 : (p.cat === "fruit" ? 3 : 5));
-      if (p.q >= cap) return;
-      var sc = (needProtein && p.cat === "protein")
-        ? get(p.it.v, "protein") / Math.max(cals, 1) * 100
-        : 1;
-      sc -= p.q * 0.35;                                  // spread repeats around the plate
-      if (sc > bs) { bs = sc; best = p; }
+      if (p.q >= (p.slot.cap || 3) || cals <= 0 || kcal + cals > tK * 1.12) return;
+      var sc = -p.q;
+      if (sc > ps) { ps = sc; pick = p; }
     });
-    if (!best) break;
-    best.q += 1;
-    kcal += best.it.v[0];
-    prot += get(best.it.v, "protein");
+    if (!pick) break;
+    pick.q += 1;
+    kcal += pick.it.v[0];
   }
 
+  var prot = picks.reduce(function(a, p){ return a + get(p.it.v, "protein") * p.q; }, 0);
   return {picks: picks, kcal: kcal, prot: prot, target: tK};
 }
 
@@ -798,12 +828,14 @@ var plateSeed = {};
 function plateCard(vkey, meal, rows){
   var key = vkey + "|" + meal;
   var seed = plateSeed[key] || 0;
-  var plate = suggestPlate(rows, seed);
+  var plate = suggestPlate(rows, seed, meal);
   if (!plate) return null;
   var sec = document.createElement("section");
   sec.className = "meal plate";
   sec.innerHTML =
-    '<header><div><h3>Eat this<small>a ' + Math.round(plate.kcal) + ' kcal plate, ' +
+    '<header><div><h3>Eat this' +
+      (mealMatchesNow(meal) ? '<span class="nowpill">now</span>' : '') +
+      '<small>a ' + Math.round(plate.kcal) + ' kcal plate, ' +
       Math.round(plate.prot) + ' g protein</small></h3></div>' +
     '<div class="mealkcal">' + Math.round(plate.kcal) + '<small>of ' +
       Math.round(plate.target) + '</small></div></header>' +
@@ -884,6 +916,8 @@ function renderDeck(di){
   var meals = v.menu[d] || {};
   var order = ["Breakfast", "Brunch", "Lunch", "Dinner", "Allday", "All day"];
   var keys = Object.keys(meals).sort(function(a, b){
+    var na = mealMatchesNow(a) ? 0 : 1, nb = mealMatchesNow(b) ? 0 : 1;
+    if (na !== nb) return na - nb;            // whatever is being served now goes first
     var ia = order.indexOf(a), ib = order.indexOf(b);
     return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
   });
@@ -940,7 +974,9 @@ function renderDeck(di){
     if (card) menuEl.appendChild(card);
     var sec = document.createElement("section");
     sec.className = "meal";
-    sec.innerHTML = '<header><h3>' + esc(meal) + '<small>' + shown + ' items' +
+    sec.innerHTML = '<header><h3>' + esc(meal) +
+      (mealMatchesNow(meal) ? '<span class="nowpill">now</span>' : '') +
+      '<small>' + shown + ' items' +
       (hidden ? " · " + hidden + " hidden by diet" : "") + '</small></h3></header>' + inner;
     menuEl.appendChild(sec);
   });
@@ -1316,7 +1352,7 @@ setInterval(function(){
 
 /* ------------------------------------------------------------------ boot */
 
-fetch("data/foods.json").then(function(r){
+fetch("data/foods.json?v=" + BUILD).then(function(r){
   if (!r.ok) throw new Error("foods.json " + r.status);
   return r.json();
 }).then(function(db){
