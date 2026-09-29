@@ -15,17 +15,18 @@ function grab(name, kind = "function") {
   assert.ok(m, `could not extract ${name}`);
   return m[0];
 }
-const consts = ["DAY_START_HOUR", "DV", "UNIT", "LABEL", "SECTIONS", "MAJOR", "CHASE"]
+const consts = ["DAY_START_HOUR", "OWNER", "DV", "UNIT", "LABEL", "SECTIONS", "MAJOR", "CHASE"]
   .map(n => src.match(new RegExp(`\\nvar ${n} =[\\s\\S]*?\\n\\};?\\n|\\nvar ${n} =[^\\n]*\\n`))[0]).join("\n");
 const fns = ["dayKey", "zero", "vecOf", "sumVecs", "get", "fmt", "isEstimated", "targets",
-             "hasRule", "scoreItem"].map(n => grab(n)).join("\n");
+             "hasRule", "isOwner", "scoreItem"].map(n => grab(n)).join("\n");
 
 const db = JSON.parse(readFileSync(new URL("../data/foods.json", import.meta.url), "utf8"));
-let PROFILE = { goal: 3100, diets: [], rules: [], log: {} };
+let PROFILE = { name: "ryanb", goal: 3100, diets: [], rules: [], log: {} };
 
 const sandbox = `
 ${consts}
 var D = DB, NUT = D.nutrients, MEASURED = D.measured;
+var who = PROFILE.name;
 function me(){ return PROFILE; }
 ${fns}
 RESULT = { dayKey, vecOf, sumVecs, get, fmt, targets, scoreItem, isEstimated, zero };
@@ -72,6 +73,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
 }
 
 // 4. targets scale with the calorie goal only when the rule is on, and ceilings never move
+//    (the rule is owner-gated, so this also proves the gate opens for the owner)
 {
   PROFILE.rules = [];
   const plain = targets();
@@ -82,6 +84,12 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(scaled.sodium, 2300, "sodium ceiling does not scale");
   assert.equal(scaled.satfat, 20, "saturated fat ceiling does not scale");
   assert.equal(scaled.kcal, 3100);
+
+  // ... and stays shut for anyone else, even with the rule ticked
+  const other = new Function("DB", "PROFILE", sandbox + "\nreturn RESULT;")(
+    DB, { name: "someone else", goal: 3100, diets: [], rules: ["scale"], log: {} });
+  assert.equal(other.targets().protein, 50, "target scaling is owner-only");
+
   PROFILE.rules = [];
 }
 
