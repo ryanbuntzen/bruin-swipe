@@ -235,6 +235,8 @@ ul.items li{border-top:1px solid var(--line-soft)}
     <ul class="results" id="results"></ul>
   </div>
 
+  <div class="gaps" id="gaps" hidden></div>
+
   <div class="deckbar" role="tablist" aria-label="Kind of place">
     <button type="button" role="tab" id="deck0">All you can eat</button>
     <button type="button" role="tab" id="deck1">Pickup &amp; to go</button>
@@ -397,6 +399,7 @@ var decks = [[], []];         // venue lists: [ayce, pickup]
 var sel = [0, 0];             // selected venue per deck
 var day = [null, null];       // selected menu day per deck
 var deckIdx = 0;
+var recIds = {};              // item ids the recommender is pushing right now
 
 function load(){
   try {
@@ -548,6 +551,104 @@ function blocked(it){
   return false;
 }
 
+/* ------------------------------------------------------------------ gap recommender
+
+   Once something is logged, work out which nutrients are furthest behind for the day,
+   then score every item by how much of that shortfall it closes per calorie.  Places
+   are scored by their best few items, so the app can say "go to Bruin Plate" — and if
+   you walk into De Neve instead, that hall's own best gap-fillers are still flagged.   */
+
+// Nutrients worth chasing.  Ceilings (sodium, saturated fat, added sugar) are left out:
+// falling short of those is the goal, not a gap.
+var CHASE = ["protein","fiber","potassium","calcium","iron","magnesium","phosphorus","zinc",
+             "copper","manganese","selenium","vit_a","vit_c","vit_d","vit_e","vit_k",
+             "thiamin","riboflavin","niacin","vit_b6","folate","vit_b12","pantothenic",
+             "choline","omega3_ala","omega3_epa","omega3_dha"];
+
+function gaps(){
+  var log = todayLog();
+  if (!log.length) return [];                       // nothing to advise on before the first meal
+  var v = sumVecs(log), T = targets(), out = [];
+  CHASE.forEach(function(k){
+    if (NUT.indexOf(k) < 0 || !T[k]) return;
+    var got = get(v, k), frac = got / T[k];
+    if (frac >= 0.95) return;
+    out.push({k:k, frac:frac, missing:T[k] - got, target:T[k]});
+  });
+  // omega-3 counts as a gap when the ratio has drifted past 1:2
+  if (hasRule("omega")) {
+    var o3 = get(v, "omega3_ala") + get(v, "omega3_epa") + get(v, "omega3_dha");
+    var o6 = get(v, "omega6");
+    if (o3 > 0 && o6 / o3 > 2) out.push({k:"omega3_ala", frac:0.2, missing:o6 / 2 - o3,
+                                         target:o6 / 2, ratio:true});
+  }
+  out.sort(function(a, b){ return a.frac - b.frac; });
+  return out.slice(0, 8);
+}
+
+function scoreItem(it, gl){
+  if (!it.v || !gl.length) return 0;
+  var s = 0;
+  gl.forEach(function(g, i){
+    var w = 1 - i / (gl.length + 1);                // the furthest-behind nutrient matters most
+    var share = get(it.v, g.k) / Math.max(g.missing, 1e-9);
+    s += w * Math.min(share, 1);
+  });
+  // per-calorie, so a 1,200 kcal platter does not win on bulk alone
+  return s / (1 + (it.v[0] || 0) / 350);
+}
+
+function bestAt(venue, gl, n){
+  var seen = {}, out = [];
+  var d = pickDay(venue, day[venue.kind === "ayce" ? 0 : 1]);
+  var meals = venue.menu[d] || {};
+  Object.keys(meals).forEach(function(m){
+    meals[m].forEach(function(row){
+      var rid = row[1], it = D.items[rid];
+      if (!it || !it.v || seen[rid] || blocked(it)) return;
+      seen[rid] = 1;
+      var sc = scoreItem(it, gl);
+      if (sc > 0.02) out.push({id:rid, it:it, score:sc, station:row[0]});
+    });
+  });
+  out.sort(function(a, b){ return b.score - a.score; });
+  return out.slice(0, n || 4);
+}
+
+function renderGaps(){
+  var el = document.getElementById("gaps");
+  var gl = gaps();
+  if (!gl.length) { el.hidden = true; recIds = {}; return; }
+
+  // rank the places by what their best handful of items would close
+  var ranked = D.venues.map(function(v){
+    var top = bestAt(v, gl, 4);
+    return {v:v, score:top.reduce(function(a, b){ return a + b.score; }, 0), top:top};
+  }).filter(function(r){ return r.score > 0; });
+  ranked.sort(function(a, b){ return b.score - a.score; });
+
+  recIds = {};
+  ranked.slice(0, 3).forEach(function(r){ r.top.forEach(function(t){ recIds[t.id] = 1; }); });
+
+  el.innerHTML = '<h3>Still short today</h3><div class="short">' +
+    gl.slice(0, 5).map(function(g){
+      return "<span>" + LABEL[g.k] + " " + Math.round(g.frac * 100) + "%" +
+             (g.ratio ? " (ratio)" : "") + "</span>";
+    }).join("") + "</div>" +
+    (ranked.length
+      ? "<p>Best place for that right now: <b>" + esc(ranked[0].v.n) + "</b> — " +
+        ranked[0].top.slice(0, 2).map(function(t){ return esc(t.it.n); }).join(", ") +
+        ".</p><button class=\"go\" type=\"button\" id=\"gapGo\">Show me</button>"
+      : "<p>Nothing on today's menus moves those much.</p>");
+  el.hidden = false;
+  var go = document.getElementById("gapGo");
+  if (go) go.onclick = function(){
+    var v = ranked[0].v, di = v.kind === "ayce" ? 0 : 1;
+    sel[di] = decks[di].indexOf(v);
+    setDeck(di); renderDeck(di);
+  };
+}
+
 /* ------------------------------------------------------------------ render: decks */
 
 function menuDays(v){ return Object.keys(v.menu).sort(); }
@@ -601,6 +702,25 @@ function renderDeck(di){
 
   menuEl.innerHTML = "";
 
+  // whatever place you actually walked into, surface its own best gap-fillers first
+  var gl = gaps();
+  if (gl.length) {
+    var top = bestAt(v, gl, 4);
+    if (top.length) {
+      var sec0 = document.createElement("section");
+      sec0.className = "meal fills";
+      sec0.innerHTML = '<header><h3>Fills your gaps here<small>' +
+        gl.slice(0, 3).map(function(g){ return LABEL[g.k]; }).join(", ") + '</small></h3></header>' +
+        '<ul class="items">' + top.map(function(t){
+          return '<li><button class="row" data-id="' + t.id + '">' +
+            '<span><span class="nm">' + esc(t.it.n) + '</span>' +
+            '<span class="sub2">' + esc(t.station) + (t.it.s ? " · " + esc(t.it.s) : "") + '</span></span>' +
+            '<span class="kc">' + Math.round(t.it.v[0]) + '</span><span class="plus">+</span></button></li>';
+        }).join("") + '</ul>';
+      menuEl.appendChild(sec0);
+    }
+  }
+
   keys.forEach(function(meal){
     var byStation = {};
     meals[meal].forEach(function(row){
@@ -617,7 +737,7 @@ function renderDeck(di){
         rows += '<li><button class="row" data-id="' + rid + '">' +
           '<span><span class="nm">' + esc(it.n) +
             (it.b ? '<span class="bpill">build</span>' : '') +
-            '</span>' +
+            (recIds[rid] ? '<span class="badge">fills a gap</span>' : '') + '</span>' +
             '<span class="sub2">' + (it.s ? esc(it.s) : "choose components") + '</span></span>' +
           '<span class="kc">' + (it.v ? Math.round(it.v[0]) : "—") +
             '<em>' + (it.v ? "P" + Math.round(get(it.v, "protein")) +
@@ -735,7 +855,7 @@ document.getElementById("itemAdd").onclick = function(){
     e.comps = picked;
   }
   todayLog().push(e);
-  save(); tally();
+  save(); tally(); renderDeck(0); renderDeck(1);
   itemSheet.hidden = true;
 };
 itemSheet.onclick = function(ev){ if (ev.target === itemSheet) itemSheet.hidden = true; };
@@ -771,7 +891,7 @@ function openLog(){
     el.querySelectorAll("[data-rm]").forEach(function(b){
       b.onclick = function(){
         todayLog().splice(+b.getAttribute("data-rm"), 1);
-        save(); tally(); openLog();
+        save(); tally(); renderDeck(0); renderDeck(1); openLog();
       };
     });
   }
@@ -798,6 +918,7 @@ function tally(){
   document.getElementById("tC").textContent = Math.round(get(v, "carb")) + "g";
   document.getElementById("barFill").style.width = Math.min(100, v[0] / goal * 100) + "%";
   document.getElementById("barMark").style.left = "100%";
+  renderGaps();
   var n = todayLog().length;
   document.getElementById("tallyLbl").textContent =
     n ? "Today · " + n + " item" + (n > 1 ? "s" : "") + " · tap to edit" : "Today · tap to edit";
