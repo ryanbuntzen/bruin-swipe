@@ -16,6 +16,9 @@ DATA = ROOT / "data"
 KEYS = [v[0] for v in NUT.values()]
 
 # key -> (label, USDA phrase, grams, which item names offer it)
+# Only the wrappers belong here: the bread around a filling, which is standardised
+# enough for a USDA weight to be honest. Starches that are a dish in their own right
+# (rice, potatoes) are not leave-behinds and their portions vary too much to subtract.
 REMOVALS = {
     "bun":      ("the bun", "Interstate Brands Corp, Wonder Hamburger Rolls", 52,
                  r"burger|cheeseburger|hamburger|hot dog|sloppy"),
@@ -25,10 +28,6 @@ REMOVALS = {
                  r"burrito|quesadilla|wrap|taco\b"),
     "pita":     ("the pita", "Bread, pita, white, enriched", 60,
                  r"pita|gyro|shawarma|falafel"),
-    "rice":     ("the rice", "Rice, white, long-grain, regular, cooked, enriched, without salt", 158,
-                 r"\bbowl\b|fried rice|rice plate"),
-    "fries":    ("the fries", "Potatoes, french fried, all types, salt added in processing, frozen, oven-heated", 85,
-                 r"\bfries\b|combo|platter"),
 }
 
 def main():
