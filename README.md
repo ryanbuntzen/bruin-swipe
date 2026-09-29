@@ -88,10 +88,13 @@ State lives in `localStorage`. Nothing is sent anywhere and there are no account
 
 ## Known gaps
 
-- **Hall beverage lines aren't published.** No UCLA menu itemises the milk and juice
-  dispensers at De Neve, Sproul, Epicuria or Feast — the only milk and orange juice
-  entries in the whole dataset belong to The Study at Hedrick. Those numbers are real,
-  but that the same drinks sit on a given hall's island is an assumption.
+- **Hall beverage lines aren't published.** No UCLA menu itemises the drinks at De Neve,
+  Sproul, Epicuria or Feast: every milk and juice entry in the dataset — lowfat, nonfat,
+  chocolate, soy, orange, apple — belongs to The Study at Hedrick, so that is the only
+  place the app offers them. Do not read that as the halls having the same lineup
+  unlisted. Chocolate milk, for one, appears to be Study-only, which suggests the hall
+  islands are a narrower selection rather than an unpublished copy of The Study's fridge.
+  Anything you drink at a hall has to be logged via search for now.
 - **Menus only publish a week ahead**, so the day picker covers the published window and
   falls back to the nearest day outside it.
 - **Bruin Bowl, To-Go Lunches and the food trucks** publish no menu at all.
