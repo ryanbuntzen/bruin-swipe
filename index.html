@@ -362,13 +362,15 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29c";
+var BUILD = "2026-09-29d";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
-// They only appear for a profile with this name; every other profile sees the ordinary
-// diet options and plain FDA Daily Values. Change the string to hand them to someone else.
-var OWNER = "ryanb";
+// The diet is not an option anyone ticks -- it applies automatically to this profile
+// and is invisible to every other one, which sees the ordinary options and plain FDA
+// Daily Values. Change the string to hand it to someone else.
+var OWNER = "ryanbuntzen";
+var OWNER_DIETS = ["animalfruit"];
 function isOwner(name){ return (name || "").trim().toLowerCase() === OWNER; }
 
 // FDA Daily Values (2016 label rules), adult.  Calories come from the profile instead.
@@ -581,9 +583,11 @@ function nutTable(vec, opts){
 /* ------------------------------------------------------------------ diet filter */
 
 function blocked(it){
-  var p = me(), d = (p.diets || []).filter(function(k){
-    return isOwner(who) || !DIET_BY_KEY[k] || !DIET_BY_KEY[k].owner;
+  var p = me();
+  var d = (p.diets || []).filter(function(k){
+    return !DIET_BY_KEY[k] || !DIET_BY_KEY[k].owner;   // owner diets are never ticked
   });
+  if (isOwner(who)) d = d.concat(OWNER_DIETS);         // they just apply
   if (!d.length) return false;
   var hay = it.n + " " + (it.a || []).join(" ");
   for (var i = 0; i < DIETS.length; i++) {
@@ -1231,7 +1235,7 @@ var editing = null;
 function paintDietOptions(name){
   fDiets.innerHTML = "";
   DIETS.forEach(function(d){
-    if (d.owner && !isOwner(name)) return;
+    if (d.owner) return;        // applies automatically to its owner, never a checkbox
     var l = document.createElement("label");
     l.innerHTML = '<input type="checkbox" value="' + d.k + '"> ' + d.n;
     fDiets.appendChild(l);

@@ -21,7 +21,7 @@ const fns = ["dayKey", "zero", "vecOf", "sumVecs", "get", "fmt", "isEstimated", 
              "hasRule", "isOwner", "scoreItem"].map(n => grab(n)).join("\n");
 
 const db = JSON.parse(readFileSync(new URL("../data/foods.json", import.meta.url), "utf8"));
-let PROFILE = { name: "ryanb", goal: 3100, diets: [], rules: [], log: {} };
+let PROFILE = { name: "ryanbuntzen", goal: 3100, diets: [], rules: [], log: {} };
 
 const sandbox = `
 ${consts}
@@ -151,9 +151,10 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
                         src.indexOf("DIETS.forEach(function(d){ DIET_BY_KEY[d.k] = d; });") + 52);
   const bs = src.match(/\nfunction blocked\([\s\S]*?\n\}/)[0];
   const blocked = new Function("DIETS", "PROFILE",
-    'var who = "ryanb", OWNER = "ryanb";\nfunction isOwner(n){return (n||"").trim().toLowerCase()===OWNER;}\n'
+    'var who = "ryanbuntzen", OWNER = "ryanbuntzen", OWNER_DIETS = ["animalfruit"];\n'
+    + 'function isOwner(n){return (n||"").trim().toLowerCase()===OWNER;}\n'
     + dbk + "\nfunction me(){return PROFILE;}" + bs + "\nreturn blocked;")(
-      DIETS, { diets: ["animalfruit"] });
+      DIETS, { diets: [] });          // nothing ticked: it applies on its own
   const find = n => Object.values(db.items).find(v => v.n === n);
 
   for (const n of ["Fried Eggs", "Scrambled Eggs", "Sticky Rice", "Bruin Cheeseburger",
@@ -171,9 +172,10 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   }
   // and the diet is owner-only: same items, a different name, nothing hidden
   const notOwner = new Function("DIETS", "PROFILE",
-    'var who = "someone", OWNER = "ryanb";\nfunction isOwner(n){return (n||"").trim().toLowerCase()===OWNER;}\n'
+    'var who = "someone", OWNER = "ryanbuntzen", OWNER_DIETS = ["animalfruit"];\n'
+    + 'function isOwner(n){return (n||"").trim().toLowerCase()===OWNER;}\n'
     + dbk + "\nfunction me(){return PROFILE;}" + bs + "\nreturn blocked;")(
-      DIETS, { diets: ["animalfruit"] });
+      DIETS, { diets: ["animalfruit"] });   // even ticked, it must not apply
   assert.equal(notOwner(find("Almond Butter")), false, "the allowlist diet is owner-only");
 }
 
