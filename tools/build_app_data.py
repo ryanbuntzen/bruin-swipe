@@ -82,12 +82,30 @@ def main():
             rec["src"] = v.get("micro_source", "none")
             if v.get("fit_residual") is not None:
                 rec["r"] = v["fit_residual"]
+        # Some UCLA "servings" are batch yields, not portions -- a 907 g salad bar, a
+        # 12 kg pork tenderloin. Anything this large is a recipe size; flag it so the
+        # app can warn rather than silently logging a whole hotel pan.
+        if (v.get("grams") or 0) > 600:
+            rec["batch"] = True
         if v.get("build_groups"):
             rec["b"] = [[c["id"] for c in g if c["id"] in items] for g in v["build_groups"]]
         if v.get("tags"):
             rec["t"] = [t for t in v["tags"] if t not in ("low-carbon", "high-carbon")]
         if v.get("allergens"):
-            rec["a"] = v["allergens"]
+            # UCLA appends its whole legal disclaimer to the allergen list, and that
+            # boilerplate names foods ("hamburger buns, pizza dough, baked goods"),
+            # which poisons any text matching done against this field. Keep the real
+            # tokens only.
+            al = []
+            for entry in v["allergens"]:
+                if "*" in entry or entry.lower().startswith(("if you", "please")):
+                    break                      # the disclaimer starts here
+                for a in entry.split(","):     # real allergens arrive comma-packed
+                    a = a.strip(" ,.")
+                    if a and len(a) <= 20 and a.lower() != "none":
+                        al.append(a)
+            if al:
+                rec["a"] = al
         out[rid] = rec
 
     # venues UCLA publishes nothing for (the trucks), reconstructed in manual_venues.py

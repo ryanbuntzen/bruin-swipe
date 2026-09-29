@@ -194,6 +194,8 @@ ul.items li{border-top:1px solid var(--line-soft)}
   font:inherit;font-size:13px;width:28px;height:28px;border-radius:2px;cursor:pointer}
 .empty{font-size:13px;color:var(--ink-3);padding:14px 0}
 
+.offdiet{font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);
+  border:1px solid var(--line);border-radius:2px;padding:0 4px;margin-left:5px;white-space:nowrap}
 .warnline{display:block;margin-top:6px;color:var(--flag);font-size:12px;line-height:1.4}
 .vnote{margin:0;font-size:12.5px;color:var(--ink-2)}
 
@@ -399,8 +401,14 @@ var DIETS = [
   {k:"vegetarian", n:"Vegetarian", bad:/\b(beef|steak|pork|bacon|ham|sausage|chicken|turkey|lamb|fish|salmon|tuna|shrimp|anchov|gelatin|carnitas|katsu|gyudon|riblet|brisket|pastrami|prosciutto|pepperoni|meatball)\b/i},
   {k:"nopork",     n:"No pork", bad:/\b(pork|bacon|ham|prosciutto|pancetta|carnitas|chorizo|pepperoni|sausage|riblet|al pastor|lard)\b/i},
   {k:"noredmeat",  n:"No red meat", bad:/\b(beef|steak|lamb|pork|bacon|ham|brisket|tri.?tip|sirloin|veal|carnitas|gyudon|riblet|pastrami|meatball)\b/i},
-  {k:"nodairy",    n:"No dairy", bad:/\b(milk|cheese|butter|cream|yogurt|yoghurt|queso|ghee|custard|gelato)\b/i}
-];
+  {k:"nodairy",    n:"No dairy", bad:/\b(milk|cheese|butter|cream|yogurt|yoghurt|queso|ghee|custard|gelato)\b/i},
+  // Defined by what is in rather than what is out, so this one is an allowlist: meat,
+  // eggs, dairy, fruit, carrots, rice and sweet potato, and nothing else. `deny` wins
+  // over `allow`, which is how a vegetable dish that happens to name a meat -- chicken
+  // tortilla soup, beef and broccoli -- still gets filtered out.
+  {k:"animalfruit", n:"Meat, eggs, dairy, fruit",
+   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr|blueberr|raspberr|blackberr|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam)\b/i,
+   deny:/(broccoli|kale|spinach|cauliflower|brussels|asparagus|zucchini|eggplant|mushroom|arugula|chard|collard|cabbage|celery|cucumber|lettuce|tomato|avocado|olive|quinoa|lentil|chickpea|garbanzo|hummus|tofu|seitan|tempeh|\bbeans?\b|\bpeas?\b|\bcorn\b|pasta|noodle|ramen|spaghetti|penne|lasagna|macaroni|fettuccine|linguine|rigatoni|ravioli|gnocchi|orzo|udon|soba|bread|bagel|\bbun\b|toast|muffin|cookie|cake|pie\b|brownie|blondie|donut|doughnut|pastry|croissant|danish|fritter|scone|tart|cobbler|crisp\b|pudding|eclair|waffle|pancake|crepe|\boat|granola|cereal|pizza|sandwich|panini|\bsub\b|wrap|burrito|quesadilla|soup|chowder|bisque|stew|curry|chili|pilaf|couscous|farro|barley|bulgur|dressing|vinaigrette|boba|vegan|vegetarian|beyond|impossible|chips|cupcake|frosting|churro|flan|turnover|fudge|veggie|plant|strudel|parfait|compote|jam|syrup|sorbet|gelato|mousse)/i}];
 
 /* ------------------------------------------------------------------ state */
 
@@ -555,10 +563,16 @@ function blocked(it){
   if (!d.length) return false;
   var hay = it.n + " " + (it.a || []).join(" ");
   for (var i = 0; i < DIETS.length; i++) {
-    if (d.indexOf(DIETS[i].k) < 0) continue;
-    if (DIETS[i].k === "vegetarian" && (it.t || []).indexOf("vegan") >= 0) continue;
-    if (DIETS[i].k === "vegetarian" && (it.t || []).indexOf("vegetarian") >= 0) continue;
-    if (DIETS[i].bad.test(hay)) return true;
+    var D = DIETS[i];
+    if (d.indexOf(D.k) < 0) continue;
+    if (D.allow) {
+      if (D.deny && D.deny.test(it.n)) return true;  // deny beats allow
+      if (!D.allow.test(it.n)) return true;          // anything unnamed is out
+      continue;
+    }
+    if (D.k === "vegetarian" && (it.t || []).indexOf("vegan") >= 0) continue;
+    if (D.k === "vegetarian" && (it.t || []).indexOf("vegetarian") >= 0) continue;
+    if (D.bad.test(hay)) return true;
   }
   return false;
 }
@@ -810,6 +824,12 @@ function openItem(rid){
   });
   var whEl = document.getElementById("itemWhere");
   whEl.textContent = wh.slice(0, 3).join("   ");
+  if (it.batch) {
+    whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) +
+      '<span class="warnline">UCLA lists this at ' + esc(it.s || "") +
+      ' — that is the batch the kitchen makes, not a plate. Dial the servings down to ' +
+      'the fraction you actually take.</span>';
+  }
   if (it.src === "reconstructed") {
     whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) +
       '<span class="warnline">Nobody publishes a panel for a food truck. ' +
@@ -861,8 +881,10 @@ function renderItem(){
   } else {
     bEl.innerHTML = "";
   }
+  var g = D.items[cur.id].g;
   document.getElementById("qVal").textContent =
-    cur.q === 0.5 ? "½ serving" : cur.q + (cur.q === 1 ? " serving" : " servings");
+    (cur.q === 0.5 ? "½" : cur.q) + (cur.q === 1 ? " serving" : " servings") +
+    (g ? "  ·  " + Math.round(g * cur.q) + " g" : "");
   document.getElementById("itemNut").innerHTML = nutTable(vecOf(cur));
 }
 
@@ -870,7 +892,13 @@ document.getElementById("qPlus").onclick = function(){
   cur.q = cur.q < 1 ? 1 : cur.q + 1; renderItem();
 };
 document.getElementById("qMinus").onclick = function(){
-  cur.q = cur.q > 1 ? cur.q - 1 : 0.5; renderItem();
+  var steps = [0.05, 0.1, 0.25, 0.5, 1];      // batch-sized items need small fractions
+  if (cur.q > 1) { cur.q -= 1; }
+  else {
+    var i = steps.indexOf(cur.q);
+    cur.q = i > 0 ? steps[i - 1] : (cur.q > 0.5 ? 0.5 : steps[0]);
+  }
+  renderItem();
 };
 document.getElementById("itemClose").onclick = function(){ itemSheet.hidden = true; };
 document.getElementById("itemAdd").onclick = function(){
@@ -961,14 +989,14 @@ qEl.addEventListener("input", function(){
   for (var rid in D.items) {
     var it = D.items[rid];
     if (it.n.toLowerCase().indexOf(q) < 0) continue;
-    if (blocked(it)) continue;
-    hits.push([rid, it]);
+    hits.push([rid, it, blocked(it)]);
     if (hits.length > 60) break;
   }
   hits.sort(function(a, b){ return a[1].n.length - b[1].n.length; });
   resEl.innerHTML = hits.slice(0, 30).map(function(h){
     return '<li><button class="row" data-id="' + h[0] + '">' +
       '<span><span class="nm">' + esc(h[1].n) + (h[1].b ? '<span class="bpill">build</span>' : '') +
+      (h[2] ? '<span class="offdiet">off diet</span>' : '') +
       '</span><span class="sub2">' + (h[1].s ? esc(h[1].s) : "choose components") + '</span></span>' +
       '<span class="kc">' + (h[1].v ? Math.round(h[1].v[0]) : "—") + '</span>' +
       '<span class="plus">+</span></button></li>';
