@@ -126,12 +126,29 @@ def main():
                            "note": v.get("note", ""),
                            "menu": {"standing": {"All day": v["rows"]}}})
 
+    # parts you can leave on the tray, attached to the items whose names imply them
+    rp = DATA / "removals.json"
+    removals = {}
+    if rp.exists():
+        import re as _re
+        spec = json.loads(rp.read_text())
+        for key, r in spec.items():
+            removals[key] = {"label": r["label"],
+                             "v": [round_sig(r["vec"].get(k, 0.0)) for k in ORDER]}
+        for rid, rec in out.items():
+            if rec.get("src") == "reconstructed":
+                continue
+            keys = [k for k, r in spec.items() if _re.search(r["match"], rec["n"], _re.I)]
+            if keys:
+                rec["rm"] = keys
+
     payload = {
         "nutrients": ORDER,
         "measured": len(MEASURED),
         "dates": sorted({w["date"] for v in items.values() for w in v.get("where", [])
                          if w["date"] != "standing"}),
         "venues": venues,
+        "removals": removals,
         "items": out,
     }
     p = DATA / "foods.json"

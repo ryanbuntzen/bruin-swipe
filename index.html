@@ -194,6 +194,10 @@ ul.items li{border-top:1px solid var(--line-soft)}
   font:inherit;font-size:13px;width:28px;height:28px;border-radius:2px;cursor:pointer}
 .empty{font-size:13px;color:var(--ink-3);padding:14px 0}
 
+.skipbtn{appearance:none;font:inherit;font-size:13px;margin:0 6px 6px 0;padding:6px 10px;
+  border:1px solid var(--line);background:var(--card-2);color:var(--ink);border-radius:2px;cursor:pointer}
+.skipbtn.on{background:var(--blue);border-color:var(--blue);color:var(--card)}
+.skipbtn span{opacity:.65;font-size:11.5px;margin-left:3px}
 .offdiet{font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--ink-3);
   border:1px solid var(--line);border-radius:2px;padding:0 4px;margin-left:5px;white-space:nowrap}
 .warnline{display:block;margin-top:6px;color:var(--flag);font-size:12px;line-height:1.4}
@@ -277,6 +281,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
     <h2 id="itemTitle"></h2>
     <p class="sub" id="itemWhere"></p>
     <div id="itemBuild"></div>
+    <div id="itemRemove"></div>
     <p class="servline" id="itemServing"></p>
     <div class="qty" role="group" aria-label="How many servings">
       <button type="button" id="qMinus" aria-label="Less">−</button>
@@ -494,6 +499,11 @@ function vecOf(entry){
   } else if (it.v) {
     for (var i = 0; i < NUT.length; i++) out[i] = it.v[i] || 0;
   }
+  (entry.skip || []).forEach(function(k){
+    var r = (D.removals || {})[k];
+    if (!r) return;
+    for (var i = 0; i < NUT.length; i++) out[i] = Math.max(0, out[i] - (r.v[i] || 0));
+  });
   var q = entry.q == null ? 1 : entry.q;
   for (var j = 0; j < out.length; j++) out[j] *= q;
   return out;
@@ -951,7 +961,7 @@ var itemSheet = document.getElementById("itemSheet");
 function openItem(rid){
   var it = D.items[rid];
   if (!it) return;
-  cur = {id: rid, q: 1, comps: null};
+  cur = {id: rid, q: 1, comps: null, skip: []};
   if (it.b) {
     cur.comps = {};
     // start with nothing selected; the first group is usually the base
@@ -1028,6 +1038,26 @@ function renderItem(){
     bEl.innerHTML = "";
   }
   var g = D.items[cur.id].g;
+  var rmEl = document.getElementById("itemRemove");
+  if (it.rm && it.rm.length && D.removals) {
+    rmEl.innerHTML = '<div class="grp">Leaving anything?</div>' + it.rm.map(function(k){
+      var r = D.removals[k];
+      if (!r) return "";
+      var on = cur.skip.indexOf(k) >= 0;
+      return '<button type="button" class="skipbtn' + (on ? " on" : "") + '" data-skip="' + k + '">' +
+        (on ? "\u2713 skipping " : "Skip ") + esc(r.label) +
+        ' <span>&minus;' + Math.round(r.v[0]) + ' kcal</span></button>';
+    }).join("");
+    rmEl.querySelectorAll("[data-skip]").forEach(function(b){
+      b.onclick = function(){
+        var k = b.getAttribute("data-skip"), i = cur.skip.indexOf(k);
+        if (i < 0) cur.skip.push(k); else cur.skip.splice(i, 1);
+        renderItem();
+      };
+    });
+  } else {
+    rmEl.innerHTML = "";
+  }
   document.getElementById("qVal").textContent =
     (cur.q === 0.5 ? "½" : cur.q) + (cur.q === 1 ? " serving" : " servings") +
     (g ? "  ·  " + Math.round(g * cur.q) + " g" : "");
@@ -1049,6 +1079,7 @@ document.getElementById("qMinus").onclick = function(){
 document.getElementById("itemClose").onclick = function(){ itemSheet.hidden = true; };
 document.getElementById("itemAdd").onclick = function(){
   var e = {id: cur.id, q: cur.q};
+  if (cur.skip && cur.skip.length) e.skip = cur.skip.slice();
   if (cur.comps) {
     var picked = {};
     Object.keys(cur.comps).forEach(function(k){ if (cur.comps[k]) picked[k] = cur.comps[k]; });
@@ -1082,6 +1113,11 @@ function openLog(){
       var extra = e.comps ? Object.keys(e.comps).map(function(c){
         return (D.items[c] || {n:"?"}).n + (e.comps[c] > 1 ? " ×" + e.comps[c] : "");
       }).join(", ") : "";
+      if (e.skip && e.skip.length) {
+        extra += (extra ? " \u00b7 " : "") + "no " + e.skip.map(function(k){
+          return ((D.removals || {})[k] || {label: k}).label.replace(/^the /, "");
+        }).join(", no ");
+      }
       return '<div class="logrow"><span>' + esc(it.n) +
         (e.q !== 1 ? " ×" + e.q : "") +
         (extra ? '<span class="n2" style="display:block;font-size:11px;color:var(--ink-3)">' +

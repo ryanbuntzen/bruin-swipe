@@ -127,7 +127,23 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.ok(Math.abs(tot[0] - (db.items[a].v[0] * 2 + db.items[b].v[0])) < 0.01, "day total adds up");
 }
 
-// 8. the allowlist diet: staples survive, and the things it exists to exclude do not
+// 8. leaving the bun behind comes off the total, and scales with servings
+{
+  const [id, it] = byName("Bruin Cheeseburger");
+  assert.ok((it.rm || []).includes("bun"), "the burger offers to skip its bun");
+  const whole = vecOf({ id, q: 1 });
+  const naked = vecOf({ id, q: 1, skip: ["bun"] });
+  const bun = db.removals.bun.v[0];
+  assert.ok(Math.abs((whole[0] - naked[0]) - bun) < 0.01, "one bun comes off");
+  assert.ok(naked[0] < whole[0] && naked[0] > 0, "and the patty is still there");
+  const two = vecOf({ id, q: 2, skip: ["bun"] });
+  assert.ok(Math.abs(two[0] - naked[0] * 2) < 0.01, "two burgers, two buns");
+  // carbs should drop more than protein does
+  const ci = db.nutrients.indexOf("carb"), pi = db.nutrients.indexOf("protein");
+  assert.ok(whole[ci] - naked[ci] > whole[pi] - naked[pi], "a bun is mostly carbohydrate");
+}
+
+// 9. the allowlist diet: staples survive, and the things it exists to exclude do not
 {
   const i = src.indexOf("var DIETS = ["), j = src.indexOf("/i}];", i) + 5;
   const DIETS = new Function(src.slice(i, j) + "\nreturn DIETS;")();
