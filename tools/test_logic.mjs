@@ -127,7 +127,24 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.ok(Math.abs(tot[0] - (db.items[a].v[0] * 2 + db.items[b].v[0])) < 0.01, "day total adds up");
 }
 
-// 8. leaving the bun behind comes off the total, and scales with servings
+// 8. the meal-of-day clock: 4pm is dinner, 2am is the late counter
+{
+  const fnSrc = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
+  const Real = Date;
+  const at = h => new Function("Real", "H", `var DAY_START_HOUR = 5;
+    function Date(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)); }
+    ${fnSrc("currentMeal")} ${fnSrc("mealMatchesNow")}
+    return { currentMeal, mealMatchesNow };`)(Real, h);
+  assert.equal(at(8).currentMeal(), "Breakfast");
+  assert.equal(at(12).currentMeal(), "Lunch");
+  assert.equal(at(16.45).currentMeal(), "Dinner", "4:27pm is not breakfast");
+  assert.equal(at(22).currentMeal(), "Late");
+  assert.equal(at(2).currentMeal(), "Late", "2am belongs to the night before");
+  assert.equal(at(16.45).mealMatchesNow("Breakfast"), false);
+  assert.equal(at(16.45).mealMatchesNow("Dinner"), true);
+}
+
+// 9. leaving the bun behind comes off the total, and scales with servings
 {
   const [id, it] = byName("Bruin Cheeseburger");
   assert.ok((it.rm || []).includes("bun"), "the burger offers to skip its bun");
@@ -143,7 +160,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.ok(whole[ci] - naked[ci] > whole[pi] - naked[pi], "a bun is mostly carbohydrate");
 }
 
-// 9. the allowlist diet: staples survive, and the things it exists to exclude do not
+// 10. the allowlist diet: staples survive, and the things it exists to exclude do not
 {
   const i = src.indexOf("var DIETS = ["), j = src.indexOf("/i}];", i) + 5;
   const DIETS = new Function(src.slice(i, j) + "\nreturn DIETS;")();

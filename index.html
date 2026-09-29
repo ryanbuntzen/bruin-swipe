@@ -48,7 +48,7 @@
 body{background:var(--paper);color:var(--ink);
   font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
   font-size:15px;line-height:1.45;-webkit-text-size-adjust:100%;margin:0}
-.wrap{max-width:600px;margin:0 auto;
+.wrap{max-width:600px;margin:0 auto;min-width:0;overflow-x:hidden;
   padding:calc(16px + env(safe-area-inset-top)) 14px calc(128px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:12px}
 
 h1{font-family:"Barlow Condensed",Impact,sans-serif;font-weight:700;font-size:34px;
@@ -78,12 +78,13 @@ h1 span{color:var(--accent)}
 /* One pane per screen. The deck must be flush: with padding on a scroll container the
    panes are sized to the content box while the viewport includes the padding, so the
    next pane shows through at the edge. */
-.deck{display:grid;grid-auto-flow:column;grid-auto-columns:100%;gap:0;
-  overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+.deck{display:flex;gap:0;min-width:0;max-width:100%;
+  overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;
   overscroll-behavior-x:contain}
 .deck::-webkit-scrollbar{display:none}
-.pane{scroll-snap-align:start;scroll-snap-stop:always;
-  display:flex;flex-direction:column;gap:12px;min-width:0}
+.pane{flex:0 0 100%;width:100%;min-width:0;max-width:100%;
+  scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;flex-direction:column;gap:12px}
 
 .tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--card);
   border:1px solid var(--line);padding:4px;border-radius:3px}
@@ -365,7 +366,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29e";
+var BUILD = "2026-09-29f";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -736,7 +737,8 @@ function jitter(str, seed){          // stable pseudo-random so a plate does not
 var SLOTS = {
   Breakfast: [
     {n:"eggs",   re:/\b(fried egg|scrambled egg|hard cooked egg|poached egg|omelet|^egg)/i, q:5, cap:6,
-     avoid:/white|vegan|plant|substitute/i},   // whole eggs win on density, not just protein
+     avoid:/white|vegan|plant|substitute|beyond/i,
+     prefer:/fried|hard cooked|poached|benedict/i},   // yolks are the point of the egg
     {n:"meat",   re:/\b(bacon|sausage|chorizo|ham|links|steak|carnitas|tri.?tip)\b/i,       q:2, cap:4},
     {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4},
     {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                    q:1, cap:2}
@@ -800,7 +802,8 @@ function suggestPlate(rows, seed, meal){
       // within a slot, prefer the denser option, nudged by today's gaps and the shuffle
       var sc = get(p.it.v, "protein") / Math.max(1, p.it.v[0] / 100)
              + scoreItem(p.it, gl) * 2 + jitter(p.id, seed);
-      if (slot.avoid && slot.avoid.test(p.it.n)) sc -= 5;
+      if (slot.avoid && slot.avoid.test(p.it.n)) sc -= 20;
+      if (slot.prefer && slot.prefer.test(p.it.n)) sc += 6;
       if (sc > bs) { bs = sc; best = p; }
     });
     if (!best) return;
@@ -1359,7 +1362,17 @@ setInterval(function(){
 
 /* ------------------------------------------------------------------ boot */
 
-fetch("data/foods.json?v=" + BUILD).then(function(r){
+fetch("build.json", {cache: "no-store"})
+  .then(function(r){ return r.ok ? r.json() : null; })
+  .then(function(b){
+    if (b && b.build && b.build !== BUILD && !sessionStorage.getItem("reloaded-" + b.build)) {
+      try { sessionStorage.setItem("reloaded-" + b.build, "1"); } catch (e) {}
+      location.reload();
+      throw new Error("reloading for " + b.build);
+    }
+  })
+  .catch(function(){})
+  .then(function(){ return fetch("data/foods.json?v=" + BUILD); }).then(function(r){
   if (!r.ok) throw new Error("foods.json " + r.status);
   return r.json();
 }).then(function(db){
