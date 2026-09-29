@@ -1,0 +1,56 @@
+{
+  "_note": "Venues UCLA publishes nothing for. Item names are exactly as the vendor or the Nom app lists them; the compositions are OUR reconstruction from the vendor's own menu descriptions, resolved against USDA SR Legacy. Every nutrient here is an estimate -- nobody publishes a panel for a food truck. Grams are per single item as served.",
+  "venues": [
+    {
+      "key": "smile-hotdog",
+      "name": "Smile Hotdog",
+      "kind": "truck",
+      "note": "Korean corn dogs. Rotates between the Rieber and Sproul truck spots.",
+      "station": "Truck",
+      "items": [
+        {
+          "name": "Smile Original",
+          "serving": "1 corn dog",
+          "desc": "all-beef frank in the house rice-and-wheat dough, fried in canola, sugar dusted",
+          "parts": [["Frankfurter, beef", 45], ["Wheat flour, white, all-purpose, enriched, bleached", 34],
+                    ["Rice flour, white", 10], ["Sugars, granulated", 9], ["Egg, whole, raw, fresh", 6],
+                    ["Milk, whole, 3.25% milkfat, with added vitamin D", 10], ["Oil, canola", 14]]
+        },
+        {
+          "name": "Mozzarella & Sausage",
+          "serving": "1 corn dog",
+          "desc": "half frank, half mozzarella, rolled in french fries",
+          "parts": [["Frankfurter, beef", 24], ["Cheese, mozzarella, whole milk", 30],
+                    ["Potatoes, french fried, all types, salt added in processing, frozen, oven-heated", 26],
+                    ["Wheat flour, white, all-purpose, enriched, bleached", 30], ["Rice flour, white", 9],
+                    ["Sugars, granulated", 7], ["Egg, whole, raw, fresh", 6], ["Oil, canola", 17]]
+        },
+        {
+          "name": "Potato & Mozzarella",
+          "serving": "1 corn dog",
+          "parts": [["Cheese, mozzarella, whole milk", 50],
+                    ["Potatoes, french fried, all types, salt added in processing, frozen, oven-heated", 30],
+                    ["Wheat flour, white, all-purpose, enriched, bleached", 30], ["Rice flour, white", 9],
+                    ["Sugars, granulated", 7], ["Egg, whole, raw, fresh", 6], ["Oil, canola", 16]]
+        },
+        {
+          "name": "All Mozzarella",
+          "serving": "1 corn dog",
+          "parts": [["Cheese, mozzarella, whole milk", 70],
+                    ["Wheat flour, white, all-purpose, enriched, bleached", 32], ["Rice flour, white", 10],
+                    ["Sugars, granulated", 8], ["Egg, whole, raw, fresh", 6], ["Oil, canola", 15]]
+        },
+        {
+          "name": "Spicy Rice Cake",
+          "serving": "1 order (tteokbokki)",
+          "desc": "rice cakes and fish cake in gochujang sauce, sesame and green onion",
+          "parts": [["Rice, white, short-grain, cooked", 180], ["Fish, surimi", 40],
+                    ["Peppers, hot chili, red, raw", 12], ["Sugars, granulated", 14],
+                    ["Soy sauce made from soy and wheat (shoyu)", 10],
+                    ["Onions, spring or scallions (includes tops and bulb), raw", 10],
+                    ["Seeds, sesame seeds, whole, dried", 3], ["Oil, canola", 6]]
+        }
+      ]
+    }
+  ]
+}

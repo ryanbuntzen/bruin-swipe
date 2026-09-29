@@ -186,6 +186,9 @@ ul.items li{border-top:1px solid var(--line-soft)}
   font:inherit;font-size:13px;width:28px;height:28px;border-radius:2px;cursor:pointer}
 .empty{font-size:13px;color:var(--ink-3);padding:14px 0}
 
+.warnline{display:block;margin-top:6px;color:var(--flag);font-size:12px;line-height:1.4}
+.vnote{margin:0;font-size:12.5px;color:var(--ink-2)}
+
 /* gap recommender */
 .gaps{background:var(--card);border:1px solid var(--accent);border-radius:3px;padding:11px 12px}
 .gaps h3{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:15px;margin:0 0 6px;
@@ -239,7 +242,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 
   <div class="deckbar" role="tablist" aria-label="Kind of place">
     <button type="button" role="tab" id="deck0">All you can eat</button>
-    <button type="button" role="tab" id="deck1">Pickup &amp; to go</button>
+    <button type="button" role="tab" id="deck1">Pickup, trucks &amp; to go</button>
   </div>
   <div class="swipehint">swipe sideways to switch</div>
 
@@ -683,6 +686,14 @@ function renderDeck(di){
 
   var v = list[sel[di]];
   h2.textContent = v.n;
+  var noteEl = pane.querySelector(".vnote");
+  if (!noteEl) {
+    noteEl = document.createElement("p");
+    noteEl.className = "vnote";
+    pane.querySelector(".hallhead").insertAdjacentElement("afterend", noteEl);
+  }
+  noteEl.textContent = v.note || "";
+  noteEl.hidden = !v.note;
   var d = day[di] = pickDay(v, day[di]);
   var days = menuDays(v);
   daySel.hidden = days.length < 2;
@@ -788,7 +799,14 @@ function openItem(rid){
       });
     });
   });
-  document.getElementById("itemWhere").textContent = wh.slice(0, 3).join("   ");
+  var whEl = document.getElementById("itemWhere");
+  whEl.textContent = wh.slice(0, 3).join("   ");
+  if (it.src === "reconstructed") {
+    whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) +
+      '<span class="warnline">Nobody publishes a panel for a food truck. ' +
+      'Every number here is reconstructed from the vendor\'s own description of the item' +
+      (it.d ? " — " + esc(it.d) : "") + ', priced against USDA. Treat it as a ballpark.</span>';
+  }
   document.getElementById("itemServing").textContent =
     it.s ? ("One serving: " + it.s + (it.g ? " (" + it.g + " g)" : "")) : "";
   renderItem();

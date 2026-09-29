@@ -90,6 +90,24 @@ def main():
             rec["a"] = v["allergens"]
         out[rid] = rec
 
+    # venues UCLA publishes nothing for (the trucks), reconstructed in manual_venues.py
+    mp = DATA / "manual_items.json"
+    if mp.exists():
+        man = json.loads(mp.read_text())
+        for rid, it in man["items"].items():
+            v = it["vec"]
+            out[rid] = {
+                "n": it["n"], "s": it.get("s", ""), "g": it.get("g"),
+                "v": [round_sig(v.get(k, 0.0)) for k in ORDER],
+                "src": "reconstructed",
+            }
+            if it.get("desc"):
+                out[rid]["d"] = it["desc"]
+        for v in man["venues"]:
+            venues.append({"k": v["k"], "n": v["n"], "kind": v["kind"],
+                           "note": v.get("note", ""),
+                           "menu": {"standing": {"All day": v["rows"]}}})
+
     payload = {
         "nutrients": ORDER,
         "measured": len(MEASURED),
