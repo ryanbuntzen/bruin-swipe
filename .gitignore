@@ -5,3 +5,6 @@ data/ucla_raw.json
 data/ucla_parsed.json
 data/ucla_full.json
 data/usda.json
+
+# python bytecode
+__pycache__/
