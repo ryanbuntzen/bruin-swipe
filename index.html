@@ -75,12 +75,15 @@ h1 span{color:var(--accent)}
   text-transform:uppercase;color:var(--ink-2);padding:7px 6px;border-radius:2px;cursor:pointer}
 .deckbar button[aria-selected="true"]{background:var(--ink);color:var(--card);border-color:var(--ink)}
 .swipehint{font-size:11px;color:var(--ink-3);text-align:center;letter-spacing:.03em}
+/* One pane per screen. The deck must be flush: with padding on a scroll container the
+   panes are sized to the content box while the viewport includes the padding, so the
+   next pane shows through at the edge. */
 .deck{display:grid;grid-auto-flow:column;grid-auto-columns:100%;gap:0;
   overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
-  margin:0 -14px;padding:0 14px;overscroll-behavior-x:contain}
+  overscroll-behavior-x:contain}
 .deck::-webkit-scrollbar{display:none}
-.pane{scroll-snap-align:center;display:flex;flex-direction:column;gap:12px;
-  padding-right:14px;min-width:0}
+.pane{scroll-snap-align:start;scroll-snap-stop:always;
+  display:flex;flex-direction:column;gap:12px;min-width:0}
 
 .tabs{display:flex;flex-wrap:wrap;gap:4px;background:var(--card);
   border:1px solid var(--line);padding:4px;border-radius:3px}
@@ -362,7 +365,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29d";
+var BUILD = "2026-09-29e";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
