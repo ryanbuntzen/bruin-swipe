@@ -144,7 +144,29 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(at(16.45).mealMatchesNow("Dinner"), true);
 }
 
-// 9. leaving the bun behind comes off the total, and scales with servings
+// 9. published service hours beat the clock heuristic
+{
+  const fnSrc = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
+  const Real = Date;
+  const at = h => new Function("Real", "H", `var DAY_START_HOUR = 5;
+    function Date(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)); }
+    Date.now = function(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)).getTime(); };
+    ${["dayKey","currentMeal","mealMatchesNow","nowMins","clock","windowsFor",
+       "mealWindow","servingNow","venueStatus"].map(fnSrc).join("\n")}
+    return { venueStatus, servingNow };`)(Real, h);
+  const deneve = db.venues.find(v => v.n === "De Neve");
+  assert.ok(deneve.hours, "De Neve has published hours");
+
+  // the clock alone calls 4:27pm dinner; the hall does not open until five
+  assert.equal(at(16.45).servingNow(deneve, "Dinner"), false, "dinner is not served at 4:27");
+  assert.match(at(16.45).venueStatus(deneve), /Closed .*Dinner at 5pm/);
+  assert.equal(at(17.5).servingNow(deneve, "Dinner"), true);
+  assert.match(at(17.5).venueStatus(deneve), /Dinner now/);
+  assert.match(at(20.9).venueStatus(deneve), /closes in \d+ min/);
+  assert.equal(at(8).servingNow(deneve, "Breakfast"), true);
+}
+
+// 10. leaving the bun behind comes off the total, and scales with servings
 {
   const [id, it] = byName("Bruin Cheeseburger");
   assert.ok((it.rm || []).includes("bun"), "the burger offers to skip its bun");
@@ -160,7 +182,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.ok(whole[ci] - naked[ci] > whole[pi] - naked[pi], "a bun is mostly carbohydrate");
 }
 
-// 10. the allowlist diet: staples survive, and the things it exists to exclude do not
+// 11. the allowlist diet: staples survive, and the things it exists to exclude do not
 {
   const i = src.indexOf("var DIETS = ["), j = src.indexOf("/i}];", i) + 5;
   const DIETS = new Function(src.slice(i, j) + "\nreturn DIETS;")();

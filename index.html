@@ -198,6 +198,9 @@ ul.items li{border-top:1px solid var(--line-soft)}
   font:inherit;font-size:13px;width:28px;height:28px;border-radius:2px;cursor:pointer}
 .empty{font-size:13px;color:var(--ink-3);padding:14px 0}
 
+.vstat{font-size:11.5px;color:var(--flag);border:1px solid var(--flag);border-radius:2px;
+  padding:1px 6px;white-space:nowrap}
+.vstat.on{color:var(--ok);border-color:var(--ok)}
 .nowpill{font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--card);
   background:var(--blue);border-radius:2px;padding:1px 5px;margin-left:6px;vertical-align:2px}
 .skipbtn{appearance:none;font:inherit;font-size:13px;margin:0 6px 6px 0;padding:6px 10px;
@@ -366,7 +369,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29f";
+var BUILD = "2026-09-29g";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -772,6 +775,62 @@ function mealMatchesNow(meal){
   return new RegExp(now === "Breakfast" ? "break|brunch" : now, "i").test(meal);
 }
 
+/* UCLA publishes real service windows, so prefer those over guessing from the clock. */
+function nowMins(){ var d = new Date(); return d.getHours() * 60 + d.getMinutes(); }
+function clock(m){
+  m = ((m % 1440) + 1440) % 1440;
+  var h = Math.floor(m / 60), mi = m % 60, ap = h < 12 ? "am" : "pm";
+  h = h % 12; if (!h) h = 12;
+  return h + (mi ? ":" + String(mi).padStart(2, "0") : "") + ap;
+}
+function windowsFor(v){
+  if (!v || !v.hours) return null;
+  var days = Object.keys(v.hours).sort();
+  return v.hours[dayKey()] || v.hours[days[days.length - 1]] || null;
+}
+function mealWindow(v, meal){
+  var w = windowsFor(v);
+  if (!w) return null;
+  var keys = Object.keys(w);
+  var key = keys.filter(function(k){ return k.toLowerCase() === String(meal).toLowerCase(); })[0];
+  if (!key) key = keys.filter(function(k){
+    return new RegExp(k.split(" ")[0], "i").test(meal) || new RegExp(meal.split(" ")[0], "i").test(k);
+  })[0];
+  if (!key) return null;
+  var n = nowMins();
+  return {key: key, from: w[key][0], to: w[key][1], open: n >= w[key][0] && n < w[key][1]};
+}
+// true when this hall is actually serving this meal right now; falls back to the clock
+// for the few places UCLA publishes no hours for.
+function servingNow(v, meal){
+  var mw = mealWindow(v, meal);
+  return mw ? mw.open : mealMatchesNow(meal);
+}
+// one line for the hall header: what is open, or what opens next
+function venueStatus(v){
+  var w = windowsFor(v);
+  if (!w) return "";
+  var n = nowMins(), keys = Object.keys(w);
+  for (var i = 0; i < keys.length; i++) {
+    var a = w[keys[i]][0], b = w[keys[i]][1];
+    if (n >= a && n < b) {
+      var left = b - n;
+      return keys[i] + " now · until " + clock(b) +
+             (left <= 45 ? " · closes in " + left + " min" : "");
+    }
+  }
+  var next = null;
+  keys.forEach(function(k){
+    if (w[k][0] > n && (!next || w[k][0] < w[next][0])) next = k;
+  });
+  if (next) {
+    var wait = w[next][0] - n;
+    return "Closed · " + next + " at " + clock(w[next][0]) +
+           (wait <= 120 ? " · in " + (wait >= 60 ? Math.floor(wait / 60) + "h " : "") + (wait % 60) + "m" : "");
+  }
+  return "Closed for the day";
+}
+
 function slotsFor(meal){
   if (/break|brunch/i.test(meal)) return SLOTS.Breakfast;
   if (/late|night/i.test(meal)) return SLOTS.Late;
@@ -835,8 +894,8 @@ function suggestPlate(rows, seed, meal){
 
 var plateSeed = {};
 
-function plateCard(vkey, meal, rows){
-  var key = vkey + "|" + meal;
+function plateCard(v, meal, rows){
+  var vkey = v.k, key = vkey + "|" + meal;
   var seed = plateSeed[key] || 0;
   var plate = suggestPlate(rows, seed, meal);
   if (!plate) return null;
@@ -844,7 +903,7 @@ function plateCard(vkey, meal, rows){
   sec.className = "meal plate";
   sec.innerHTML =
     '<header><div><h3>Eat this' +
-      (mealMatchesNow(meal) ? '<span class="nowpill">now</span>' : '') +
+      (servingNow(v, meal) ? '<span class="nowpill">now</span>' : '') +
       '<small>a ' + Math.round(plate.kcal) + ' kcal plate, ' +
       Math.round(plate.prot) + ' g protein</small></h3></div>' +
     '<div class="mealkcal">' + Math.round(plate.kcal) + '<small>of ' +
@@ -911,8 +970,11 @@ function renderDeck(di){
     noteEl.className = "vnote";
     pane.querySelector(".hallhead").insertAdjacentElement("afterend", noteEl);
   }
-  noteEl.textContent = v.note || "";
-  noteEl.hidden = !v.note;
+  var st = venueStatus(v);
+  noteEl.innerHTML = (st ? '<span class="vstat' + (/ now ·/.test(st) ? " on" : "") + '">' +
+                            esc(st) + "</span>" : "") +
+                     (v.note ? (st ? " " : "") + esc(v.note) : "");
+  noteEl.hidden = !st && !v.note;
   var d = day[di] = pickDay(v, day[di]);
   var days = menuDays(v);
   daySel.hidden = days.length < 2;
@@ -926,7 +988,7 @@ function renderDeck(di){
   var meals = v.menu[d] || {};
   var order = ["Breakfast", "Brunch", "Lunch", "Dinner", "Allday", "All day"];
   var keys = Object.keys(meals).sort(function(a, b){
-    var na = mealMatchesNow(a) ? 0 : 1, nb = mealMatchesNow(b) ? 0 : 1;
+    var na = servingNow(v, a) ? 0 : 1, nb = servingNow(v, b) ? 0 : 1;
     if (na !== nb) return na - nb;            // whatever is being served now goes first
     var ia = order.indexOf(a), ib = order.indexOf(b);
     return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib);
@@ -980,12 +1042,12 @@ function renderDeck(di){
       if (rows) inner += '<div class="stationrow">' + esc(st) + '</div><ul class="items">' + rows + '</ul>';
     });
     if (!shown) return;
-    var card = plateCard(v.k, meal, meals[meal]);
+    var card = plateCard(v, meal, meals[meal]);
     if (card) menuEl.appendChild(card);
     var sec = document.createElement("section");
     sec.className = "meal";
     sec.innerHTML = '<header><h3>' + esc(meal) +
-      (mealMatchesNow(meal) ? '<span class="nowpill">now</span>' : '') +
+      (servingNow(v, meal) ? '<span class="nowpill">now</span>' : '') +
       '<small>' + shown + ' items' +
       (hidden ? " · " + hidden + " hidden by diet" : "") + '</small></h3></header>' + inner;
     menuEl.appendChild(sec);

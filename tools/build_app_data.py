@@ -142,6 +142,23 @@ def main():
             if keys:
                 rec["rm"] = keys
 
+    # real service windows from dining.ucla.edu/hours/
+    hp = DATA / "hours.json"
+    if hp.exists():
+        hours = json.loads(hp.read_text())
+        alias = {"Epicuria at Covel": "Epicuria at Covel", "De Neve": "De Neve Dining",
+                 "Smile Hotdog": "Food Trucks", "Perro 1-10 Tacos": "Food Trucks"}
+        missing = []
+        for v in venues:
+            name = alias.get(v["n"], v["n"])
+            got = {d: day[name] for d, day in hours.items() if name in day and day[name]}
+            if got:
+                v["hours"] = got
+            else:
+                missing.append(v["n"])
+        if missing:
+            print("  no published hours for: " + ", ".join(missing))
+
     payload = {
         "nutrients": ORDER,
         "measured": len(MEASURED),
