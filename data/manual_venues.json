@@ -12,43 +12,269 @@
           "name": "Smile Original",
           "serving": "1 corn dog",
           "desc": "all-beef frank in the house rice-and-wheat dough, fried in canola, sugar dusted",
-          "parts": [["Frankfurter, beef", 45], ["Wheat flour, white, all-purpose, enriched, bleached", 34],
-                    ["Rice flour, white", 10], ["Sugars, granulated", 9], ["Egg, whole, raw, fresh", 6],
-                    ["Milk, whole, 3.25% milkfat, with added vitamin D", 10], ["Oil, canola", 14]]
+          "parts": [
+            [
+              "Frankfurter, beef",
+              45
+            ],
+            [
+              "Wheat flour, white, all-purpose, enriched, bleached",
+              34
+            ],
+            [
+              "Rice flour, white",
+              10
+            ],
+            [
+              "Sugars, granulated",
+              9
+            ],
+            [
+              "Egg, whole, raw, fresh",
+              6
+            ],
+            [
+              "Milk, whole, 3.25% milkfat, with added vitamin D",
+              10
+            ],
+            [
+              "Oil, canola",
+              14
+            ]
+          ]
         },
         {
           "name": "Mozzarella & Sausage",
           "serving": "1 corn dog",
           "desc": "half frank, half mozzarella, rolled in french fries",
-          "parts": [["Frankfurter, beef", 24], ["Cheese, mozzarella, whole milk", 30],
-                    ["Potatoes, french fried, all types, salt added in processing, frozen, oven-heated", 26],
-                    ["Wheat flour, white, all-purpose, enriched, bleached", 30], ["Rice flour, white", 9],
-                    ["Sugars, granulated", 7], ["Egg, whole, raw, fresh", 6], ["Oil, canola", 17]]
+          "parts": [
+            [
+              "Frankfurter, beef",
+              24
+            ],
+            [
+              "Cheese, mozzarella, whole milk",
+              30
+            ],
+            [
+              "Potatoes, french fried, all types, salt added in processing, frozen, oven-heated",
+              26
+            ],
+            [
+              "Wheat flour, white, all-purpose, enriched, bleached",
+              30
+            ],
+            [
+              "Rice flour, white",
+              9
+            ],
+            [
+              "Sugars, granulated",
+              7
+            ],
+            [
+              "Egg, whole, raw, fresh",
+              6
+            ],
+            [
+              "Oil, canola",
+              17
+            ]
+          ]
         },
         {
           "name": "Potato & Mozzarella",
           "serving": "1 corn dog",
-          "parts": [["Cheese, mozzarella, whole milk", 50],
-                    ["Potatoes, french fried, all types, salt added in processing, frozen, oven-heated", 30],
-                    ["Wheat flour, white, all-purpose, enriched, bleached", 30], ["Rice flour, white", 9],
-                    ["Sugars, granulated", 7], ["Egg, whole, raw, fresh", 6], ["Oil, canola", 16]]
+          "parts": [
+            [
+              "Cheese, mozzarella, whole milk",
+              50
+            ],
+            [
+              "Potatoes, french fried, all types, salt added in processing, frozen, oven-heated",
+              30
+            ],
+            [
+              "Wheat flour, white, all-purpose, enriched, bleached",
+              30
+            ],
+            [
+              "Rice flour, white",
+              9
+            ],
+            [
+              "Sugars, granulated",
+              7
+            ],
+            [
+              "Egg, whole, raw, fresh",
+              6
+            ],
+            [
+              "Oil, canola",
+              16
+            ]
+          ]
         },
         {
           "name": "All Mozzarella",
           "serving": "1 corn dog",
-          "parts": [["Cheese, mozzarella, whole milk", 70],
-                    ["Wheat flour, white, all-purpose, enriched, bleached", 32], ["Rice flour, white", 10],
-                    ["Sugars, granulated", 8], ["Egg, whole, raw, fresh", 6], ["Oil, canola", 15]]
+          "parts": [
+            [
+              "Cheese, mozzarella, whole milk",
+              70
+            ],
+            [
+              "Wheat flour, white, all-purpose, enriched, bleached",
+              32
+            ],
+            [
+              "Rice flour, white",
+              10
+            ],
+            [
+              "Sugars, granulated",
+              8
+            ],
+            [
+              "Egg, whole, raw, fresh",
+              6
+            ],
+            [
+              "Oil, canola",
+              15
+            ]
+          ]
         },
         {
           "name": "Spicy Rice Cake",
           "serving": "1 order (tteokbokki)",
           "desc": "rice cakes and fish cake in gochujang sauce, sesame and green onion",
-          "parts": [["Rice, white, short-grain, cooked", 180], ["Fish, surimi", 40],
-                    ["Peppers, hot chili, red, raw", 12], ["Sugars, granulated", 14],
-                    ["Soy sauce made from soy and wheat (shoyu)", 10],
-                    ["Onions, spring or scallions (includes tops and bulb), raw", 10],
-                    ["Seeds, sesame seeds, whole, dried", 3], ["Oil, canola", 6]]
+          "parts": [
+            [
+              "Rice, white, short-grain, cooked",
+              180
+            ],
+            [
+              "Fish, surimi",
+              40
+            ],
+            [
+              "Peppers, hot chili, red, raw",
+              12
+            ],
+            [
+              "Sugars, granulated",
+              14
+            ],
+            [
+              "Soy sauce made from soy and wheat (shoyu)",
+              10
+            ],
+            [
+              "Onions, spring or scallions (includes tops and bulb), raw",
+              10
+            ],
+            [
+              "Seeds, sesame seeds, whole, dried",
+              3
+            ],
+            [
+              "Oil, canola",
+              6
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "key": "perro-110",
+      "name": "Perro 1-10 Tacos",
+      "kind": "truck",
+      "note": "Taco Perrón — a very large skirt-steak taco. Rotates through the Rieber and Sproul truck spots.",
+      "station": "Truck",
+      "items": [
+        {
+          "name": "Perro (Taco Perrón)",
+          "serving": "1 taco",
+          "desc": "grilled skirt steak, frijoles de olla, mozzarella, chipotle crema, guacamole, red onion and cilantro in a handmade flour tortilla",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              78
+            ],
+            [
+              "Beef, short loin, top loin, steak, separable lean only, raw",
+              130
+            ],
+            [
+              "Beans, pinto, mature seeds, cooked, boiled, without salt",
+              60
+            ],
+            [
+              "Cheese, mozzarella, whole milk",
+              30
+            ],
+            [
+              "Cream, sour, cultured",
+              30
+            ],
+            [
+              "Avocados, raw, California",
+              30
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              4
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              25
+            ]
+          ]
+        },
+        {
+          "name": "Quesadilla",
+          "serving": "1 quesadilla",
+          "desc": "the Perro without the steak",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              78
+            ],
+            [
+              "Cheese, mozzarella, whole milk",
+              60
+            ],
+            [
+              "Beans, pinto, mature seeds, cooked, boiled, without salt",
+              50
+            ],
+            [
+              "Cream, sour, cultured",
+              25
+            ],
+            [
+              "Avocados, raw, California",
+              25
+            ],
+            [
+              "Onions, raw",
+              12
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              22
+            ]
+          ]
         }
       ]
     }
