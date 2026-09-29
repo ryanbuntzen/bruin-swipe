@@ -127,4 +127,38 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.ok(Math.abs(tot[0] - (db.items[a].v[0] * 2 + db.items[b].v[0])) < 0.01, "day total adds up");
 }
 
+// 8. the allowlist diet: staples survive, and the things it exists to exclude do not
+{
+  const i = src.indexOf("var DIETS = ["), j = src.indexOf("/i}];", i) + 5;
+  const DIETS = new Function(src.slice(i, j) + "\nreturn DIETS;")();
+  const dbk = src.slice(src.indexOf("var DIET_BY_KEY"),
+                        src.indexOf("DIETS.forEach(function(d){ DIET_BY_KEY[d.k] = d; });") + 52);
+  const bs = src.match(/\nfunction blocked\([\s\S]*?\n\}/)[0];
+  const blocked = new Function("DIETS", "PROFILE",
+    'var who = "ryanb", OWNER = "ryanb";\nfunction isOwner(n){return (n||"").trim().toLowerCase()===OWNER;}\n'
+    + dbk + "\nfunction me(){return PROFILE;}" + bs + "\nreturn blocked;")(
+      DIETS, { diets: ["animalfruit"] });
+  const find = n => Object.values(db.items).find(v => v.n === n);
+
+  for (const n of ["Fried Eggs", "Scrambled Eggs", "Sticky Rice", "Bruin Cheeseburger",
+                   "Bruin Burger", "Pork Sausage", "Bacon", "Cantaloupe", "Banana",
+                   "Lowfat Milk", "Low Fat Greek Yogurt", "Sweet Potato Fries",
+                   "Grilled Rosemary Chicken Breast", "Orange Juice"]) {
+    const it = find(n);
+    if (it) assert.equal(blocked(it), false, `${n} should be on the diet`);
+  }
+  for (const n of ["Almond Butter", "Peanut Butter", "Chocolate Peanut Butter",
+                   "Garlicky Green Beans", "Oatmeal", "Chicken Tortilla Soup",
+                   "Cheese Pizza", "Banana Walnut Muffin"]) {
+    const it = find(n);
+    if (it) assert.equal(blocked(it), true, `${n} should be off the diet`);
+  }
+  // and the diet is owner-only: same items, a different name, nothing hidden
+  const notOwner = new Function("DIETS", "PROFILE",
+    'var who = "someone", OWNER = "ryanb";\nfunction isOwner(n){return (n||"").trim().toLowerCase()===OWNER;}\n'
+    + dbk + "\nfunction me(){return PROFILE;}" + bs + "\nreturn blocked;")(
+      DIETS, { diets: ["animalfruit"] });
+  assert.equal(notOwner(find("Almond Butter")), false, "the allowlist diet is owner-only");
+}
+
 console.log("all logic checks passed");
