@@ -371,7 +371,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29h";
+var BUILD = "2026-09-29i";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -914,8 +914,8 @@ function plateCard(v, meal, rows){
       var q = p.q || 1;
       return '<li><button class="row" data-id="' + p.id + '">' +
         '<span><span class="nm">' + esc(p.it.n) + '</span>' +
-        '<span class="eye">' + esc(portionText(p.it, q)) + '</span>' +
-        '<span class="sub2">' + esc(p.station) + '</span></span>' +
+        '<span class="sub2">' + esc(portionText(p.it, q)) +
+          ' &middot; ' + esc(p.station) + '</span></span>' +
         '<span class="kc">' + Math.round(p.it.v[0] * q) + '</span><span class="plus">+</span></button></li>';
     }).join("") + '</ul>' +
     '<div class="plateacts"><button type="button" class="btn ghost" data-shuffle="' + key + '">Different plate</button>' +
