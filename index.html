@@ -371,7 +371,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29i";
+var BUILD = "2026-09-29j";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -741,23 +741,25 @@ function jitter(str, seed){          // stable pseudo-random so a plate does not
 // so fill those same slots from whatever is on the menu today.
 var SLOTS = {
   Breakfast: [
-    {n:"eggs",   re:/\b(fried egg|scrambled egg|hard cooked egg|poached egg|omelet|^egg)/i, q:5, cap:6,
+    {n:"eggs",   re:/\b(fried egg|scrambled egg|hard cooked egg|poached egg|omelet|^egg)/i,
+     units:5, cap:5, maxKcal:620,
      avoid:/white|vegan|plant|substitute|beyond/i,
-     prefer:/fried|hard cooked|poached|benedict/i},   // yolks are the point of the egg
-    {n:"meat",   re:/\b(bacon|sausage|chorizo|ham|links|steak|carnitas|tri.?tip)\b/i,       q:2, cap:4},
-    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4},
-    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                    q:1, cap:2}
+     prefer:/^fried egg|hard cooked|poached egg/i},   // yolks are the point of the egg
+    {n:"meat",   re:/\b(bacon|sausage|chorizo|ham|links|steak|carnitas|tri.?tip)\b/i,
+     units:3, cap:3, maxKcal:320},
+    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4, maxKcal:170},
+    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                    q:1, cap:2, maxKcal:260}
   ],
   Main: [
-    {n:"main",   re:/\b(beef|steak|tri.?tip|sirloin|brisket|burger|patty|lamb|pork|riblet|carnitas|chorizo|ribs|meatball|gyudon|carne)\b/i, q:1, cap:3},
-    {n:"second", re:/\b(chicken|turkey|salmon|fish|shrimp|tuna|katsu|cod)\b/i,               q:1, cap:3},
+    {n:"main",   re:/\b(beef|steak|tri.?tip|sirloin|brisket|burger|patty|lamb|pork|riblet|carnitas|chorizo|ribs|meatball|gyudon|carne)\b/i, q:1, cap:3, maxKcal:520},
+    {n:"second", re:/\b(chicken|turkey|salmon|fish|shrimp|tuna|katsu|cod)\b/i,  q:1, cap:2, maxKcal:380},
     {n:"starch", re:/\b(rice|sweet potato|yam|potato)\b/i,                                   q:2, cap:4},
-    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4},
-    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                     q:1, cap:2}
+    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4, maxKcal:170},
+    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                     q:1, cap:2, maxKcal:260}
   ],
   Late: [
     {n:"main",   re:/\b(beef|steak|burger|patty|chicken|pork|bacon|sausage|egg|salmon|shrimp)\b/i, q:1, cap:3},
-    {n:"starch", re:/\b(rice|sweet potato|yam|potato)\b/i,                                   q:1, cap:3},
+    {n:"starch", re:/\b(rice|sweet potato|yam|potato)\b/i,               q:1, cap:3, maxKcal:340},
     {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                     q:1, cap:2}
   ]
 };
@@ -833,6 +835,16 @@ function venueStatus(v){
   return "Closed for the day";
 }
 
+// UCLA's serving is not the unit anyone counts in: one "serving" of scrambled eggs is
+// already about two eggs, so a slot asking for five means five eggs, not five servings.
+function unitsPerServing(it){
+  if (!it.p || !it.p[0] || !it.g) return 1;
+  return Math.max(1, Math.round(it.g / it.p[0]));
+}
+function servingsForUnits(it, units){
+  return Math.max(1, Math.round(units / unitsPerServing(it)));
+}
+
 function slotsFor(meal){
   if (/break|brunch/i.test(meal)) return SLOTS.Breakfast;
   if (/late|night/i.test(meal)) return SLOTS.Late;
@@ -869,7 +881,10 @@ function suggestPlate(rows, seed, meal){
     });
     if (!best) return;
     used[best.id] = 1;
-    best.q = slot.q;
+    best.q = slot.units ? servingsForUnits(best.it, slot.units) : slot.q;
+    if (slot.maxKcal) {                       // and never more than the slot is worth
+      while (best.q > 1 && best.it.v[0] * best.q > slot.maxKcal) best.q -= 1;
+    }
     best.slot = slot;
     picks.push(best);
     kcal += best.it.v[0] * best.q;
@@ -881,7 +896,9 @@ function suggestPlate(rows, seed, meal){
     var pick = null, ps = -Infinity;
     picks.forEach(function(p){
       var cals = p.it.v[0];
-      if (p.q >= (p.slot.cap || 3) || cals <= 0 || kcal + cals > tK * 1.12) return;
+      if (p.q >= (p.slot.cap || 3) || cals <= 0 || kcal + cals > tK * 1.06) return;
+      if (p.slot.maxKcal && cals * (p.q + 1) > p.slot.maxKcal) return;
+      if (p.slot.units && unitsPerServing(p.it) * (p.q + 1) > p.slot.units * 1.4) return;
       var sc = -p.q;
       if (sc > ps) { ps = sc; pick = p; }
     });

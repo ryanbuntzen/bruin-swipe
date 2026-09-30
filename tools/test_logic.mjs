@@ -144,7 +144,25 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(at(16.45).mealMatchesNow("Dinner"), true);
 }
 
-// 9. published service hours beat the clock heuristic
+// 9. slot targets count real units, not UCLA servings
+{
+  const fnSrc = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
+  const M = new Function(`${["cups","portionText","unitsPerServing","servingsForUnits"].map(fnSrc).join("\n")}
+    return { portionText, unitsPerServing, servingsForUnits };`)();
+  const eggs = byName("Scrambled Eggs")[1];
+  // one UCLA serving of scrambled eggs is already about two eggs, so asking for five
+  // must not hand back five servings
+  assert.equal(M.unitsPerServing(eggs), 2);
+  const q = M.servingsForUnits(eggs, 5);
+  assert.ok(q <= 3, `five eggs should be at most 3 servings, got ${q}`);
+  assert.ok(!/\b(9|10|11|12)\b/.test(M.portionText(eggs, q)), "no ten-egg plates");
+  // and counting is per serving then multiplied, so it does not drift
+  const fried = byName("Fried Eggs")[1];
+  const per = M.unitsPerServing(fried);
+  assert.equal(M.portionText(fried, 5), (per * 5) + " eggs");
+}
+
+// 10. published service hours beat the clock heuristic
 {
   const fnSrc = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
   const Real = Date;
@@ -166,7 +184,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(at(8).servingNow(deneve, "Breakfast"), true);
 }
 
-// 10. leaving the bun behind comes off the total, and scales with servings
+// 11. leaving the bun behind comes off the total, and scales with servings
 {
   const [id, it] = byName("Bruin Cheeseburger");
   assert.ok((it.rm || []).includes("bun"), "the burger offers to skip its bun");
@@ -182,7 +200,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.ok(whole[ci] - naked[ci] > whole[pi] - naked[pi], "a bun is mostly carbohydrate");
 }
 
-// 11. the allowlist diet: staples survive, and the things it exists to exclude do not
+// 12. the allowlist diet: staples survive, and the things it exists to exclude do not
 {
   const i = src.indexOf("var DIETS = ["), j = src.indexOf("/i}];", i) + 5;
   const DIETS = new Function(src.slice(i, j) + "\nreturn DIETS;")();
