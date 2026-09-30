@@ -95,6 +95,7 @@ h1 span{color:var(--accent)}
 .tab[aria-selected="true"]{background:var(--ink);color:var(--card)}
 .tab:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 
+.menu{display:flex;flex-direction:column;gap:12px}
 .hallhead{border-bottom:2px solid var(--ink);padding-bottom:6px;
   display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
 .hallhead h2{font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:24px;margin:0;
@@ -297,6 +298,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
       <span id="qVal">1</span>
       <button type="button" id="qPlus" aria-label="More">+</button>
     </div>
+    <p class="eye" id="itemEye"></p>
     <div id="itemNut"></div>
     <div class="btns">
       <button class="btn ghost" id="itemClose" type="button">Close</button>
@@ -369,7 +371,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29g";
+var BUILD = "2026-09-29h";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -911,9 +913,9 @@ function plateCard(v, meal, rows){
     '<ul class="items">' + plate.picks.map(function(p){
       var q = p.q || 1;
       return '<li><button class="row" data-id="' + p.id + '">' +
-        '<span><span class="nm">' + (q > 1 ? q + "&times; " : "") + esc(p.it.n) + '</span>' +
-        '<span class="sub2">' + esc(p.station) +
-          (p.it.s ? " · " + (q > 1 ? q + " &times; " : "") + esc(p.it.s) : "") + '</span></span>' +
+        '<span><span class="nm">' + esc(p.it.n) + '</span>' +
+        '<span class="eye">' + esc(portionText(p.it, q)) + '</span>' +
+        '<span class="sub2">' + esc(p.station) + '</span></span>' +
         '<span class="kc">' + Math.round(p.it.v[0] * q) + '</span><span class="plus">+</span></button></li>';
     }).join("") + '</ul>' +
     '<div class="plateacts"><button type="button" class="btn ghost" data-shuffle="' + key + '">Different plate</button>' +
@@ -1015,6 +1017,17 @@ function renderDeck(di){
     }
   }
 
+  // one suggestion per hall, for the meal you could actually walk into
+  var focus = keys.filter(function(m){ return servingNow(v, m); })[0];
+  if (!focus) {
+    var soon = null, bestStart = Infinity, n0 = nowMins();
+    keys.forEach(function(m){
+      var mw = mealWindow(v, m);
+      if (mw && mw.from > n0 && mw.from < bestStart) { bestStart = mw.from; soon = m; }
+    });
+    focus = soon || keys[0];
+  }
+
   keys.forEach(function(meal){
     var byStation = {};
     meals[meal].forEach(function(row){
@@ -1032,7 +1045,8 @@ function renderDeck(di){
           '<span><span class="nm">' + esc(it.n) +
             (it.b ? '<span class="bpill">build</span>' : '') +
             (recIds[rid] ? '<span class="badge">fills a gap</span>' : '') + '</span>' +
-            '<span class="sub2">' + (it.s ? esc(it.s) : "choose components") + '</span></span>' +
+            '<span class="sub2">' + (it.v ? esc(portionText(it, 1)) : "choose components") +
+              ' &middot; ' + esc(st) + '</span></span>' +
           '<span class="kc">' + (it.v ? Math.round(it.v[0]) : "—") +
             '<em>' + (it.v ? "P" + Math.round(get(it.v, "protein")) +
                              " F" + Math.round(get(it.v, "fat")) +
@@ -1042,8 +1056,10 @@ function renderDeck(di){
       if (rows) inner += '<div class="stationrow">' + esc(st) + '</div><ul class="items">' + rows + '</ul>';
     });
     if (!shown) return;
-    var card = plateCard(v, meal, meals[meal]);
-    if (card) menuEl.appendChild(card);
+    if (meal === focus) {
+      var card = plateCard(v, meal, meals[meal]);
+      if (card) menuEl.appendChild(card);
+    }
     var sec = document.createElement("section");
     sec.className = "meal";
     sec.innerHTML = '<header><h3>' + esc(meal) +
@@ -1053,6 +1069,44 @@ function renderDeck(di){
     menuEl.appendChild(sec);
   });
   if (!menuEl.children.length) menuEl.innerHTML = '<p class="empty">Nothing on this day\'s menu.</p>';
+}
+
+// UCLA publishes "3.29oz", which is useless in line. Each item carries the unit it is
+// naturally counted in, so weight x servings becomes "5 eggs" or "3 scoops = 1 cup".
+function cups(g, perCup){
+  var c = g / (perCup || 150);
+  if (c < 0.4) return Math.round(g) + " g";
+  if (c < 0.6) return "\u00bd cup";
+  if (c < 0.9) return "\u00be cup";
+  if (c < 1.35) return "1 cup";
+  return (Math.round(c * 2) / 2) + " cups";
+}
+function portionText(it, q){
+  q = q || 1;
+  var p = it.p;
+  if (!p) return it.s ? (q > 1 ? q + " \u00d7 " + it.s : it.s) : "";
+  var style = p[3], g = (it.g || 0) * q;
+  if (style === "whole") {
+    if (p[1] === "medium") return q + " medium";
+    return q > 1 ? q + " of them" : "the whole thing";
+  }
+  if (style === "piece") {
+    var np = q % 1 ? q : Math.round(q);
+    return np + (np === 1 ? " piece \u00b7 about a palm" : " pieces");
+  }
+  if (!p[0]) return it.s || "";
+  // count one serving, then multiply -- rounding the scaled weight drifts (5 x 2 eggs
+  // came out as 11)
+  var per = Math.max(1, Math.round((it.g || 0) / p[0]));
+  var n = q % 1 ? Math.max(1, Math.round(per * q)) : per * q;
+  var label = n === 1 ? p[1] : p[2];
+  if (style === "worth") return n + " " + label + "\u2019 worth";
+  if (style === "handful") return "\u2248 " + n + " " + label + " \u00b7 a cupped handful";
+  if (style === "cup")     return "\u2248 " + n + " " + label + " \u00b7 " + cups(g, 150);
+  if (style === "halfcup") return n + " " + label + " \u00b7 " + cups(g, 226);
+  if (style === "rice")    return n + " " + label + " \u2248 " + cups(g, 158);
+  if (style === "basket")  return "\u2248 " + n + " " + label;
+  return n + " " + label;
 }
 
 function esc(s){

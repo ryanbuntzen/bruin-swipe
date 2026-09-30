@@ -33,6 +33,48 @@ VENUE_NAME = {
     "epicuria-at-ackerman": "Epicuria at Ackerman", "bruin-bowl": "Bruin Bowl",
 }
 
+# How a portion actually looks on a tray. UCLA publishes "3.29oz", which tells you
+# nothing in line, so each item carries the unit it is naturally counted in and the app
+# turns weight x servings into "5 eggs" or "3 scoops = 1 cup".
+# (unit grams, singular, plural, style)  -- style drives the hint the app appends.
+PORTION = [
+    (r"\bhard cooked egg|\bfried egg|poached egg",      50,  "egg", "eggs", "count"),
+    (r"scrambled egg|omelet|egg white|^egg\b",           47,  "egg", "eggs", "worth"),
+    (r"\bturkey bacon",                                  13,  "strip", "strips", "count"),
+    (r"\bbacon\b",                                       15,  "strip", "strips", "count"),
+    (r"sausage|link|chorizo|hot ?dog|frank",              28,  "link", "links", "count"),
+    (r"\bmilk\b|juice|spritzer|\bwater\b|kombucha|tea", 240, "glass", "glasses", "count"),
+    (r"yogurt|cottage cheese",                           113, "ladle", "ladles", "halfcup"),
+    (r"sliced .*cheese|cheese.*slice|swiss|provolone|american cheese", 28, "slice", "slices", "count"),
+    (r"\bham\b|roast beef|pastrami|salami|prosciutto|deli|sliced turkey",
+                                                           28,  "slice", "slices", "count"),
+    (r"grape",                                             5,  "grape", "grapes", "handful"),
+    (r"cantaloupe|watermelon|honeydew|\bmelon",           14,  "cube", "cubes", "cup"),
+    (r"pineapple",                                        15,  "chunk", "chunks", "cup"),
+    (r"\bbanana\b|\bapple\b|\borange\b|\bkiwi\b|\bpear\b|\bpeach\b", 0, "medium", "medium", "whole"),
+    (r"breast|thigh|drumstick|\bwing|chop\b|tenderloin|fillet|filet|steak|tri.?tip|\bribs?\b|patty|cutlet|fillet",
+                                                            0,  "piece", "pieces", "piece"),
+    (r"\bfries\b|tater tot",                             5.3, "fry", "fries", "basket"),
+    (r"\brice\b|quinoa|grain|couscous|farro",            79,  "scoop", "scoops", "rice"),
+    (r"burger|sandwich|wrap|burrito|taco\b|calzone|panini|roll\b|bowl\b|plate\b|platter",
+                                                            0,  "", "", "whole"),
+    (r"bar\b|salad bar|yogurt bar",                       0,  "", "", "whole"),
+]
+
+def portion_for(name, grams):
+    import re as _r
+    for pat, unit, sing, plur, style in PORTION:
+        if _r.search(pat, name, _r.I):
+            if style in ("whole", "piece"):      # counted as-is, no unit weight needed
+                return [0, sing, plur, style]
+            if not grams or not unit:
+                return None
+            return [unit, sing, plur, style]
+    if grams:
+        return [120, "scoop", "scoops", "plain"]     # a serving spoon of something hot
+    return None
+
+
 def round_sig(x):
     if x is None:
         return 0
@@ -87,6 +129,9 @@ def main():
         # app can warn rather than silently logging a whole hotel pan.
         if (v.get("grams") or 0) > 600:
             rec["batch"] = True
+        pf = portion_for(v["name"], v.get("grams"))
+        if pf:
+            rec["p"] = pf
         if v.get("build_groups"):
             rec["b"] = [[c["id"] for c in g if c["id"] in items] for g in v["build_groups"]]
         if v.get("tags"):
