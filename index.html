@@ -837,7 +837,7 @@ function renderGaps(){
   // a hall swipe is the whole buffet, so a counter only gets the nod when no hall is open
   function hall(c){ return c.v.kind === "ayce"; }
   function open(c){ return c.open; }
-  var pool = [cands.filter(hall).filter(open), cands.filter(open), cands.filter(hall)]
+  var pool = [cands.filter(hall).filter(open), cands.filter(open), cands.filter(hall), cands]
     .filter(function(l){ return l.length; })[0] || [];
   var ranked = pool.slice().sort(function(a, b){ return b.score - a.score; });
 
@@ -855,7 +855,7 @@ function renderGaps(){
         "</b> (" + esc(top.meal) + ") — " +
         top.plate.picks.slice(0, 4).map(function(p){ return esc(p.it.n); }).join(", ") +
         ".</p><button class=\"go\" type=\"button\" id=\"gapGo\">Show me</button>"
-      : "<p>Nothing on today's menus moves those much.</p>");
+      : "<p>Everything is closed for the night.</p>");
   el.hidden = false;
   var go = document.getElementById("gapGo");
   if (go) go.onclick = function(){
@@ -1006,16 +1006,27 @@ function servingsForUnits(it, units){
   return Math.max(1, Math.round(units / unitsPerServing(it)));
 }
 
-// the meal you could walk into: the one being served, else the next to open
+// the meal you could walk into: the one being served, else the next to open today,
+// else null -- a hall that is closed for the night has nothing to walk into
 function focusMeal(v, keys){
   var now = keys.filter(function(m){ return servingNow(v, m); })[0];
   if (now) return now;
+  if (!windowsFor(v)) {                    // no published hours: go by the clock
+    var cur = ["Breakfast", "Lunch", "Dinner"].indexOf(currentMeal());
+    return cur < 0 ? null : keys.filter(function(m){
+      return [/break|brunch/i, /lunch/i, /dinner/i].some(function(re, i){ return i > cur && re.test(m); });
+    })[0] || null;
+  }
   var soon = null, bestStart = Infinity, n0 = nowMins();
+  var w = windowsFor(v);
   keys.forEach(function(m){
     var mw = mealWindow(v, m);
-    if (mw && mw.from > n0 && mw.from < bestStart) { bestStart = mw.from; soon = m; }
+    var from = mw ? mw.from : /all ?day/i.test(m)   // a counter's one menu opens with its first window
+      ? Math.min.apply(null, Object.keys(w).map(function(k){ return w[k][0] > n0 ? w[k][0] : Infinity; }))
+      : Infinity;
+    if (from > n0 && from < bestStart) { bestStart = from; soon = m; }
   });
-  return soon || keys[0];
+  return soon;
 }
 
 function slotsFor(meal){

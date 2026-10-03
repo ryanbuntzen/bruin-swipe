@@ -169,9 +169,9 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   const at = h => new Function("Real", "H", `var DAY_START_HOUR = 5;
     function Date(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)); }
     Date.now = function(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)).getTime(); };
-    ${["dayKey","currentMeal","mealMatchesNow","nowMins","clock","windowsFor",
-       "mealWindow","servingNow","venueStatus"].map(fnSrc).join("\n")}
-    return { venueStatus, servingNow };`)(Real, h);
+    ${["dayKey","mealAt","currentMeal","mealMatchesNow","nowMins","clock","windowsFor",
+       "mealWindow","servingNow","venueStatus","focusMeal"].map(fnSrc).join("\n")}
+    return { venueStatus, servingNow, focusMeal };`)(Real, h);
   const deneve = db.venues.find(v => v.n === "De Neve");
   assert.ok(deneve.hours, "De Neve has published hours");
 
@@ -182,6 +182,16 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.match(at(17.5).venueStatus(deneve), /Dinner now/);
   assert.match(at(20.9).venueStatus(deneve), /closes in \d+ min/);
   assert.equal(at(8).servingNow(deneve, "Breakfast"), true);
+
+  // a hall closed for the night has no meal to walk into -- not tomorrow's breakfast
+  const plate = db.venues.find(v => v.n === "Bruin Plate");
+  const keys = ["Breakfast", "Lunch", "Dinner"];
+  assert.equal(at(8).focusMeal(plate, keys), "Breakfast");
+  assert.equal(at(9.5).focusMeal(plate, keys), "Lunch", "between meals, the next one");
+  assert.equal(at(21.5).focusMeal(plate, keys), null, "9:30pm: closed, no breakfast eggs");
+  const sproul = db.venues.find(v => v.n === "Sproul");     // no published hours: the clock
+  assert.equal(at(21.5).focusMeal(sproul, keys), null);
+  assert.equal(at(12).focusMeal(sproul, keys), "Lunch");
 }
 
 // 11. leaving the bun behind comes off the total, and scales with servings
