@@ -29,7 +29,7 @@ def main():
         urllib.request.Request("https://dining.ucla.edu/hours/", headers=UA),
         timeout=45).read().decode("utf8", "ignore")
 
-    dates = [d for _, d in re.findall(r"<option value=\"(\d+)\">([^<]+)</option>", html)]
+    dates = [d for _, d in re.findall(r"<option value=\"(\d+)\"[^>]*>([^<]+)</option>", html)]
     panels = re.split(r'<div class="hours-day-panel"', html)[1:]
     out = {}
     from datetime import datetime
