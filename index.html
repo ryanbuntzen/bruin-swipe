@@ -406,7 +406,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-10-02f";
+var BUILD = "2026-10-02g";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -719,6 +719,14 @@ function nutTable(vec, opts){
 }
 
 /* ------------------------------------------------------------------ diet filter */
+
+// Café 1919's undated menu lists every weekday's special ("Tue - Chicken Parmesan");
+// only today's is actually on.
+var WEEKDAY_ITEM = /^(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s*-\s/;
+function offToday(it){
+  var m = WEEKDAY_ITEM.exec(it.n);
+  return !!m && WEEKDAYS.indexOf(m[1]) !== weekdayOf(dayKey());
+}
 
 function blocked(it){
   var p = me();
@@ -1067,7 +1075,7 @@ function suggestPlate(rows, seed, meal, v){
   var pool = [], seen = {};
   function add(rid, station){
     var it = D.items[rid];
-    if (!it || !it.v || !it.v[0] || seen[rid] || it.batch || blocked(it)) return;
+    if (!it || !it.v || !it.v[0] || seen[rid] || it.batch || blocked(it) || offToday(it)) return;
     seen[rid] = 1;
     // the owner diet takes the bread off a meat sandwich, unless it is sourdough
     var skip = isOwner(who) && !/sourdough/i.test(it.n) ? (it.rm || []).slice() : [];
@@ -1285,7 +1293,7 @@ function renderDeck(di){
       var rows = "";
       byStation[st].forEach(function(rid){
         var it = D.items[rid];
-        if (!it) return;
+        if (!it || offToday(it)) return;
         if (blocked(it)) { hidden++; return; }
         shown++;
         rows += '<li><button class="row" data-id="' + rid + '">' +

@@ -284,4 +284,21 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(p.today, 2, "plenty left: the plan's own meals");
 }
 
+// 14. Café 1919's weekday specials only show on their own day
+{
+  const fnSrc = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
+  const Real = Date;
+  const offToday = new Function("Real", `var DAY_START_HOUR = 5;
+    var WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    var WEEKDAY_ITEM = ${src.match(/var WEEKDAY_ITEM = (.*);/)[1]};
+    function Date(){ return arguments.length ? new Real(...arguments) : new Real(2026, 9, 2, 21, 30); }
+    Date.now = function(){ return new Real(2026, 9, 2, 21, 30).getTime(); };
+    ${src.match(/\nfunction keyDate.*\n/)[0]}${src.match(/\nfunction weekdayOf.*\n/)[0]}
+    ${["dayKey", "offToday"].map(fnSrc).join("\n")}
+    return offToday;`)(Real);                               // Fri Oct 2, 9:30pm
+  assert.equal(offToday({ n: "Tue - Chicken Parmesan" }), true, "no Tuesday special on a Friday");
+  assert.equal(offToday({ n: "Fri - Calzone" }), false, "Friday's is on");
+  assert.equal(offToday({ n: "Chicken Parmesan" }), false, "ordinary items untouched");
+}
+
 console.log("all logic checks passed");
