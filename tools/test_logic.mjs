@@ -133,7 +133,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   const Real = Date;
   const at = h => new Function("Real", "H", `var DAY_START_HOUR = 5;
     function Date(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)); }
-    ${fnSrc("currentMeal")} ${fnSrc("mealMatchesNow")}
+    ${fnSrc("mealAt")} ${fnSrc("currentMeal")} ${fnSrc("mealMatchesNow")}
     return { currentMeal, mealMatchesNow };`)(Real, h);
   assert.equal(at(8).currentMeal(), "Breakfast");
   assert.equal(at(12).currentMeal(), "Lunch");
@@ -240,6 +240,38 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
     + dbk + "\nfunction me(){return PROFILE;}" + bs + "\nreturn blocked;")(
       DIETS, { diets: ["animalfruit"] });   // even ticked, it must not apply
   assert.equal(notOwner(find("Almond Butter")), false, "the allowlist diet is owner-only");
+}
+
+// 13. the swipe budget: a 19 Regular with 4 left on Saturday gets 2 today, not 3
+{
+  const pick = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
+  const plan = src.slice(src.indexOf("var PLANS = ["), src.indexOf("function keyDate"));
+  const body = ["dayKey", "keyDate", "addDays", "weekdayOf", "planOf", "mealsOn", "swipesOn", "budget"]
+    .map(pick).join("\n");
+  const at = (d, h) => new Date(2026, 9, d, h).getTime();      // Oct 2026: the 3rd is a Saturday
+  function run(profile, nowD, nowH) {
+    const RealDate = Date;
+    class FakeDate extends RealDate {
+      constructor(...a) { super(...(a.length ? a : [at(nowD, nowH)])); }
+      static now() { return at(nowD, nowH); }
+    }
+    return new Function("PROFILE", "Date", "var DAY_START_HOUR = 5;\n" + plan + body +
+      "\nfunction me(){ return PROFILE; }\nreturn budget();")(profile, FakeDate);
+  }
+  // 15 swipes Mon 9/28 - Fri 10/2, three meals planned every day
+  const swipes = [];
+  for (let d = 28; d <= 32; d++) for (const h of [9, 13, 18]) if (swipes.length < 15)
+    swipes.push(new Date(2026, 8, d, h).getTime());
+  const b = run({plan: "19R", meals: [3, 3, 3, 3, 3, 3, 3], swipes}, 3, 10);
+  assert.equal(b.left, 4, "19 minus 15");
+  assert.equal(b.today, 2, "4 left over Sat+Sun is 2 a day");
+  // a new week resets the count
+  assert.equal(run({plan: "19R", meals: [3, 3, 3, 3, 3, 3, 3], swipes}, 5, 10).left, 19, "Monday resets");
+  // a Premier pot counts down from what was typed in, and plans 2-meal days lightly
+  const p = run({plan: "19P", meals: [2, 2, 2, 2, 2, 2, 2], planEnd: "2026-12-11",
+                 left: {n: 150, at: at(1, 8)}, swipes: [at(1, 12), at(2, 12)]}, 3, 10);
+  assert.equal(p.left, 148, "typed count minus swipes since");
+  assert.equal(p.today, 2, "plenty left: the plan's own meals");
 }
 
 console.log("all logic checks passed");

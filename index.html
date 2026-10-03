@@ -146,6 +146,21 @@ ul.items li{border-top:1px solid var(--line-soft)}
 .fld input{width:100%;font:inherit;font-size:15px;padding:7px 9px;border-radius:2px;
   border:1px solid var(--line);background:var(--card-2);color:var(--ink)}
 .fld input:focus-visible{outline:2px solid var(--accent);outline-offset:-1px}
+.fld select{width:100%;font:inherit;font-size:15px;padding:7px 9px;border-radius:2px;
+  border:1px solid var(--line);background:var(--card-2);color:var(--ink)}
+.mealsgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.mealsgrid label{text-align:center;margin:0}
+.mealsgrid input{padding:6px 2px;text-align:center}
+.swiperow{display:flex;align-items:center;gap:8px;margin:4px 0 12px;font-size:14px}
+.swiperow span{flex:1}
+.swiperow .btn{padding:4px 12px}
+.askbar{position:fixed;left:16px;right:16px;bottom:calc(84px + env(safe-area-inset-bottom));z-index:4;
+  max-width:568px;margin:0 auto;background:var(--card);border:1px solid var(--line);border-radius:2px;
+  padding:10px 12px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:14px;
+  box-shadow:0 6px 24px rgba(0,0,0,.18)}
+.askbar[hidden]{display:none}
+.askbar span{flex:1 1 180px}
+.askbar .btn{padding:6px 12px}
 .diets{display:flex;flex-wrap:wrap;gap:6px}
 .diets label{display:inline-flex;align-items:center;gap:5px;font-size:13px;text-transform:none;
   letter-spacing:0;color:var(--ink);border:1px solid var(--line);border-radius:2px;
@@ -312,6 +327,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
   <div class="card2" role="dialog" aria-modal="true" aria-labelledby="logTitle">
     <h2 id="logTitle">Today</h2>
     <p class="sub" id="logSub"></p>
+    <div class="swiperow" id="swipeRow"></div>
     <div id="logList"></div>
     <div id="logNut"></div>
     <div class="btns">
@@ -336,6 +352,22 @@ ul.items li{border-top:1px solid var(--line-soft)}
       <input id="fGoal" type="number" inputmode="numeric" min="800" max="8000" step="50" placeholder="2000">
     </div>
     <div class="fld">
+      <label for="fPlan">Meal plan</label>
+      <select id="fPlan"></select>
+    </div>
+    <div class="fld" id="fLeftWrap">
+      <label for="fLeft" id="fLeftLbl">Swipes left right now</label>
+      <input id="fLeft" type="number" inputmode="numeric" min="0" max="400" step="1">
+    </div>
+    <div class="fld" id="fEndWrap">
+      <label for="fEnd">Plan ends</label>
+      <input id="fEnd" type="date">
+    </div>
+    <div class="fld">
+      <label>Meals a day</label>
+      <div class="mealsgrid" id="fMeals"></div>
+    </div>
+    <div class="fld">
       <label>Diet</label>
       <div class="diets" id="fDiets"></div>
     </div>
@@ -350,6 +382,11 @@ ul.items li{border-top:1px solid var(--line-soft)}
   </div>
 </div>
 
+<div class="askbar" id="swipeAsk" role="status" hidden>
+  <span id="swipeAskTxt"></span>
+  <button class="btn ghost" id="askSame" type="button">Same meal</button>
+  <button class="btn" id="askNew" type="button">Second swipe</button>
+</div>
 <div class="bar"><i id="barFill"></i><b id="barMark"></b></div>
 <button class="total" id="total" type="button">
   <div class="inner">
@@ -371,7 +408,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-09-29j";
+var BUILD = "2026-10-02e";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -499,6 +536,96 @@ function todayLog(){
   // keep a fortnight; anything older is noise on a phone
   Object.keys(p.log).sort().slice(0, -14).forEach(function(old){ delete p.log[old]; });
   return p.log[k];
+}
+
+/* ------------------------------------------------------------------ meal plan
+
+   Regular plans give n swipes a week and lose what is left when the week ends; Premier
+   plans and the off-campus Bruin Meal Plan are one pot for the quarter. Counts are UCLA's
+   Fall 2026 numbers (ask.housing.ucla.edu); other quarters differ, so "swipes left" is
+   typed in at setup and counted down from there.                                       */
+
+var PLANS = [
+  {k:"none", n:"No meal plan"},
+  {k:"19R", n:"19 Regular", week:19}, {k:"14R", n:"14 Regular", week:14},
+  {k:"11R", n:"11 Regular", week:11},
+  {k:"19P", n:"19 Premier", quarter:215}, {k:"14P", n:"14 Premier", quarter:158},
+  {k:"11P", n:"11 Premier", quarter:128},
+  {k:"BMP", n:"Bruin Meal Plan (off campus)", quarter:84}
+];
+var PLAN_END = "2026-12-11";   // Fall 2026's last contracted meal; editable per profile
+var WEEKDAYS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+
+function keyDate(k){ var a = k.split("-"); return new Date(+a[0], a[1] - 1, +a[2], 12); }
+function addDays(k, n){ var d = keyDate(k); d.setDate(d.getDate() + n); return dayKey(d); }
+function weekdayOf(k){ return (keyDate(k).getDay() + 6) % 7; }       // Mon = 0
+function planOf(){
+  var k = me().plan || "none";
+  return PLANS.filter(function(p){ return p.k === k; })[0] || PLANS[0];
+}
+function mealsOn(k){
+  var m = me().meals;
+  return m && m[weekdayOf(k)] != null ? m[weekdayOf(k)] : 3;
+}
+function swipesOn(k){
+  return (me().swipes || []).filter(function(t){ return dayKey(t) === k; }).length;
+}
+// Swipes left in the current week (Regular) or quarter (Premier), and how many of them
+// today can have. If the plan's meals-a-day would overspend what is left, today gets its
+// fair share of the remainder instead -- 4 left over two 3-meal days is 2 a day.
+// ponytail: the weekly reset is assumed to be Monday 5am; UCLA does not publish the day.
+function budget(){
+  var p = me(), plan = planOf(), today = dayKey();
+  var used = swipesOn(today), L = Math.max(0, mealsOn(today) - used);
+  var out = {plan: plan, used: used, planned: mealsOn(today), today: L, left: null};
+  if (!plan.week && !plan.quarter) return out;
+  var start = plan.week ? addDays(today, -weekdayOf(today)) : null;
+  var end = plan.week ? addDays(start, 6) : (p.planEnd || PLAN_END);
+  var s = p.swipes || [], a = p.left, left;
+  if (a && (!start || dayKey(a.at) >= start))
+    left = a.n - s.filter(function(t){ return t > a.at; }).length;
+  else
+    left = (plan.week || plan.quarter) - s.filter(function(t){ return !start || dayKey(t) >= start; }).length;
+  left = Math.max(0, left);
+  var F = 0;
+  for (var k = addDays(today, 1); k <= end; k = addDays(k, 1)) F += mealsOn(k);
+  out.left = left;
+  out.today = left >= L + F ? L : Math.min(L, Math.round(left * L / Math.max(1, L + F)));
+  return out;
+}
+// what one plate should come to: what is left of today's calories over the meals left today
+function mealTarget(){
+  var eaten = sumVecs(todayLog())[0];
+  return Math.max(300, ((me().goal || 2000) - eaten) / Math.max(1, budget().today));
+}
+function useSwipe(){
+  var p = me();
+  p.swipes = (p.swipes || []).filter(function(t){ return Date.now() - t < 130 * 864e5; });
+  p.swipes.push(Date.now());
+}
+// Logging food is a swipe used, once per meal period. Regular plans allow one entry a
+// period, so that is the end of it; a Premier plan can swipe twice, so when food comes
+// in well after the last log of an already-swiped meal, ask whether it was a new swipe.
+var askTimer = null;
+function swipeForMeal(){
+  var p = me(), now = Date.now(), k = dayKey(now), m = mealAt(now);
+  var had = (p.swipes || []).some(function(t){ return dayKey(t) === k && mealAt(t) === m; });
+  var last = p.lastLog || 0;
+  p.lastLog = now;
+  if (!had) { useSwipe(); return; }
+  if (!planOf().quarter || now - last < 20 * 60000) return;   // same sitting
+  document.getElementById("swipeAskTxt").textContent =
+    "You already swiped for " + (m === "Late" ? "late night" : m.toLowerCase()) + ". Was this a second swipe?";
+  var el = document.getElementById("swipeAsk");
+  el.hidden = false;
+  clearTimeout(askTimer);
+  askTimer = setTimeout(function(){ el.hidden = true; }, 15000);
+}
+function swipeLine(){
+  var b = budget();
+  if (b.left == null) return b.today + " meal" + (b.today === 1 ? "" : "s") + " left today";
+  return b.left + " swipe" + (b.left === 1 ? "" : "s") + " left this " +
+         (b.plan.week ? "week" : "quarter") + " · " + b.today + " for today";
 }
 
 /* ------------------------------------------------------------------ nutrition math */
@@ -794,14 +921,15 @@ var SLOTS = {
 };
 // Which meal you could walk into right now. Dining halls run breakfast until about
 // 10:30, lunch to 4, dinner to 9, and anything later is the late-night counter.
-function currentMeal(){
-  var d = new Date(), h = d.getHours() + d.getMinutes() / 60;
+function mealAt(t){
+  var d = new Date(t), h = d.getHours() + d.getMinutes() / 60;
   if (h < DAY_START_HOUR) return "Late";
   if (h < 10.5) return "Breakfast";
   if (h < 16) return "Lunch";
   if (h < 21) return "Dinner";
   return "Late";
 }
+function currentMeal(){ return mealAt(new Date()); }
 function mealMatchesNow(meal){
   var now = currentMeal();
   if (now === "Late") return /late|night|all ?day/i.test(meal);
@@ -963,8 +1091,7 @@ function suggestPlate(rows, seed, meal, v){
   });
   if (!pool.length) return null;
 
-  var goal = me().goal || 2000;
-  var tK = goal / 3;
+  var tK = mealTarget();
   var slots = slotsFor(meal || "");
   if (swipe) return swipePlate(pool, gl, seed, tK, v.k);
   var picks = [], kcal = 0, used = {};
@@ -1054,7 +1181,7 @@ function plateCard(v, meal, rows){
     '<header><div><h3>Eat this' +
       (servingNow(v, meal) ? '<span class="nowpill">now</span>' : '') +
       '<small>a ' + Math.round(plate.kcal) + ' kcal plate, ' +
-      Math.round(plate.prot) + ' g protein</small></h3></div>' +
+      Math.round(plate.prot) + ' g protein · ' + esc(swipeLine()) + '</small></h3></div>' +
     '<div class="mealkcal">' + Math.round(plate.kcal) + '<small>of ' +
       Math.round(plate.target) + '</small></div></header>' +
     '<ul class="items">' + plate.picks.map(function(p){
@@ -1080,6 +1207,7 @@ function plateCard(v, meal, rows){
       if (p.skip.length) e.skip = p.skip.slice();
       todayLog().push(e);
     });
+    swipeForMeal();
     save(); tally(); renderDeck(0); renderDeck(1); openLog();
   };
   return sec;
@@ -1394,6 +1522,7 @@ document.getElementById("itemAdd").onclick = function(){
     e.comps = picked;
   }
   todayLog().push(e);
+  swipeForMeal();
   save(); tally(); renderDeck(0); renderDeck(1);
   itemSheet.hidden = true;
 };
@@ -1439,6 +1568,14 @@ function openLog(){
       };
     });
   }
+  var sr = document.getElementById("swipeRow");
+  sr.innerHTML = '<span>' + esc(swipeLine()) + '</span>' +
+    '<button class="btn ghost" type="button" id="swipeLess" aria-label="Take back a swipe">−</button>' +
+    '<button class="btn ghost" type="button" id="swipeMore" aria-label="Used a swipe">+ swipe</button>';
+  document.getElementById("swipeMore").onclick = function(){ useSwipe(); save(); tally(); renderDeck(0); renderDeck(1); openLog(); };
+  document.getElementById("swipeLess").onclick = function(){
+    (me().swipes || []).pop(); save(); tally(); renderDeck(0); renderDeck(1); openLog();
+  };
   document.getElementById("logNut").innerHTML = nutTable(sumVecs(log));
   logSheet.hidden = false;
 }
@@ -1450,6 +1587,11 @@ document.getElementById("logClear").onclick = function(){
 };
 logSheet.onclick = function(ev){ if (ev.target === logSheet) logSheet.hidden = true; };
 document.getElementById("total").onclick = openLog;
+document.getElementById("askSame").onclick = function(){ document.getElementById("swipeAsk").hidden = true; };
+document.getElementById("askNew").onclick = function(){
+  useSwipe(); save(); tally(); renderDeck(0); renderDeck(1);
+  document.getElementById("swipeAsk").hidden = true;
+};
 
 /* ------------------------------------------------------------------ tally bar */
 
@@ -1465,7 +1607,7 @@ function tally(){
   renderGaps();
   var n = todayLog().length;
   document.getElementById("tallyLbl").textContent =
-    n ? "Today · " + n + " item" + (n > 1 ? "s" : "") + " · tap to edit" : "Today · tap to edit";
+    (n ? "Today · " + n + " item" + (n > 1 ? "s" : "") : "Today") + " · " + swipeLine();
 }
 
 /* ------------------------------------------------------------------ search */
@@ -1497,6 +1639,32 @@ qEl.addEventListener("input", function(){
 var setupEl = document.getElementById("setup");
 var fName = document.getElementById("fName"), fGoal = document.getElementById("fGoal");
 var fDiets = document.getElementById("fDiets"), peopleEl = document.getElementById("people");
+var fPlan = document.getElementById("fPlan"), fLeft = document.getElementById("fLeft");
+var fEnd = document.getElementById("fEnd"), fMeals = document.getElementById("fMeals");
+fPlan.innerHTML = PLANS.map(function(p){ return '<option value="' + p.k + '">' + esc(p.n) + '</option>'; }).join("");
+fMeals.innerHTML = WEEKDAYS.map(function(d, i){
+  return '<label>' + d + '<input type="number" inputmode="numeric" min="0" max="5" step="1" data-day="' + i + '"></label>';
+}).join("");
+function paintPlanFields(){
+  var plan = PLANS.filter(function(p){ return p.k === fPlan.value; })[0] || PLANS[0];
+  document.getElementById("fLeftWrap").hidden = !plan.week && !plan.quarter;
+  document.getElementById("fEndWrap").hidden = !plan.quarter;
+  document.getElementById("fLeftLbl").textContent =
+    plan.week ? "Swipes left this week" : "Swipes left this quarter";
+  fLeft.placeholder = plan.week || plan.quarter || "";
+}
+fPlan.onchange = function(){ fLeft.value = ""; paintPlanFields(); };
+function fillPlan(p){
+  fPlan.value = (p && p.plan) || "none";
+  fEnd.value = (p && p.planEnd) || PLAN_END;
+  var m = (p && p.meals) || [3, 3, 3, 3, 3, 3, 3];
+  fMeals.querySelectorAll("input").forEach(function(i){ i.value = m[+i.getAttribute("data-day")]; });
+  fLeft.value = "";
+  if (p && p.plan && p.plan !== "none") {        // what the counter says now, under the profile's own plan
+    var keep = who; who = editing; fLeft.value = budget().left; who = keep;
+  }
+  paintPlanFields();
+}
 var editing = null;
 
 function paintDietOptions(name){
@@ -1535,7 +1703,7 @@ function openSetup(name){
   });
   var add = document.createElement("button");
   add.type = "button"; add.textContent = "+ new";
-  add.onclick = function(){ editing = null; fName.value = ""; fGoal.value = ""; setDiets([]); };
+  add.onclick = function(){ editing = null; fName.value = ""; fGoal.value = ""; setDiets([]); fillPlan(null); };
   peopleEl.appendChild(add);
 
   var p = editing ? people[editing] : null;
@@ -1545,6 +1713,7 @@ function openSetup(name){
   fGoal.value = p ? p.goal : "";
   setDiets(p ? (p.diets || []) : []);
   setRules(p ? (p.rules || []) : []);
+  fillPlan(p);
   document.getElementById("setupDel").hidden = !editing;
   setupEl.hidden = false;
 }
@@ -1570,9 +1739,20 @@ document.getElementById("setupSave").onclick = function(){
   fDiets.querySelectorAll("input").forEach(function(i){ if (i.checked) diets.push(i.value); });
   var rules = [];
   fRules.querySelectorAll("input").forEach(function(i){ if (i.checked) rules.push(i.value); });
-  var keepLog = (editing && people[editing] && people[editing].log) || {};
+  var old = (editing && people[editing]) || {};
+  var meals = [];
+  fMeals.querySelectorAll("input").forEach(function(i){
+    var n = parseInt(i.value, 10);
+    meals[+i.getAttribute("data-day")] = isNaN(n) ? 3 : Math.max(0, Math.min(5, n));
+  });
+  var rec = {goal: goal, diets: diets, rules: rules, log: old.log || {}, swipes: old.swipes || [],
+             plan: fPlan.value, meals: meals, planEnd: fEnd.value || PLAN_END};
+  // the typed count is the truth as of now; blank means count from the plan's full allowance
+  var left = parseInt(fLeft.value, 10);
+  if (!isNaN(left)) rec.left = {n: Math.max(0, left), at: Date.now()};
+  else if (old.plan === rec.plan && old.left) rec.left = old.left;
   if (editing && editing !== name) delete people[editing];
-  people[name] = {goal: goal, diets: diets, rules: rules, log: keepLog};
+  people[name] = rec;
   who = name;
   save(); afterProfile(); setupEl.hidden = true;
 };
