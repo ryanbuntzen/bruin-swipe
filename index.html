@@ -756,12 +756,15 @@ var SLOTS = {
     {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4, maxKcal:170},
     {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                    q:1, cap:2, maxKcal:260}
   ],
+  // by weight, because that is how the plan reads: 7 oz of meat, 3 scoops of rice,
+  // some fruit, a glass of milk and some yogurt. `grams` is the target; top-up may
+  // run a slot to 1.6x it before the plate counts as full.
   Main: [
-    {n:"main",   re:/\b(beef|steak|tri.?tip|sirloin|brisket|burger|patty|lamb|pork|riblet|carnitas|chorizo|ribs|meatball|gyudon|carne)\b/i, q:1, cap:3, maxKcal:520},
-    {n:"second", re:/\b(chicken|turkey|salmon|fish|shrimp|tuna|katsu|cod)\b/i,  q:1, cap:2, maxKcal:380},
-    {n:"starch", re:/\b(rice|sweet potato|yam|potato)\b/i,                                   q:2, cap:4},
-    {n:"fruit",  re:/\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr)/i, q:2, cap:4, maxKcal:170},
-    {n:"dairy",  re:/\b(milk|yogurt|cottage|cheese)\b/i,                                     q:1, cap:2, maxKcal:260}
+    {n:"meat",   re:/\b(beef|steak|tri.?tip|sirloin|brisket|burger|patty|lamb|pork|riblet|carnitas|chorizo|ribs|meatball|gyudon|carne|barbacoa|chicken|turkey|salmon|fish|shrimp|tuna|katsu|cod|tilapia|calamari|sausage|cheesesteak)\b/i, grams:198, q:1},
+    {n:"starch", re:/\b(rice|sweet potato|yam)\b/i,                                         grams:237, q:3},
+    {n:"fruit",  re:/^(?!.*\b(links?|sausage|chicken|pork|turkey|juice|frozen|gelato|ice cream)\b).*\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr|smoothie)/i, grams:150, q:1},
+    {n:"milk",   re:/\bmilk\b(?!.*(chocolate|soy|oat|almond))/i,                             grams:240, q:1},
+    {n:"yogurt", re:/^(?!.*\b(frozen|bar)\b).*\b(yogurt|yoghurt|cottage)\b/i,                  grams:170, q:1}
   ],
   Late: [
     {n:"main",   re:/\b(beef|steak|burger|patty|chicken|pork|bacon|sausage|egg|salmon|shrimp)\b/i, q:1, cap:3},
@@ -857,14 +860,35 @@ function slotsFor(meal){
   return SLOTS.Main;
 }
 
-function suggestPlate(rows, seed, meal){
+// A plate entry's own panel: the item minus any wrapper the diet leaves on the tray.
+function plateVec(rid, it, skip){
+  return skip.length ? vecOf({id: rid, q: 1, skip: skip}) : it.v;
+}
+function plateQ(slot, it){
+  if (slot.units) return servingsForUnits(it, slot.units);
+  if (slot.grams && it.g) return Math.max(1, Math.round(slot.grams / it.g));
+  return slot.q;
+}
+
+function suggestPlate(rows, seed, meal, v){
   var gl = gaps();
+  var swipe = v.kind === "pickup";
   var pool = [], seen = {};
-  rows.forEach(function(row){
-    var rid = row[1], it = D.items[rid];
+  function add(rid, station){
+    var it = D.items[rid];
     if (!it || !it.v || !it.v[0] || seen[rid] || it.batch || blocked(it)) return;
     seen[rid] = 1;
-    pool.push({id: rid, it: it, station: row[0]});
+    // the owner diet takes the bread off a meat sandwich, unless it is sourdough
+    var skip = isOwner(who) && !/sourdough/i.test(it.n) ? (it.rm || []).slice() : [];
+    var v = plateVec(rid, it, skip);
+    pool.push({id: rid, it: it, v: v, skip: skip, station: station});
+  }
+  rows.forEach(function(row){
+    var it = D.items[row[1]];
+    if (!it || /gelato|ice cream/i.test(row[0])) return;     // dessert counters are not a plate
+    // a bar is its parts: the yogurt bar is the yogurt, the fruit and the cottage cheese on it
+    if (it.b && !swipe) it.b.forEach(function(g){ g.forEach(function(cid){ add(cid, row[0] + " · " + it.n); }); });
+    else add(row[1], row[0]);
   });
   if (!pool.length) return null;
 
@@ -879,7 +903,7 @@ function suggestPlate(rows, seed, meal){
       if (used[p.id] || !slot.re.test(p.it.n)) return;
       if (kcal + p.it.v[0] * slot.q > tK * 1.3) return;
       // within a slot, prefer the denser option, nudged by today's gaps and the shuffle
-      var sc = get(p.it.v, "protein") / Math.max(1, p.it.v[0] / 100)
+      var sc = get(p.v, "protein") / Math.max(1, p.v[0] / 100)
              + scoreItem(p.it, gl) * 2 + jitter(p.id, seed);
       if (slot.avoid && slot.avoid.test(p.it.n)) sc -= 20;
       if (slot.prefer && slot.prefer.test(p.it.n)) sc += 6;
@@ -887,33 +911,61 @@ function suggestPlate(rows, seed, meal){
     });
     if (!best) return;
     used[best.id] = 1;
-    best.q = slot.units ? servingsForUnits(best.it, slot.units) : slot.q;
+    best.q = plateQ(slot, best.it);
     if (slot.maxKcal) {                       // and never more than the slot is worth
-      while (best.q > 1 && best.it.v[0] * best.q > slot.maxKcal) best.q -= 1;
+      while (best.q > 1 && best.v[0] * best.q > slot.maxKcal) best.q -= 1;
     }
     best.slot = slot;
     picks.push(best);
-    kcal += best.it.v[0] * best.q;
+    kcal += best.v[0] * best.q;
   });
   if (!picks.length) return null;
 
-  // top up toward the calorie target, respecting each slot's own ceiling
+  // well over the target: take servings back off the sides, never the meat (a little over is fine)
+  for (var trim = 0; trim < 30 && kcal > tK * 1.2; trim++) {
+    var big = null;
+    picks.forEach(function(p){
+      if (p.q > 1 && p.slot.n !== "meat" && (!big || p.v[0] * p.q > big.v[0] * big.q)) big = p;
+    });
+    if (!big) break;
+    big.q -= 1;
+    kcal -= big.v[0];
+  }
+
+  // top up toward the calorie target, filling whichever slot is furthest under its own size
   for (var guard = 0; guard < 30 && kcal < tK * 0.92; guard++) {
     var pick = null, ps = -Infinity;
     picks.forEach(function(p){
-      var cals = p.it.v[0];
-      if (p.q >= (p.slot.cap || 3) || cals <= 0 || kcal + cals > tK * 1.06) return;
-      if (p.slot.maxKcal && cals * (p.q + 1) > p.slot.maxKcal) return;
-      if (p.slot.units && unitsPerServing(p.it) * (p.q + 1) > p.slot.units * 1.4) return;
-      var sc = -p.q;
+      var cals = p.v[0], s = p.slot;
+      if (cals <= 0 || kcal + cals > tK * 1.06) return;
+      if (s.grams && p.it.g) {
+        if (p.it.g * (p.q + 1) > s.grams * 1.6) return;
+      } else {
+        if (p.q >= (s.cap || 3)) return;
+        if (s.maxKcal && cals * (p.q + 1) > s.maxKcal) return;
+        if (s.units && unitsPerServing(p.it) * (p.q + 1) > s.units * 1.4) return;
+      }
+      var sc = s.grams && p.it.g ? -p.it.g * p.q / s.grams : -p.q;
       if (sc > ps) { ps = sc; pick = p; }
     });
-    if (!pick) break;
+    if (!pick) {                              // every slot is full: open another of the first one
+      var more = null, ms = -Infinity;
+      pool.forEach(function(p){
+        if (used[p.id] || !slots[0].re.test(p.it.n) || kcal + p.v[0] > tK * 1.06) return;
+        if (slots[0].avoid && slots[0].avoid.test(p.it.n)) return;
+        var sc = get(p.v, "protein") / Math.max(1, p.v[0] / 100) + jitter(p.id, seed);
+        if (sc > ms) { ms = sc; more = p; }
+      });
+      if (!more) break;
+      used[more.id] = 1; more.q = 1; more.slot = slots[0];
+      picks.push(more); kcal += more.v[0];
+      continue;
+    }
     pick.q += 1;
-    kcal += pick.it.v[0];
+    kcal += pick.v[0];
   }
 
-  var prot = picks.reduce(function(a, p){ return a + get(p.it.v, "protein") * p.q; }, 0);
+  var prot = picks.reduce(function(a, p){ return a + get(p.v, "protein") * p.q; }, 0);
   return {picks: picks, kcal: kcal, prot: prot, target: tK};
 }
 
@@ -922,7 +974,7 @@ var plateSeed = {};
 function plateCard(v, meal, rows){
   var vkey = v.k, key = vkey + "|" + meal;
   var seed = plateSeed[key] || 0;
-  var plate = suggestPlate(rows, seed, meal);
+  var plate = suggestPlate(rows, seed, meal, v);
   if (!plate) return null;
   var sec = document.createElement("section");
   sec.className = "meal plate";
@@ -938,8 +990,10 @@ function plateCard(v, meal, rows){
       return '<li><button class="row" data-id="' + p.id + '">' +
         '<span><span class="nm">' + esc(p.it.n) + '</span>' +
         '<span class="sub2">' + esc(portionText(p.it, q)) +
+          (p.skip.length ? ' &middot; no ' + esc(p.skip.map(function(k){
+            return ((D.removals || {})[k] || {label: k}).label.replace(/^the /, ""); }).join(", ")) : '') +
           ' &middot; ' + esc(p.station) + '</span></span>' +
-        '<span class="kc">' + Math.round(p.it.v[0] * q) + '</span><span class="plus">+</span></button></li>';
+        '<span class="kc">' + Math.round(p.v[0] * q) + '</span><span class="plus">+</span></button></li>';
     }).join("") + '</ul>' +
     '<div class="plateacts"><button type="button" class="btn ghost" data-shuffle="' + key + '">Different plate</button>' +
     '<button type="button" class="btn" data-logplate="' + key + '">Log the plate</button></div>';
@@ -949,7 +1003,11 @@ function plateCard(v, meal, rows){
     renderDeck(decks[0].some(function(v){ return v.k === vkey; }) ? 0 : 1);
   };
   sec.querySelector("[data-logplate]").onclick = function(){
-    plate.picks.forEach(function(p){ todayLog().push({id: p.id, q: p.q || 1}); });
+    plate.picks.forEach(function(p){
+      var e = {id: p.id, q: p.q || 1};
+      if (p.skip.length) e.skip = p.skip.slice();
+      todayLog().push(e);
+    });
     save(); tally(); renderDeck(0); renderDeck(1); openLog();
   };
   return sec;
