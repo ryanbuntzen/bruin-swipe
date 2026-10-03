@@ -67,7 +67,7 @@ def parse_at_a_glance(html, date, out):
                 for rid, name in re.findall(r"recipe=(\d+)['\"]>([^<]+)<", sm.group(2)):
                     out.append((rid, name.strip(), hall, meal, station, date))
 
-def parse_venue_page(html, venue, out):
+def parse_venue_page(html, venue, out, date="standing"):
     """venue page: section id '<meal>-<Station>' -> recipe-card h3 names"""
     secs = re.findall(
         r"meal-station' id='([^']+)'>(.*?)(?=<div class='force-left-full-width meal-station'|</main>)",
@@ -79,7 +79,7 @@ def parse_venue_page(html, venue, out):
             name = card.group(1).strip()
             rid = re.search(r"recipe=(\d+)", card.group(2))
             if rid:
-                out.append((rid.group(1), name, venue, meal.title(), station, "standing"))
+                out.append((rid.group(1), name, venue, meal.title(), station, date))
 
 # ---------------------------------------------------------------- nutrition panel
 
@@ -167,8 +167,19 @@ def main():
         parse_at_a_glance(html, d, placements)
     print(f"  {len(dates)} days, {len(placements)} placements", file=sys.stderr)
 
+    # a hall missing from at-a-glance (Bruin Plate) still dates its own page with ?date=
+    seen = {p[2] for p in placements}
+    dated = [s for h, s in HALL_SLUG.items() if h not in seen]
+    for slug in dated:
+        with cf.ThreadPoolExecutor(8) as ex:
+            got = dict(zip(dates, ex.map(lambda d: get(f"https://dining.ucla.edu/{slug}/?date={d}"), dates)))
+        before = len(placements)
+        for d, html in got.items():
+            parse_venue_page(html, slug, placements, d)
+        print(f"  {slug}: {len(placements) - before} over {len(dates)} days", file=sys.stderr)
+
     print("fetching venue standing menus ...", file=sys.stderr)
-    slugs = sorted(set(list(HALL_SLUG.values()) + QUICK))
+    slugs = sorted(QUICK)   # halls are dated above; their own pages repeat that menu undated
     with cf.ThreadPoolExecutor(8) as ex:
         vpages = dict(zip(slugs, ex.map(lambda s: get(f"https://dining.ucla.edu/{s}/", required=False), slugs)))
     for slug, html in vpages.items():
