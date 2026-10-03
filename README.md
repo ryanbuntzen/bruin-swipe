@@ -86,12 +86,9 @@ State lives in `localStorage`. Nothing is sent anywhere and there are no account
 
 ## Known gaps
 
-- **Hall beverage lines aren't published.** No UCLA menu itemises the drinks at De Neve,
-  Sproul, Epicuria or Feast. Every milk and juice entry in the dataset, lowfat through
-  chocolate, soy, orange and apple, belongs to The Study at Hedrick, so that is the only place
-  the app offers them. Do not read that as the halls having the same lineup unlisted. Chocolate
-  milk looks to be Study-only, which suggests the hall islands really are a narrower selection.
-  Anything you drink at a hall has to be logged through search for now.
+- **Hall beverage lines aren't published.** No UCLA menu itemises hall drinks. Lowfat and
+  nonfat milk are added to De Neve and Bruin Plate by hand in `build_app_data.py`, borrowing
+  The Study's panels; any other hall drink has to be logged through search.
 - **Menus only publish a week ahead**, so the day picker covers the published window and falls
   back to the nearest day outside it.
 - **Bruin Bowl, To-Go Lunches and the food trucks** publish no menu at all.

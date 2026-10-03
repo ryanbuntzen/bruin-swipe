@@ -58,6 +58,22 @@ def main():
         out["venues"].append({"k": v["key"], "n": v["name"], "kind": v["kind"],
                               "note": v.get("note", ""), "rows": rows})
 
+    # single items a hall serves but UCLA never lists (whole milk at De Neve); the
+    # venue rows that place them live in build_app_data.py
+    for it in spec.get("extras", []):
+        vec = {k: 0.0 for k in KEYS}
+        grams = 0
+        for phrase, g in it["parts"]:
+            fid = find(usda, phrase)
+            if not fid:
+                unresolved.append(phrase)
+                continue
+            for k in KEYS:
+                vec[k] += usda[fid]["n"].get(k, 0.0) / 100.0 * g
+            grams += g
+        out["items"][it["key"]] = {"n": it["name"], "s": it.get("serving", ""), "g": grams,
+                                   "vec": {k: round(x, 4) for k, x in vec.items()}}
+        print(f"  extra {it['name'][:26]:26} {grams:4}g  {vec['kcal']:5.0f} kcal")
     (DATA / "manual_items.json").write_text(json.dumps(out, ensure_ascii=False))
     if unresolved:
         print("\nUNRESOLVED (fix the phrase in manual_venues.json):", unresolved)

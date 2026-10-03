@@ -107,6 +107,18 @@ def main():
         })
     venues.sort(key=lambda v: (v["kind"] != "ayce", v["n"]))
 
+    # UCLA never itemises hall drinks, but the milk is there (seen at De Neve, and
+    # reportedly Bruin Plate). Borrow The Study's milk panels and add them to every meal.
+    # Whole milk has no UCLA panel at all, so it comes from manual_items.json (USDA).
+    HALL_MILK = {
+        "De Neve Dining": [["Beverages", "6570"], ["Beverages", "6569"], ["Beverages", "m-whole-milk"]],
+        "Bruin Plate":    [["Beverages", "6570"], ["Beverages", "6569"]],   # lowfat, nonfat
+    }
+    for v in venues:
+        for ms in v["menu"].values() if v["k"] in HALL_MILK else []:
+            for rows in ms.values():
+                rows.extend(r for r in HALL_MILK[v["k"]] if r not in rows)
+
     # ---- items
     out = {}
     for rid, v in items.items():

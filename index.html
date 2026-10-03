@@ -973,7 +973,7 @@ function suggestPlate(rows, seed, meal, v){
     var best = null, bs = -Infinity;
     pool.forEach(function(p){
       if (used[p.id] || !slot.re.test(p.it.n)) return;
-      if (kcal + p.it.v[0] * slot.q > tK * 1.3) return;
+      if (p.v[0] * plateQ(slot, p.it) > tK * 0.8) return;   // every slot gets a turn; the trim below pays for it
       // within a slot, prefer the denser option, nudged by today's gaps and the shuffle
       var sc = get(p.v, "protein") / Math.max(1, p.v[0] / 100)
              + scoreItem(p.it, gl) * 2 + jitter(p.id, seed);
