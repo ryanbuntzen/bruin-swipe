@@ -670,8 +670,8 @@ function scoreItem(it, gl){
 function bestAt(venue, gl, n){
   var seen = {}, out = [];
   var d = pickDay(venue, day[venue.kind === "ayce" ? 0 : 1]);
-  var meals = venue.menu[d] || {};
-  Object.keys(meals).forEach(function(m){
+  var meals = venue.menu[d] || {}, m = focusMeal(venue, Object.keys(meals));
+  if (m) (function(){
     meals[m].forEach(function(row){
       var rid = row[1], it = D.items[rid];
       if (!it || !it.v || seen[rid] || blocked(it)) return;
@@ -679,7 +679,7 @@ function bestAt(venue, gl, n){
       var sc = scoreItem(it, gl);
       if (sc > 0.02) out.push({id:rid, it:it, score:sc, station:row[0]});
     });
-  });
+  })();
   out.sort(function(a, b){ return b.score - a.score; });
   return out.slice(0, n || 4);
 }
@@ -816,6 +816,10 @@ function mealWindow(v, meal){
 // true when this hall is actually serving this meal right now; falls back to the clock
 // for the few places UCLA publishes no hours for.
 function servingNow(v, meal){
+  if (/all ?day/i.test(meal)) {            // a counter's one menu: open whenever any window is
+    var w = windowsFor(v), n = nowMins();
+    return !w || Object.keys(w).some(function(k){ return n >= w[k][0] && n < w[k][1]; });
+  }
   var mw = mealWindow(v, meal);
   return mw ? mw.open : mealMatchesNow(meal);
 }
@@ -852,6 +856,18 @@ function unitsPerServing(it){
 }
 function servingsForUnits(it, units){
   return Math.max(1, Math.round(units / unitsPerServing(it)));
+}
+
+// the meal you could walk into: the one being served, else the next to open
+function focusMeal(v, keys){
+  var now = keys.filter(function(m){ return servingNow(v, m); })[0];
+  if (now) return now;
+  var soon = null, bestStart = Infinity, n0 = nowMins();
+  keys.forEach(function(m){
+    var mw = mealWindow(v, m);
+    if (mw && mw.from > n0 && mw.from < bestStart) { bestStart = mw.from; soon = m; }
+  });
+  return soon || keys[0];
 }
 
 function slotsFor(meal){
@@ -1099,15 +1115,7 @@ function renderDeck(di){
   }
 
   // one suggestion per hall, for the meal you could actually walk into
-  var focus = keys.filter(function(m){ return servingNow(v, m); })[0];
-  if (!focus) {
-    var soon = null, bestStart = Infinity, n0 = nowMins();
-    keys.forEach(function(m){
-      var mw = mealWindow(v, m);
-      if (mw && mw.from > n0 && mw.from < bestStart) { bestStart = mw.from; soon = m; }
-    });
-    focus = soon || keys[0];
-  }
+  var focus = focusMeal(v, keys);
 
   keys.forEach(function(meal){
     var byStation = {};
