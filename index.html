@@ -906,6 +906,41 @@ function plateQ(slot, it){
   return slot.q;
 }
 
+// A takeout swipe is one entrée and one side, except The Study, where it is an entrée,
+// a drink and one piece of fruit. A handcrafted drink is a swipe on its own, so it is
+// never part of a plate.
+var SIDE_ST = /^sides?$/i;
+var SWIPE_DRINK = /\b(milk|juice)\b/i, SWIPE_FRUIT = /\b(fruit|apple|banana|orange|kiwi|pear|grape|berr|melon)/i;
+var SWIPE_PARTS = {"the-study-at-hedrick": ["drink", "fruit"]};
+var NOT_ENTREE = /side|beverage|drink|coffee|\btea\b|espresso|kombucha|boba|dressing|sauce|topping|condiment|cake|pastr|gelato|cereal|^\W*$/i;
+function swipePlate(pool, gl, seed, tK, vk){
+  function best(ok, score){
+    var b = null, bs = -Infinity;
+    pool.forEach(function(p){
+      if (!ok(p)) return;
+      var sc = score(p) + jitter(p.id, seed);
+      if (sc > bs) { bs = sc; b = p; }
+    });
+    return b;
+  }
+  var main = best(function(p){ return !NOT_ENTREE.test(p.station); },
+                  function(p){ return get(p.v, "protein") + scoreItem(p.it, gl) * 20; });
+  var sideScore = function(p){ return scoreItem(p.it, gl) * 20 + get(p.v, "protein") / 2; };
+  var picks = [main].concat((SWIPE_PARTS[vk] || ["side"]).map(function(part){
+    return best(function(p){
+      if (!SIDE_ST.test(p.station) || p === main) return false;
+      if (part === "drink") return SWIPE_DRINK.test(p.it.n);
+      if (part === "fruit") return SWIPE_FRUIT.test(p.it.n) && !SWIPE_DRINK.test(p.it.n);
+      return true;
+    }, sideScore);
+  })).filter(Boolean);
+  if (!picks.length) return null;
+  picks.forEach(function(p){ p.q = 1; });
+  var kcal = picks.reduce(function(a, p){ return a + p.v[0]; }, 0);
+  var prot = picks.reduce(function(a, p){ return a + get(p.v, "protein"); }, 0);
+  return {picks: picks, kcal: kcal, prot: prot, target: tK};
+}
+
 function suggestPlate(rows, seed, meal, v){
   var gl = gaps();
   var swipe = v.kind === "pickup";
@@ -931,6 +966,7 @@ function suggestPlate(rows, seed, meal, v){
   var goal = me().goal || 2000;
   var tK = goal / 3;
   var slots = slotsFor(meal || "");
+  if (swipe) return swipePlate(pool, gl, seed, tK, v.k);
   var picks = [], kcal = 0, used = {};
 
   slots.forEach(function(slot){
