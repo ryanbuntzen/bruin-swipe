@@ -239,8 +239,6 @@ ul.items li{border-top:1px solid var(--line-soft)}
 .gaps p b{color:var(--ink);font-weight:600}
 .gaps .go{appearance:none;font:inherit;font-size:12.5px;margin-top:8px;padding:5px 10px;
   border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer}
-.fills{border:1px solid var(--accent)!important;background:var(--accent-soft)}
-.fills > header{background:transparent}
 .badge{font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);
   border:1px solid var(--accent);border-radius:2px;padding:0 4px;margin-left:5px;white-space:nowrap}
 
@@ -408,7 +406,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-10-02e";
+var BUILD = "2026-10-02f";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -794,23 +792,6 @@ function scoreItem(it, gl){
   return s / (1 + (it.v[0] || 0) / 350);
 }
 
-function bestAt(venue, gl, n){
-  var seen = {}, out = [];
-  var d = pickDay(venue, day[venue.kind === "ayce" ? 0 : 1]);
-  var meals = venue.menu[d] || {}, m = focusMeal(venue, Object.keys(meals));
-  if (m) (function(){
-    meals[m].forEach(function(row){
-      var rid = row[1], it = D.items[rid];
-      if (!it || !it.v || seen[rid] || blocked(it)) return;
-      seen[rid] = 1;
-      var sc = scoreItem(it, gl);
-      if (sc > 0.02) out.push({id:rid, it:it, score:sc, station:row[0]});
-    });
-  })();
-  out.sort(function(a, b){ return b.score - a.score; });
-  return out.slice(0, n || 4);
-}
-
 // how much of today's shortfall a whole plate closes -- in total, not per calorie,
 // because a swipe buys the plate, and juice only wins per calorie
 function plateScore(plate, gl){
@@ -1112,9 +1093,10 @@ function suggestPlate(rows, seed, meal, v){
     pool.forEach(function(p){
       if (used[p.id] || !slot.re.test(p.it.n)) return;
       if (p.v[0] * plateQ(slot, p.it) > tK * 0.8) return;   // every slot gets a turn; the trim below pays for it
-      // within a slot, prefer the denser option, nudged by today's gaps and the shuffle
+      // the slots keep the plate balanced and on its macros; inside a slot, today's gaps
+      // pick which meat, which fruit, which dairy -- weighed against protein density
       var sc = get(p.v, "protein") / Math.max(1, p.v[0] / 100)
-             + scoreItem(p.it, gl) * 2 + jitter(p.id, seed);
+             + scoreItem(p.it, gl) * 8 + jitter(p.id, seed);
       if (slot.avoid && slot.avoid.test(p.it.n)) sc -= 20;
       if (slot.prefer && slot.prefer.test(p.it.n)) sc += 6;
       if (sc > bs) { bs = sc; best = p; }
@@ -1289,25 +1271,6 @@ function renderDeck(di){
   });
 
   menuEl.innerHTML = "";
-
-  // whatever place you actually walked into, surface its own best gap-fillers first
-  var gl = gaps();
-  if (gl.length) {
-    var top = bestAt(v, gl, 4);
-    if (top.length) {
-      var sec0 = document.createElement("section");
-      sec0.className = "meal fills";
-      sec0.innerHTML = '<header><h3>Fills your gaps here<small>' +
-        gl.slice(0, 3).map(function(g){ return LABEL[g.k]; }).join(", ") + '</small></h3></header>' +
-        '<ul class="items">' + top.map(function(t){
-          return '<li><button class="row" data-id="' + t.id + '">' +
-            '<span><span class="nm">' + esc(t.it.n) + '</span>' +
-            '<span class="sub2">' + esc(t.station) + (t.it.s ? " · " + esc(t.it.s) : "") + '</span></span>' +
-            '<span class="kc">' + Math.round(t.it.v[0]) + '</span><span class="plus">+</span></button></li>';
-        }).join("") + '</ul>';
-      menuEl.appendChild(sec0);
-    }
-  }
 
   // one suggestion per hall, for the meal you could actually walk into
   var focus = focusMeal(v, keys);
