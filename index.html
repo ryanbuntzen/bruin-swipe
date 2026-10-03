@@ -684,35 +684,55 @@ function bestAt(venue, gl, n){
   return out.slice(0, n || 4);
 }
 
+// how much of today's shortfall a whole plate closes -- in total, not per calorie,
+// because a swipe buys the plate, and juice only wins per calorie
+function plateScore(plate, gl){
+  var tot = zero();
+  plate.picks.forEach(function(p){ for (var i = 0; i < tot.length; i++) tot[i] += p.v[i] * p.q; });
+  return gl.reduce(function(s, g, i){
+    return s + (1 - i / (gl.length + 1)) * Math.min(get(tot, g.k) / Math.max(g.missing, 1e-9), 1);
+  }, 0);
+}
+
 function renderGaps(){
   var el = document.getElementById("gaps");
   var gl = gaps();
   if (!gl.length) { el.hidden = true; recIds = {}; return; }
 
-  // rank the places by what their best handful of items would close
-  var ranked = D.venues.map(function(v){
-    var top = bestAt(v, gl, 4);
-    return {v:v, score:top.reduce(function(a, b){ return a + b.score; }, 0), top:top};
-  }).filter(function(r){ return r.score > 0; });
-  ranked.sort(function(a, b){ return b.score - a.score; });
+  var cands = D.venues.map(function(v){
+    var meals = v.menu[pickDay(v, day[v.kind === "ayce" ? 0 : 1])] || {};
+    var meal = focusMeal(v, Object.keys(meals));
+    if (!meal) return null;
+    var plate = suggestPlate(meals[meal], 0, meal, v);
+    if (!plate) return null;
+    return {v: v, meal: meal, plate: plate, open: servingNow(v, meal), score: plateScore(plate, gl)};
+  }).filter(Boolean);
+  // a hall swipe is the whole buffet, so a counter only gets the nod when no hall is open
+  function hall(c){ return c.v.kind === "ayce"; }
+  function open(c){ return c.open; }
+  var pool = [cands.filter(hall).filter(open), cands.filter(open), cands.filter(hall)]
+    .filter(function(l){ return l.length; })[0] || [];
+  var ranked = pool.slice().sort(function(a, b){ return b.score - a.score; });
 
   recIds = {};
-  ranked.slice(0, 3).forEach(function(r){ r.top.forEach(function(t){ recIds[t.id] = 1; }); });
+  ranked.slice(0, 3).forEach(function(r){ r.plate.picks.forEach(function(p){ recIds[p.id] = 1; }); });
 
+  var top = ranked[0];
   el.innerHTML = '<h3>Still short today</h3><div class="short">' +
     gl.slice(0, 5).map(function(g){
       return "<span>" + LABEL[g.k] + " " + Math.round(g.frac * 100) + "%" +
              (g.ratio ? " (ratio)" : "") + "</span>";
     }).join("") + "</div>" +
-    (ranked.length
-      ? "<p>Best place for that right now: <b>" + esc(ranked[0].v.n) + "</b> — " +
-        ranked[0].top.slice(0, 2).map(function(t){ return esc(t.it.n); }).join(", ") +
+    (top
+      ? "<p>Best place for that " + (top.open ? "right now" : "next") + ": <b>" + esc(top.v.n) +
+        "</b> (" + esc(top.meal) + ") — " +
+        top.plate.picks.slice(0, 4).map(function(p){ return esc(p.it.n); }).join(", ") +
         ".</p><button class=\"go\" type=\"button\" id=\"gapGo\">Show me</button>"
       : "<p>Nothing on today's menus moves those much.</p>");
   el.hidden = false;
   var go = document.getElementById("gapGo");
   if (go) go.onclick = function(){
-    var v = ranked[0].v, di = v.kind === "ayce" ? 0 : 1;
+    var v = top.v, di = v.kind === "ayce" ? 0 : 1;
     sel[di] = decks[di].indexOf(v);
     setDeck(di); renderDeck(di);
   };
