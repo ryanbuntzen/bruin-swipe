@@ -217,13 +217,19 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   for (const n of ["Fried Eggs", "Scrambled Eggs", "Sticky Rice", "Bruin Cheeseburger",
                    "Bruin Burger", "Pork Sausage", "Bacon", "Cantaloupe", "Banana",
                    "Lowfat Milk", "Low Fat Greek Yogurt", "Sweet Potato Fries",
-                   "Grilled Rosemary Chicken Breast", "Orange Juice"]) {
+                   "Grilled Rosemary Chicken Breast", "Orange Juice",
+                   // the bread, the veg and the sauce come off a meat dish; smoothies and coconut are in
+                   "Bruin Fresh Smoothie", "Shredded Coconut", "Cheesesteak", "Ham & Swiss Sandwich",
+                   "Daube Beef Provençal", "Beef and Broccoli", "Whole Wheat Sourdough Bread"]) {
     const it = find(n);
     if (it) assert.equal(blocked(it), false, `${n} should be on the diet`);
   }
   for (const n of ["Almond Butter", "Peanut Butter", "Chocolate Peanut Butter",
                    "Garlicky Green Beans", "Oatmeal", "Chicken Tortilla Soup",
-                   "Cheese Pizza", "Banana Walnut Muffin"]) {
+                   "Cheese Pizza", "Banana Walnut Muffin",
+                   // a meat dish is still out when the rest can't be picked off, or the meat isn't meat
+                   "Chicken Noodle Soup", "Chicken & Sundried Tomato Pizza", "Pepperoni and Cheese Calzone", "Vegan Chicken Caesar Sandwich",
+                   'Roasted Garden "Salmon" Sandwich', "Wheat Berry"]) {
     const it = find(n);
     if (it) assert.equal(blocked(it), true, `${n} should be off the diet`);
   }
