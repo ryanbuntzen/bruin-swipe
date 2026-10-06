@@ -924,9 +924,32 @@ function jitter(str, seed){          // stable pseudo-random so a plate does not
   return ((h >>> 0) % 1000) / 1000;
 }
 
-// A plate is a template with slots, not an optimiser. The hand-built plans read well
-// because they said "five eggs, two sausage links, a fruit bowl, a glass of milk" --
-// so fill those same slots from whatever is on the menu today.
+// A plate is a template with slots, not an optimiser. The owner's hand-built plans read
+// well because they said "five eggs, two sausage links, a fruit bowl, a glass of milk" --
+// so fill those same slots from whatever is on the menu today. Everyone else gets
+// MyPlate's split: a protein, a grain, vegetables, fruit and dairy.
+var MIXED = "pizza|lasagna|macaroni|pasta|sandwich|burger|wrap|quesadilla|burrito|bowl|cake|pancakes?|waffles?|muffin|bread|pie|crisp|cobbler|tart|cookies?|chips|soup|casserole|vinaigrette|dressing|sauce|syrup|jam|jelly|glaze";
+var FRUIT_RE = new RegExp("^(?!.*\\b(links?|sausage|chicken|pork|turkey|juice|frozen|gelato|ice cream|tomato(es)?|" + MIXED + ")\\b).*" +
+  "\\b(fruit|cantaloupe|watermelon|pineapple|melon|grapes?|banana|apple|orange|kiwi|mango|berr\\w*|smoothie)", "i");
+var DAIRY_RE = /^(?!.*\b(frozen|bar|chocolate)\b).*\b(milk|yogurt|yoghurt|cottage|cheese)\b/i;
+var PLATE_SLOTS = {
+  Breakfast: [
+    {n:"protein", re:/\b(egg|eggs|omelet|omelette|bacon|sausage|ham|turkey|tofu|chorizo)\b/i, q:1},
+    {n:"grain",   re:/\b(oatmeal|oats|toast|bagel|pancake|waffle|bread|muffin|english muffin|granola|potato|hash brown|tortilla|biscuit)\b/i, q:1},
+    {n:"fruit",   re:FRUIT_RE, q:1},
+    {n:"dairy",   re:DAIRY_RE, q:1}
+  ],
+  Main: [
+    {n:"protein", re:/\b(chicken|beef|steak|pork|turkey|fish|salmon|cod|tilapia|shrimp|tuna|lamb|tofu|tempeh|egg|eggs|beans?|lentils?|chickpeas?|falafel|meatballs?|burger|patty|carnitas|sausage)\b/i, q:1,
+     not:new RegExp("\\b(" + MIXED + ")\\b", "i")},
+    {n:"grain",   re:/\b(rice|pasta|noodles?|quinoa|bread|roll|tortilla|couscous|potato(es)?|farro|orzo|pita)\b/i, q:1,
+     not:new RegExp("\\b(" + MIXED + "|chicken|beef|pork|shrimp|salmon|tofu|egg)\\b", "i")},
+    {n:"veg",     re:/\b(broccoli|carrots?|green beans?|spinach|kale|salad|greens|vegetables?|veggies?|zucchini|squash|cauliflower|asparagus|brussels|cabbage|peas|corn|peppers?|tomato(es)?|cucumber|mushrooms?|eggplant|bok choy)\b/i, q:1,
+     not:new RegExp("\\b(" + MIXED + "|chicken|beef|pork|shrimp|salmon)\\b", "i")},
+    {n:"fruit",   re:FRUIT_RE, q:1},
+    {n:"dairy",   re:DAIRY_RE, q:1}
+  ]
+};
 var SLOTS = {
   Breakfast: [
     {n:"eggs",   re:/\b(fried egg|scrambled egg|hard cooked egg|poached egg|omelet|^egg)/i,
@@ -1065,6 +1088,7 @@ function focusMeal(v, keys){
 }
 
 function slotsFor(meal){
+  if (!isOwner(who)) return /break|brunch/i.test(meal) ? PLATE_SLOTS.Breakfast : PLATE_SLOTS.Main;
   if (/break|brunch/i.test(meal)) return SLOTS.Breakfast;
   if (/late|night/i.test(meal)) return SLOTS.Late;
   return SLOTS.Main;
@@ -1146,7 +1170,7 @@ function suggestPlate(rows, seed, meal, v){
   slots.forEach(function(slot){
     var best = null, bs = -Infinity;
     pool.forEach(function(p){
-      if (used[p.id] || !slot.re.test(p.it.n)) return;
+      if (used[p.id] || !slot.re.test(p.it.n) || (slot.not && slot.not.test(p.it.n))) return;
       if (p.v[0] * plateQ(slot, p.it) > tK * 0.8) return;   // every slot gets a turn; the trim below pays for it
       // the slots keep the plate balanced and on its macros; inside a slot, today's gaps
       // pick which meat, which fruit, which dairy -- weighed against protein density
@@ -1180,9 +1204,31 @@ function suggestPlate(rows, seed, meal, v){
   }
 
   // top up toward the calorie target, filling whichever slot is furthest under its own size
-  // a hall is all you can eat, so its slots have no ceiling; only a counter's do
+  // Top up toward the calorie target. Each extra serving goes to whatever closes the most
+  // of this meal's share of the day's shortfall (protein and the micros) per calorie, so
+  // the plate goes lopsided when one food fills a gap the others don't; once the gaps are
+  // closed, it spreads evenly over the slots. A hall is all you can eat, so its slots have
+  // no ceiling; only a counter's do.
+  var dayV = sumVecs(todayLog()), T = targets(), left = Math.max(1, budget().today);
+  var need = {}, plateV = zero();
+  CHASE.forEach(function(k){
+    var i = NUT.indexOf(k);
+    if (i >= 0 && T[k]) need[i] = Math.max(0, T[k] - dayV[i]) / left;
+  });
+  picks.forEach(function(p){ for (var i = 0; i < plateV.length; i++) plateV[i] += p.v[i] * p.q; });
+  // A food's credit shrinks with its share of the plate, so it only runs away with the
+  // plate when it fills a gap far better than the rest -- not on a sliver of everything.
+  function gain(p){                          // share of the remaining need one serving closes, per kcal
+    var g = 0, share = p.v[0] * p.q / Math.max(1, kcal);
+    for (var i in need) {
+      if (!need[i]) continue;
+      var rem = need[i] - plateV[i];
+      if (rem > 0) g += Math.min(p.v[i], rem) / need[i];
+    }
+    return g / p.v[0] * (1 - share);
+  }
   for (var guard = 0; guard < 200 && kcal < tK * 0.92; guard++) {
-    var pick = null, ps = -Infinity;
+    var pick = null, ps = -Infinity, gainPick = null, gs = 1e-3;
     picks.forEach(function(p){
       var cals = p.v[0], s = p.slot;
       if (cals <= 0 || kcal + cals > tK * 1.06) return;
@@ -1195,7 +1241,10 @@ function suggestPlate(rows, seed, meal, v){
       }
       var sc = s.grams && p.it.g ? -p.it.g * p.q / s.grams : -p.q;
       if (sc > ps) { ps = sc; pick = p; }
+      var g = gain(p);
+      if (g > gs) { gs = g; gainPick = p; }
     });
+    pick = gainPick || pick;
     if (!pick) {                              // every slot is full: open another of the first one
       var more = null, ms = -Infinity;
       pool.forEach(function(p){
@@ -1207,10 +1256,12 @@ function suggestPlate(rows, seed, meal, v){
       if (!more) break;
       used[more.id] = 1; more.q = 1; more.slot = slots[0];
       picks.push(more); kcal += more.v[0];
+      for (var j = 0; j < plateV.length; j++) plateV[j] += more.v[j];
       continue;
     }
     pick.q += 1;
     kcal += pick.v[0];
+    for (var j = 0; j < plateV.length; j++) plateV[j] += pick.v[j];
   }
 
   var prot = picks.reduce(function(a, p){ return a + get(p.v, "protein") * p.q; }, 0);
