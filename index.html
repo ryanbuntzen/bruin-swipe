@@ -133,7 +133,8 @@ ul.items li{border-top:1px solid var(--line-soft)}
 
 /* sheets */
 .sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-start;
-  justify-content:center;padding:18px 12px;overflow:auto;z-index:20}
+  justify-content:center;padding:18px 12px;overflow:auto;z-index:20;overscroll-behavior:contain}
+html:has(.sheet:not([hidden])){overflow:hidden}
 .sheet[hidden]{display:none}
 .card2{background:var(--card);border:1px solid var(--line);border-radius:3px;
   width:100%;max-width:460px;padding:15px}
