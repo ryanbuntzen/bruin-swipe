@@ -301,4 +301,18 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(offToday({ n: "Chicken Parmesan" }), false, "ordinary items untouched");
 }
 
+// 15. an open counter that can't cover the meal loses to the next hall meal
+{
+  const gapPool = new Function(src.match(/\nfunction covers\(.*\n/)[0] +
+    src.match(/\nfunction gapPool\([\s\S]*?\n\}/)[0] + "\nreturn gapPool;")();
+  const c = (n, kind, open, kcal, target) => ({ v: { n, kind }, open, plate: { kcal, target } });
+  const cafe = c("Bruin Café", "pickup", true, 793, 1940), plate = c("Bruin Plate", "ayce", false, 1900, 1940);
+  assert.deepEqual(gapPool([cafe, plate]).map(x => x.v.n), ["Bruin Plate"], "1,940 needed: wait for the hall");
+  const small = c("Bruin Café", "pickup", true, 700, 750);
+  assert.deepEqual(gapPool([small, plate]).map(x => x.v.n), ["Bruin Café"], "a counter that covers it is fine now");
+  assert.deepEqual(gapPool([cafe]).map(x => x.v.n), ["Bruin Café"], "halls shut for the night: best on offer");
+  const open = c("De Neve", "ayce", true, 1800, 1940);
+  assert.deepEqual(gapPool([cafe, open, plate]).map(x => x.v.n), ["De Neve"], "an open hall wins");
+}
+
 console.log("all logic checks passed");
