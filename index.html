@@ -1138,6 +1138,7 @@ function suggestPlate(rows, seed, meal, v){
   if (!pool.length) return null;
 
   var tK = mealTarget();
+  var ayce = v.kind === "ayce";
   var slots = slotsFor(meal || "");
   if (swipe) return swipePlate(pool, gl, seed, tK, v.k);
   var picks = [], kcal = 0, used = {};
@@ -1158,7 +1159,7 @@ function suggestPlate(rows, seed, meal, v){
     if (!best) return;
     used[best.id] = 1;
     best.q = plateQ(slot, best.it);
-    if (slot.maxKcal) {                       // and never more than the slot is worth
+    if (slot.maxKcal && !ayce) {              // and never more than the slot is worth
       while (best.q > 1 && best.v[0] * best.q > slot.maxKcal) best.q -= 1;
     }
     best.slot = slot;
@@ -1179,14 +1180,15 @@ function suggestPlate(rows, seed, meal, v){
   }
 
   // top up toward the calorie target, filling whichever slot is furthest under its own size
-  for (var guard = 0; guard < 30 && kcal < tK * 0.92; guard++) {
+  // a hall is all you can eat, so its slots have no ceiling; only a counter's do
+  for (var guard = 0; guard < 200 && kcal < tK * 0.92; guard++) {
     var pick = null, ps = -Infinity;
     picks.forEach(function(p){
       var cals = p.v[0], s = p.slot;
       if (cals <= 0 || kcal + cals > tK * 1.06) return;
-      if (s.grams && p.it.g) {
+      if (!ayce && s.grams && p.it.g) {
         if (p.it.g * (p.q + 1) > s.grams * 1.6) return;
-      } else {
+      } else if (!ayce) {
         if (p.q >= (s.cap || 3)) return;
         if (s.maxKcal && cals * (p.q + 1) > s.maxKcal) return;
         if (s.units && unitsPerServing(p.it) * (p.q + 1) > s.units * 1.4) return;
