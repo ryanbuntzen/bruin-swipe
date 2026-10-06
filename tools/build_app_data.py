@@ -21,12 +21,11 @@ CANON = {
     "de-neve-dining": "De Neve Dining",
     "spice-kitchen": "Feast at Rieber",
     "covel-dining-2": "Covel Dining",
-    "sproul-dining": "Sproul Dining",
     "bruin-plate": "Bruin Plate",
 }
-AYCE = {"De Neve Dining", "Sproul Dining", "Covel Dining", "Feast at Rieber", "Bruin Plate"}
+AYCE = {"De Neve Dining", "Covel Dining", "Feast at Rieber", "Bruin Plate"}
 VENUE_NAME = {
-    "De Neve Dining": "De Neve", "Sproul Dining": "Sproul", "Covel Dining": "Epicuria at Covel",
+    "De Neve Dining": "De Neve", "Covel Dining": "Epicuria at Covel",
     "Feast at Rieber": "Feast at Rieber", "Bruin Plate": "Bruin Plate",
     "rendezvous": "Rendezvous", "bruin-cafe": "Bruin Café", "cafe-1919": "Café 1919",
     "the-drey": "The Drey", "the-study-at-hedrick": "The Study at Hedrick",
@@ -91,6 +90,8 @@ def main():
     stations = defaultdict(lambda: defaultdict(set))
     for rid, v in items.items():
         for w in v.get("where", []):
+            if "sproul" in w["venue"].lower():
+                continue        # UCLA's menu site still lists Sproul, but it doesn't serve
             ven = CANON.get(w["venue"], w["venue"])
             day, meal, st = w["date"], w["meal"] or "All day", w["station"]
             menus[ven][day][meal].append([st, rid])

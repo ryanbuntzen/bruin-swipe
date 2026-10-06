@@ -14,7 +14,7 @@ macros and 39 micronutrients, for every item at every dining location on campus.
 - **39 micronutrients.** UCLA publishes 19 of them per item. The other 20, including magnesium,
   zinc, selenium, copper, manganese, the B vitamins, E, K and the omega-3s, are worked out from
   the ingredient list instead. Anything worked out that way is marked `est`.
-- **Every dining location**, not just the residential halls. Five all-you-can-eat halls on the
+- **Every dining location**, not just the residential halls. Four all-you-can-eat halls on the
   first deck, then Rendezvous, Bruin Café, The Study at Hedrick, Café 1919, The Drey and
   Epicuria at Ackerman on the second. Swipe sideways to get between the two.
 - **Build-your-own items** are priced up component by component from UCLA's own picker, so the

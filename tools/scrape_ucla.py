@@ -14,7 +14,6 @@ OUT = ROOT / "data" / "ucla_raw.json"
 # Residential halls keep a rotating menu published on the at-a-glance page.
 HALL_SLUG = {
     "De Neve Dining": "de-neve-dining",
-    "Sproul Dining": "sproul-dining",
     "Covel Dining": "covel-dining-2",
     "Feast at Rieber": "spice-kitchen",
     "Bruin Plate": "bruin-plate",
