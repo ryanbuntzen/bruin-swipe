@@ -237,7 +237,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
   color:var(--ink-2);white-space:nowrap;font-variant-numeric:tabular-nums}
 .gaps p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.45}
 .gaps p b{color:var(--ink);font-weight:600}
-.gaps .go{appearance:none;font:inherit;font-size:12.5px;margin-top:8px;padding:5px 10px;
+.gaps .go,.menu .go{appearance:none;font:inherit;font-size:12.5px;margin-top:8px;padding:5px 10px;
   border:1px solid var(--ink);background:transparent;color:var(--ink);border-radius:2px;cursor:pointer}
 .badge{font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--accent);
   border:1px solid var(--accent);border-radius:2px;padding:0 4px;margin-left:5px;white-space:nowrap}
@@ -406,7 +406,7 @@ ul.items li{border-top:1px solid var(--line-soft)}
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-10-02g";
+var BUILD = "2026-10-06a";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -487,17 +487,19 @@ var sel = [0, 0];             // selected venue per deck
 var day = [null, null];       // selected menu day per deck
 var deckIdx = 0;
 var recIds = {};              // item ids the recommender is pushing right now
+var allMeals = false;         // show every meal period, not just the one you could walk into
 
 function load(){
   try {
     var raw = JSON.parse(localStorage.getItem("bruinswipe") || "{}");
     people = raw.people || {};
     who = raw.who || null;
+    allMeals = !!raw.allMeals;
     if (who && !people[who]) who = null;
   } catch (e) { people = {}; who = null; }
 }
 function save(){
-  try { localStorage.setItem("bruinswipe", JSON.stringify({people:people, who:who})); }
+  try { localStorage.setItem("bruinswipe", JSON.stringify({people:people, who:who, allMeals:allMeals})); }
   catch (e) {}
 }
 function me(){ return people[who] || {goal:2000, diets:[], log:{}, rules:[]}; }
@@ -1282,6 +1284,9 @@ function renderDeck(di){
 
   // one suggestion per hall, for the meal you could actually walk into
   var focus = focusMeal(v, keys);
+  // today shows only that meal: breakfast from 5am until it ends, then lunch, then dinner
+  var periods = d === dayKey() && keys.length > 1;
+  if (periods && !allMeals) keys = focus ? [focus] : [];
 
   keys.forEach(function(meal){
     var byStation = {};
@@ -1323,7 +1328,15 @@ function renderDeck(di){
       (hidden ? " · " + hidden + " hidden by diet" : "") + '</small></h3></header>' + inner;
     menuEl.appendChild(sec);
   });
-  if (!menuEl.children.length) menuEl.innerHTML = '<p class="empty">Nothing on this day\'s menu.</p>';
+  if (!menuEl.children.length) menuEl.innerHTML = '<p class="empty">' +
+    (periods && !allMeals ? "Closed for the night." : "Nothing on this day\'s menu.") + "</p>";
+  if (periods) {
+    var tg = document.createElement("button");
+    tg.type = "button"; tg.className = "go";
+    tg.textContent = allMeals ? "Only the current meal" : "Show all meals today";
+    tg.onclick = function(){ allMeals = !allMeals; save(); renderDeck(di); };
+    menuEl.appendChild(tg);
+  }
 }
 
 // UCLA publishes "3.29oz", which is useless in line. Each item carries the unit it is
