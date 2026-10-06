@@ -808,10 +808,37 @@ var CHASE = ["protein","fiber","potassium","calcium","iron","magnesium","phospho
              "thiamin","riboflavin","niacin","vit_b6","folate","vit_b12","pantothenic",
              "choline","omega3_ala","omega3_epa","omega3_dha"];
 
+// What the body actually takes up. The targets already assume a mixed diet, so only the
+// plant forms that absorb far worse than that are marked down: iron from plants (the RDA
+// for vegetarians is 1.8x), zinc from plants (phytates, up to 1.5x), and calcium from
+// high-oxalate greens (~5% absorbed against ~30% from dairy). Vitamin A is published as
+// RAE, which already counts carotene's poor conversion. Panels keep the label's numbers;
+// this is only what the gap tracking and the plates count.
+var PLANT_ONLY = {iron: 1 / 1.8, zinc: 1 / 1.5};
+var OXALATE = /\b(spinach|chard|beet greens|rhubarb)\b/i;
+function absorbed(v, it){
+  if (!it || (it.t || []).indexOf("vegan") < 0) return v;
+  var out = v.slice();
+  Object.keys(PLANT_ONLY).forEach(function(k){
+    var i = NUT.indexOf(k); if (i >= 0) out[i] *= PLANT_ONLY[k];
+  });
+  var c = NUT.indexOf("calcium");
+  if (c >= 0 && OXALATE.test(it.n)) out[c] *= 5 / 30;
+  return out;
+}
+function sumAbsorbed(list){
+  var out = zero();
+  list.forEach(function(e){
+    var v = absorbed(vecOf(e), D.items[e.id]);
+    for (var i = 0; i < out.length; i++) out[i] += v[i];
+  });
+  return out;
+}
+
 function gaps(){
   var log = todayLog();
   if (!log.length) return [];                       // nothing to advise on before the first meal
-  var v = sumVecs(log), T = targets(), out = [];
+  var v = sumAbsorbed(log), T = targets(), out = [];
   CHASE.forEach(function(k){
     if (NUT.indexOf(k) < 0 || !T[k]) return;
     var got = get(v, k), frac = got / T[k];
@@ -831,10 +858,10 @@ function gaps(){
 
 function scoreItem(it, gl){
   if (!it.v || !gl.length) return 0;
-  var s = 0;
+  var s = 0, av = absorbed(it.v, it);
   gl.forEach(function(g, i){
     var w = 1 - i / (gl.length + 1);                // the furthest-behind nutrient matters most
-    var share = get(it.v, g.k) / Math.max(g.missing, 1e-9);
+    var share = get(av, g.k) / Math.max(g.missing, 1e-9);
     s += w * Math.min(share, 1);
   });
   // per-calorie, so a 1,200 kcal platter does not win on bulk alone
@@ -845,7 +872,7 @@ function scoreItem(it, gl){
 // because a swipe buys the plate, and juice only wins per calorie
 function plateScore(plate, gl){
   var tot = zero();
-  plate.picks.forEach(function(p){ for (var i = 0; i < tot.length; i++) tot[i] += p.v[i] * p.q; });
+  plate.picks.forEach(function(p){ for (var i = 0; i < tot.length; i++) tot[i] += p.av[i] * p.q; });
   return gl.reduce(function(s, g, i){
     return s + (1 - i / (gl.length + 1)) * Math.min(get(tot, g.k) / Math.max(g.missing, 1e-9), 1);
   }, 0);
@@ -1155,7 +1182,7 @@ function suggestPlate(rows, seed, meal, v){
     // the owner diet takes the bread off a meat sandwich, unless it is sourdough
     var skip = isOwner(who) && !/sourdough/i.test(it.n) ? (it.rm || []).slice() : [];
     var v = plateVec(rid, it, skip);
-    pool.push({id: rid, it: it, v: v, skip: skip, station: station});
+    pool.push({id: rid, it: it, v: v, av: absorbed(v, it), skip: skip, station: station});
   }
   rows.forEach(function(row){
     var it = D.items[row[1]];
@@ -1214,13 +1241,13 @@ function suggestPlate(rows, seed, meal, v){
   // the plate goes lopsided when one food fills a gap the others don't; once the gaps are
   // closed, it spreads evenly over the slots. A hall is all you can eat, so its slots have
   // no ceiling; only a counter's do.
-  var dayV = sumVecs(todayLog()), T = targets(), left = Math.max(1, budget().today);
+  var dayV = sumAbsorbed(todayLog()), T = targets(), left = Math.max(1, budget().today);
   var need = {}, plateV = zero();
   CHASE.forEach(function(k){
     var i = NUT.indexOf(k);
     if (i >= 0 && T[k]) need[i] = Math.max(0, T[k] - dayV[i]) / left;
   });
-  picks.forEach(function(p){ for (var i = 0; i < plateV.length; i++) plateV[i] += p.v[i] * p.q; });
+  picks.forEach(function(p){ for (var i = 0; i < plateV.length; i++) plateV[i] += p.av[i] * p.q; });
   // A food's credit shrinks with its share of the plate, by calories and by weight, so it
   // only runs away with the plate when it fills a gap far better than the rest -- and a
   // low-calorie vegetable can't fill the plate with two kilos of itself.
@@ -1231,7 +1258,7 @@ function suggestPlate(rows, seed, meal, v){
     for (var i in need) {
       if (!need[i]) continue;
       var rem = need[i] - plateV[i];
-      if (rem > 0) g += Math.min(p.v[i], rem) / need[i];
+      if (rem > 0) g += Math.min(p.av[i], rem) / need[i];
     }
     return g / p.v[0] * (1 - share) * (1 - heft) * (1 - heft);
   }
@@ -1264,12 +1291,12 @@ function suggestPlate(rows, seed, meal, v){
       if (!more) break;
       used[more.id] = 1; more.q = 1; more.slot = slots[0];
       picks.push(more); kcal += more.v[0];
-      for (var j = 0; j < plateV.length; j++) plateV[j] += more.v[j];
+      for (var j = 0; j < plateV.length; j++) plateV[j] += more.av[j];
       continue;
     }
     pick.q += 1;
     kcal += pick.v[0];
-    for (var j = 0; j < plateV.length; j++) plateV[j] += pick.v[j];
+    for (var j = 0; j < plateV.length; j++) plateV[j] += pick.av[j];
   }
 
   var prot = picks.reduce(function(a, p){ return a + get(p.v, "protein") * p.q; }, 0);

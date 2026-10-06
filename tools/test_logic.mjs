@@ -321,4 +321,14 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.deepEqual(gapPool([cafe, open, plate]).map(x => x.v.n), ["De Neve"], "an open hall wins");
 }
 
+// 16. plant iron and zinc, and calcium from high-oxalate greens, count at what's absorbed
+{
+  const absorbed = new Function("NUT", src.match(/\nvar PLANT_ONLY = .*\n/)[0] + src.match(/\nvar OXALATE = .*\n/)[0] +
+    src.match(/\nfunction absorbed\([\s\S]*?\n\}/)[0] + "\nreturn absorbed;")(["kcal", "iron", "zinc", "calcium"]);
+  const v = [20, 1.8, 1.5, 60];
+  assert.deepEqual(absorbed(v, { n: "Spinach", t: ["vegan"] }).map(x => +x.toFixed(2)), [20, 1, 1, 10], "spinach: plant iron, zinc, oxalate calcium");
+  assert.deepEqual(absorbed(v, { n: "Roasted Brussels Sprouts", t: ["vegan"] }).map(x => +x.toFixed(2)), [20, 1, 1, 60], "sprouts: calcium is fine");
+  assert.deepEqual(absorbed(v, { n: "Grilled Rosemary Chicken Breast" }), v, "animal foods untouched");
+}
+
 console.log("all logic checks passed");
