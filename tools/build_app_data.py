@@ -119,6 +119,9 @@ def main():
         for ms in v["menu"].values() if v["k"] in HALL_MILK else []:
             for rows in ms.values():
                 rows.extend(r for r in HALL_MILK[v["k"]] if r not in rows)
+    for ms in next(v for v in venues if v["k"] == "De Neve Dining")["menu"].values():
+        if "Breakfast" in ms and ["Beverages", "6568"] not in ms["Breakfast"]:
+            ms["Breakfast"].append(["Beverages", "6568"])     # orange juice, The Study's panel
 
     # A hall's yogurt bar is out at every meal, but UCLA only lists it at some of them
     # (De Neve skips it at breakfast), so copy a day's yogurt-bar rows to its other meals.

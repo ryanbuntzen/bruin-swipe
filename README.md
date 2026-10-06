@@ -86,9 +86,9 @@ State lives in `localStorage`. Nothing is sent anywhere and there are no account
 
 ## Known gaps
 
-- **Hall beverage lines aren't published.** No UCLA menu itemises hall drinks. Lowfat and
-  nonfat milk are added to De Neve and Bruin Plate by hand in `build_app_data.py`, borrowing
-  The Study's panels; any other hall drink has to be logged through search.
+- **Hall beverage lines aren't published.** No UCLA menu itemises hall drinks. Milk (De Neve,
+  Bruin Plate), De Neve's breakfast orange juice and the yogurt bars' honey are added by hand in
+  `build_app_data.py`; any other hall drink has to be logged through search.
 - **Menus only publish a week ahead**, so the day picker covers the published window and falls
   back to the nearest day outside it.
 - **Bruin Bowl, To-Go Lunches and the food trucks** publish no menu at all.
