@@ -285,6 +285,12 @@
       "name": "Whole Milk",
       "serving": "8 fl oz",
       "parts": [["Milk, whole, 3.25% milkfat, with added vitamin D", 244]]
+    },
+    {
+      "key": "m-honey",
+      "name": "Squeezable Honey",
+      "serving": "1 tbsp",
+      "parts": [["Honey", 21]]
     }
   ]
 }

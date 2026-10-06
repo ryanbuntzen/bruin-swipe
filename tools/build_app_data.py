@@ -200,6 +200,17 @@ def main():
                            "note": v.get("note", ""),
                            "menu": {"standing": {"All day": v["rows"]}}})
 
+    # every yogurt bar has squeezable honey; UCLA lists it at none of them
+    if "m-honey" in out:
+        for rec in out.values():
+            if rec["n"] == "Yogurt Bar" and rec.get("b") and "m-honey" not in rec["b"][-1]:
+                rec["b"][-1].append("m-honey")
+        for v in venues:
+            for ms in v["menu"].values():
+                for rows in ms.values():
+                    if any(r[0] == "Yogurt Bar" for r in rows) and ["Yogurt Bar", "m-honey"] not in rows:
+                        rows.append(["Yogurt Bar", "m-honey"])
+
     # parts you can leave on the tray, attached to the items whose names imply them
     rp = DATA / "removals.json"
     removals = {}
