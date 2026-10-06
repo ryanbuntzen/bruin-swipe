@@ -120,6 +120,22 @@ def main():
             for rows in ms.values():
                 rows.extend(r for r in HALL_MILK[v["k"]] if r not in rows)
 
+    # A hall's yogurt bar is out at every meal, but UCLA only lists it at some of them
+    # (De Neve skips it at breakfast), so copy a day's yogurt-bar rows to its other meals.
+    def yog(r):
+        n = items.get(r[1], {}).get("name", "")
+        return "yogurt bar" in (r[0] + " " + n).lower() and \
+               "frozen" not in n.lower()
+    for v in venues:
+        if v["kind"] != "ayce":
+            continue
+        for ms in v["menu"].values():
+            bar = [r for rows in ms.values() for r in rows if yog(r)]
+            bar = [r for i, r in enumerate(bar) if r not in bar[:i]]
+            for rows in ms.values():
+                if bar and not any(yog(r) for r in rows):
+                    rows.extend(bar)
+
     # ---- items
     out = {}
     for rid, v in items.items():
