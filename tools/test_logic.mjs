@@ -230,13 +230,19 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
                    "Grilled Rosemary Chicken Breast", "Orange Juice",
                    // the bread, the veg and the sauce come off a meat dish; smoothies and coconut are in
                    "Bruin Fresh Smoothie", "Shredded Coconut", "Cheesesteak", "Ham & Swiss Sandwich",
-                   "Daube Beef Provençal", "Beef and Broccoli", "Whole Wheat Sourdough Bread"]) {
+                   "Daube Beef Provençal", "Beef and Broccoli", "Whole Wheat Sourdough Bread",
+                   // cooked greens are in, wherever the hall serves them
+                   "Roasted Brussels Sprouts", "Roasted Broccoli", "Roasted Broccoli w/ Garlic",
+                   "Sauteed Kale", "Roasted Kale", "Sautéed Spinach", "Wilted Collard Greens"]) {
     const it = find(n);
     if (it) assert.equal(blocked(it), false, `${n} should be on the diet`);
   }
   for (const n of ["Almond Butter", "Peanut Butter", "Chocolate Peanut Butter",
                    "Garlicky Green Beans", "Oatmeal", "Chicken Tortilla Soup",
-                   "Cheese Pizza", "Banana Walnut Muffin",
+                   "Cheese Pizza", "Banana Walnut Muffin", "Spinach", "Baby Spinach",
+                   // raw, or a green inside something else
+                   "Spaghetti w/ Broccoli Pesto", "Kale & Quinoa Pilaf", "Artichoke Spinach Dip",
+                   "Tortellini w/ Spinach & Mornay Sauce", "Italian Broccoli & Cauliflower",
                    // a meat dish is still out when the rest can't be picked off, or the meat isn't meat
                    "Chicken Noodle Soup", "Chicken & Sundried Tomato Pizza", "Pepperoni and Cheese Calzone", "Vegan Chicken Caesar Sandwich",
                    'Roasted Garden "Salmon" Sandwich', "Wheat Berry"]) {

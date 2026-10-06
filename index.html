@@ -507,6 +507,9 @@ var DIETS = [
    meat:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|calamari|squid|cheesesteak)\b/i,
    fused:/(pasta|noodle|ramen|spaghetti|penne|lasagna|macaroni|mac (and|&)|fettuccine|linguine|rigatoni|ravioli|gnocchi|orzo|udon|soba|ziti|lo mein|chow mein|pizza|calzone|flatbread|stromboli|soup|chowder|bisque|stew|chili\b|gumbo|pot pie|casserole|dumpling|potsticker|gyoza|wonton|empanada|egg ?roll|spring roll|lumpia|samosa|nachos|chilaquiles|enchilada|tamale|pho\b|sinigang|quiche|frittata|vegan|vegetarian|meatless|plant|beyond|impossible|veggie|tofu|seitan|tempeh|\bbeans?\b|lentil|chickpea|")/i,   // "Salmon" in quotes is the imitation
    allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr|blueberr|raspberr|blackberr|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam|honey|sourdough|coconut|smoothie|calamari|squid)\b/i,
+   // one exception to "no veg": cooked greens, for vitamin K and fiber -- plain, not a salad,
+   // a pesto or a pasta, and not the salad bar's raw spinach
+   greens:/^(?=.*\b(roasted|sauteed|sautéed|steamed|wilted|braised|garlicky|stir.?fried|charred|blanched)\b)(?!.*\b(salad|pesto|dip|pasta|spaghetti|quinoa|pilaf|tofu|cheese|cream|gratin|bake|tortellini|rotini)\b).*\b(brussels|broccoli|broccolini|kale|collards?|chard|spinach|bok choy|mustard greens)\b/i,
    owner:true,
    deny:/(broccoli|kale|spinach|cauliflower|brussels|asparagus|zucchini|eggplant|mushroom|arugula|chard|collard|cabbage|celery|cucumber|lettuce|tomato|avocado|olive|quinoa|lentil|chickpea|garbanzo|hummus|tofu|seitan|tempeh|\bbeans?\b|\bpeas?\b|\bcorn\b|pasta|noodle|ramen|spaghetti|penne|lasagna|macaroni|fettuccine|linguine|rigatoni|ravioli|gnocchi|orzo|udon|soba|bread|bagel|\bbun\b|toast|muffin|cookie|cake|pie\b|brownie|blondie|donut|doughnut|pastry|croissant|danish|fritter|scone|tart|cobbler|crisp\b|pudding|eclair|waffle|pancake|crepe|\boat|granola|cereal|pizza|calzone|stromboli|sandwich|panini|\bsub\b|wrap|burrito|quesadilla|soup|chowder|bisque|stew|curry|chili|pilaf|couscous|farro|barley|bulgur|dressing|vinaigrette|boba|vegan|vegetarian|beyond|impossible|chips|cupcake|frosting|churro|flan|turnover|fudge|veggie|plant|strudel|parfait|compote|jam|syrup|sorbet|gelato|mousse|almond|peanut|cashew|walnut|pecan|pistachio|hazelnut|macadamia|tahini|sesame|nutella|gianduja|praline|marzipan|granola|seed|sunflower|pumpkin seed|chia|flax|hemp|dressing|aioli|pesto|salsa|chutney|relish|marinade|glaze|gravy|broth|stock|puree|sauce|mochi|cacao|dulce|caramel|ice cream|soft serve|pearl|popping|crouton|cracker|pretzel|ziti|dumpling|nachos|pita|pho\b|sinigang|spanakopita|chilaquiles|cream of wheat|wheat berr|special k|speical k|boba|spritzer|horchata|latte|mocha|frappe|shake)/i}];
 var DIET_BY_KEY = {};
@@ -779,6 +782,7 @@ function blocked(it){
     if (D.allow) {
       var n = it.n.replace(/sourdough( bread| toast| roll)?/ig, "sourdough");   // the one bread that is in
       if (D.meat.test(n)) { if (D.fused.test(n)) return true; continue; }
+      if (D.greens && D.greens.test(n)) continue;
       if (D.deny.test(n)) return true;               // deny beats allow
       if (!D.allow.test(n)) return true;             // anything unnamed is out
       continue;
@@ -969,7 +973,8 @@ var SLOTS = {
     {n:"starch", re:/\b(rice|sweet potato|yam)\b/i,                                         grams:237, q:3},
     {n:"fruit",  re:/^(?!.*\b(links?|sausage|chicken|pork|turkey|juice|frozen|gelato|ice cream)\b).*\b(fruit|cantaloupe|watermelon|pineapple|melon|grape|banana|apple|orange|kiwi|mango|berr|smoothie)/i, grams:150, q:1},
     {n:"milk",   re:/\bmilk\b(?!.*(chocolate|soy|oat|almond))/i,                             grams:240, q:1},
-    {n:"yogurt", re:/^(?!.*\b(frozen|bar)\b).*\b(yogurt|yoghurt|cottage)\b/i,                  grams:170, q:1}
+    {n:"yogurt", re:/^(?!.*\b(frozen|bar)\b).*\b(yogurt|yoghurt|cottage)\b/i,                  grams:170, q:1},
+    {n:"greens", re:DIET_BY_KEY.animalfruit.greens,                                            grams:113, q:1}   // cooked greens: vitamin K and fiber
   ],
   Late: [
     {n:"main",   re:/\b(beef|steak|burger|patty|chicken|pork|bacon|sausage|egg|salmon|shrimp)\b/i, q:1, cap:3},
@@ -1216,16 +1221,19 @@ function suggestPlate(rows, seed, meal, v){
     if (i >= 0 && T[k]) need[i] = Math.max(0, T[k] - dayV[i]) / left;
   });
   picks.forEach(function(p){ for (var i = 0; i < plateV.length; i++) plateV[i] += p.v[i] * p.q; });
-  // A food's credit shrinks with its share of the plate, so it only runs away with the
-  // plate when it fills a gap far better than the rest -- not on a sliver of everything.
+  // A food's credit shrinks with its share of the plate, by calories and by weight, so it
+  // only runs away with the plate when it fills a gap far better than the rest -- and a
+  // low-calorie vegetable can't fill the plate with two kilos of itself.
+  function grams(){ return picks.reduce(function(a, p){ return a + (p.it.g || 100) * p.q; }, 0); }
   function gain(p){                          // share of the remaining need one serving closes, per kcal
-    var g = 0, share = p.v[0] * p.q / Math.max(1, kcal);
+    var g = 0, share = p.v[0] * p.q / Math.max(1, kcal),
+        heft = (p.it.g || 100) * p.q / Math.max(1, grams());
     for (var i in need) {
       if (!need[i]) continue;
       var rem = need[i] - plateV[i];
       if (rem > 0) g += Math.min(p.v[i], rem) / need[i];
     }
-    return g / p.v[0] * (1 - share);
+    return g / p.v[0] * (1 - share) * (1 - heft) * (1 - heft);
   }
   for (var guard = 0; guard < 200 && kcal < tK * 0.92; guard++) {
     var pick = null, ps = -Infinity, gainPick = null, gs = 1e-3;
