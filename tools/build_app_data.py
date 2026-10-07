@@ -252,16 +252,20 @@ def main():
     # Servings UCLA weighs as several of what you're handed. The per-gram panel is fine;
     # the serving is cut down to one piece, so a serving in the app is what's on the plate.
     PIECE = {
-        "Hawaiian BBQ Chicken": (85, "1 piece (about 3 oz)",
+        "Hawaiian BBQ Chicken": (85, "1 piece (about 3 oz)", [0, "piece", "pieces", "piece"],
             "UCLA lists one serving as {g:.0f} g / {k} kcal -- about four of the 3 oz pieces "
             "Rieber actually serves. Same recipe per gram, sized to one piece."),
+        "Japanese Karaage Popcorn Chicken": (72, "about 6 pieces", [12, "piece", "pieces", "count"],
+            "UCLA lists one serving as {g:.0f} g / {k} kcal, but what's handed out is 5-6 small "
+            "pieces (~12 g each). Same recipe per gram, sized to 6 pieces -- and UCLA's recipe "
+            "counts a lot of spicy mayo, which is most of the fat."),
     }
     for rec in out.values():
         if rec["n"] in PIECE and rec.get("g"):
-            g, serving, note = PIECE[rec["n"]]
+            g, serving, p, note = PIECE[rec["n"]]
             rec["note"] = note.format(g=rec["g"], k=round(rec["v"][0]))
             rec["v"] = [round_sig(x * g / rec["g"]) for x in rec["v"]]
-            rec.update({"g": g, "s": serving, "p": [0, "piece", "pieces", "piece"]})
+            rec.update({"g": g, "s": serving, "p": p})
 
     for rid, note in FIX.items():
         fix = out.pop("fix-" + rid, None)
