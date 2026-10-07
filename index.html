@@ -963,6 +963,7 @@ var MIXED = "pizza|lasagna|macaroni|pasta|sandwich|burger|wrap|quesadilla|burrit
 var FRUIT_RE = new RegExp("^(?!.*\\b(links?|sausage|chicken|pork|turkey|juice|frozen|gelato|ice cream|tomato(es)?|" + MIXED + ")\\b).*" +
   "\\b(fruit|cantaloupe|watermelon|pineapple|melon|grapes?|banana|apple|orange|kiwi|mango|berr\\w*|smoothie)", "i");
 var DAIRY_RE = /^(?!.*\b(frozen|bar|chocolate)\b).*\b(milk|yogurt|yoghurt|cottage|cheese)\b/i;
+var MIXED_RE = new RegExp("\\b(" + MIXED + ")\\b", "i");
 var PLATE_SLOTS = {
   Breakfast: [
     {n:"protein", re:/\b(egg|eggs|omelet|omelette|bacon|sausage|ham|turkey|tofu|chorizo)\b/i, q:1},
@@ -1171,6 +1172,7 @@ function swipePlate(pool, gl, seed, tK, vk){
   return {picks: picks, kcal: kcal, prot: prot, target: tK};
 }
 
+var STACK = 3;                                // portions of one meat before a second one is preferred
 function suggestPlate(rows, seed, meal, v){
   var gl = gaps();
   var swipe = v.kind === "pickup";
@@ -1260,7 +1262,10 @@ function suggestPlate(rows, seed, meal, v){
       var rem = need[i] - plateV[i];
       if (rem > 0) g += Math.min(p.av[i], rem) / need[i];
     }
-    return g / p.v[0] * (1 - share) * (1 - heft) * (1 - heft);
+    // past STACK portions of one meat, each more counts for less, so a second meat
+    // gets its turn; the meat still stacks when it is the only one that fills the gap
+    var deep = p.slot === slots[0] && p.q >= STACK ? STACK / (p.q + 1) : 1;
+    return g / p.v[0] * (1 - share) * (1 - heft) * (1 - heft) * deep;
   }
   for (var guard = 0; guard < 200 && kcal < tK * 0.92; guard++) {
     var pick = null, ps = -Infinity, gainPick = null, gs = 1e-3;
@@ -1280,15 +1285,21 @@ function suggestPlate(rows, seed, meal, v){
       if (g > gs) { gs = g; gainPick = p; }
     });
     pick = gainPick || pick;
-    if (!pick) {                              // every slot is full: open another of the first one
+    // the same meat 3 portions deep: put a second meat next to it if the hall has one
+    var stacked = pick && pick.slot === slots[0] && pick.q >= STACK, more = null;
+    if (!pick || stacked) {                   // every slot is full: open another of the first one
       var more = null, ms = -Infinity;
       pool.forEach(function(p){
         if (used[p.id] || !slots[0].re.test(p.it.n) || kcal + p.v[0] > tK * 1.06) return;
         if (slots[0].avoid && slots[0].avoid.test(p.it.n)) return;
+        if (slots[0].not && slots[0].not.test(p.it.n)) return;
+        if (stacked && MIXED_RE.test(p.it.n)) return;  // a lasagna or a soup is not a second meat
         var sc = get(p.v, "protein") / Math.max(1, p.v[0] / 100) + jitter(p.id, seed);
         if (sc > ms) { ms = sc; more = p; }
       });
-      if (!more) break;
+      if (!more && !pick) break;
+    }
+    if (more && (!pick || stacked)) {
       used[more.id] = 1; more.q = 1; more.slot = slots[0];
       picks.push(more); kcal += more.v[0];
       for (var j = 0; j < plateV.length; j++) plateV[j] += more.av[j];
