@@ -214,6 +214,24 @@ def main():
                     if any(r[0] == "Yogurt Bar" for r in rows) and ["Yogurt Bar", "m-honey"] not in rows:
                         rows.append(["Yogurt Bar", "m-honey"])
 
+    # Cooked rice is 100-130 kcal per 100 g and dry rice about 360, so a "rice" panel above
+    # ~280 was worked out from the dry rice that went into the scoop. Scale the whole panel
+    # to cooked rice of the same kind (USDA: glutinous 97, brown 112, white 130).
+    for rid, rec in out.items():
+        n = rec["n"].lower()
+        if "rice" not in n or not rec.get("v") or not rec.get("g") or \
+           any(w in n for w in ("fried", "pudding", "bowl", "beans", "cereal", "cake")):
+            continue
+        dens = rec["v"][0] / rec["g"] * 100
+        if dens < 280:
+            continue
+        ref = 97 if "sticky" in n or "glutinous" in n else 112 if "brown" in n else 130
+        k = ref / dens
+        rec["v"] = [round_sig(x * k) for x in rec["v"]]
+        rec["note"] = (f"UCLA's panel works out to {dens:.0f} kcal per 100 g, which only dry rice "
+                       f"reaches (cooked is about {ref}), so it was calculated from the uncooked rice. "
+                       f"Scaled to cooked rice of the same weight.")
+
     # parts you can leave on the tray, attached to the items whose names imply them
     rp = DATA / "removals.json"
     removals = {}

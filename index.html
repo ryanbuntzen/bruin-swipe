@@ -1548,6 +1548,9 @@ function openItem(rid){
       ' — that is the batch the kitchen makes, not a plate. Dial the servings down to ' +
       'the fraction you actually take.</span>';
   }
+  if (it.note) {
+    whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) + '<span class="warnline">' + esc(it.note) + '</span>';
+  }
   if (it.src === "reconstructed") {
     whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) +
       '<span class="warnline">Nobody publishes a panel for a food truck. ' +
