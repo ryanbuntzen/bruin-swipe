@@ -249,6 +249,20 @@ def main():
                 "mostly bread: ~60 g naan, ~40 g cooked chicken thigh, a little yogurt marinade "
                 "and peppers, priced against USDA. A ballpark.",
     }
+    # Servings UCLA weighs as several of what you're handed. The per-gram panel is fine;
+    # the serving is cut down to one piece, so a serving in the app is what's on the plate.
+    PIECE = {
+        "Hawaiian BBQ Chicken": (85, "1 piece (about 3 oz)",
+            "UCLA lists one serving as {g:.0f} g / {k} kcal -- about four of the 3 oz pieces "
+            "Rieber actually serves. Same recipe per gram, sized to one piece."),
+    }
+    for rec in out.values():
+        if rec["n"] in PIECE and rec.get("g"):
+            g, serving, note = PIECE[rec["n"]]
+            rec["note"] = note.format(g=rec["g"], k=round(rec["v"][0]))
+            rec["v"] = [round_sig(x * g / rec["g"]) for x in rec["v"]]
+            rec.update({"g": g, "s": serving, "p": [0, "piece", "pieces", "piece"]})
+
     for rid, note in FIX.items():
         fix = out.pop("fix-" + rid, None)
         if rid in out and fix:
