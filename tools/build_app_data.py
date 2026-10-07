@@ -214,22 +214,29 @@ def main():
                     if any(r[0] == "Yogurt Bar" for r in rows) and ["Yogurt Bar", "m-honey"] not in rows:
                         rows.append(["Yogurt Bar", "m-honey"])
 
-    # Cooked rice is 100-130 kcal per 100 g and dry rice about 360, so a "rice" panel above
-    # ~280 was worked out from the dry rice that went into the scoop. Scale the whole panel
-    # to cooked rice of the same kind (USDA: glutinous 97, brown 112, white 130).
+    # Cooked rice is 100-130 kcal per 100 g and dry rice about 360. Plain rice (rice, water,
+    # salt, garlic or saffron) that comes out denser than cooked rice of its kind -- by more
+    # than a quarter -- was worked out from rice that wasn't fully cooked; anything above ~280,
+    # oil or not, from the dry rice itself. Keep UCLA's weight, scale the whole panel to
+    # cooked rice of the same kind (USDA: glutinous 97, brown 112, white 130).
+    PLAIN = re.compile(r"rice|water|salt|garlic|saffron|bay leaf", re.I)
     for rid, rec in out.items():
         n = rec["n"].lower()
         if "rice" not in n or not rec.get("v") or not rec.get("g") or \
            any(w in n for w in ("fried", "pudding", "bowl", "beans", "cereal", "cake")):
             continue
+        ing = items.get(rid, {}).get("ingredients") or []
+        plain = bool(ing) and all(PLAIN.search(x) for x in ing)
+        low = " ".join(ing).lower() + " " + n
+        ref = 97 if "sticky" in low and "calrose" not in low or "glutinous" in low else \
+              112 if "brown" in low else 130
         dens = rec["v"][0] / rec["g"] * 100
-        if dens < 280:
+        if dens < (ref * 1.25 if plain else 280):
             continue
-        ref = 97 if "sticky" in n or "glutinous" in n else 112 if "brown" in n else 130
         k = ref / dens
         rec["v"] = [round_sig(x * k) for x in rec["v"]]
-        rec["note"] = (f"UCLA's panel works out to {dens:.0f} kcal per 100 g, which only dry rice "
-                       f"reaches (cooked is about {ref}), so it was calculated from the uncooked rice. "
+        rec["note"] = (f"UCLA's panel works out to {dens:.0f} kcal per 100 g; cooked rice of this kind "
+                       f"is about {ref}, so it was calculated from uncooked or part-cooked rice. "
                        f"Scaled to cooked rice of the same weight.")
 
     # Servings UCLA publishes for something other than what you're handed: the panel is
