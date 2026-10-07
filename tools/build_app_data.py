@@ -244,9 +244,10 @@ def main():
     # keyed "fix-<id>"), and the note says what UCLA's number was.
     FIX = {
         "8197": "UCLA's 533 g / {k} kcal serving is the whole plate: the naan wrap plus saffron "
-                "basmati rice and raita. This is the wrap alone, rebuilt from its recipe card "
-                "(4 oz raw chicken thigh, one naan of about 90 g, yogurt marinade, peppers) "
-                "against USDA.",
+                "basmati rice and raita. UCLA doesn't publish the wrap alone or how much chicken "
+                "goes in, so this is the wrap as served -- about the size of a deck of cards and "
+                "mostly bread: ~60 g naan, ~40 g cooked chicken thigh, a little yogurt marinade "
+                "and peppers, priced against USDA. A ballpark.",
     }
     for rid, note in FIX.items():
         fix = out.pop("fix-" + rid, None)
