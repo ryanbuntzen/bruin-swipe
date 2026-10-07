@@ -232,6 +232,22 @@ def main():
                        f"reaches (cooked is about {ref}), so it was calculated from the uncooked rice. "
                        f"Scaled to cooked rice of the same weight.")
 
+    # Servings UCLA publishes for something other than what you're handed: the panel is
+    # replaced with the item rebuilt from its own recipe card (manual_venues.json extras,
+    # keyed "fix-<id>"), and the note says what UCLA's number was.
+    FIX = {
+        "8197": "UCLA's 533 g / {k} kcal serving is the whole plate: the naan wrap plus saffron "
+                "basmati rice and raita. This is the wrap alone, rebuilt from its recipe card "
+                "(4 oz raw chicken thigh, one naan of about 90 g, yogurt marinade, peppers) "
+                "against USDA.",
+    }
+    for rid, note in FIX.items():
+        fix = out.pop("fix-" + rid, None)
+        if rid in out and fix:
+            rec = out[rid]
+            rec["note"] = note.format(k=round(rec["v"][0]))
+            rec.update({"v": fix["v"], "g": fix["g"], "s": fix["s"], "src": "recipe"})
+
     # parts you can leave on the tray, attached to the items whose names imply them
     rp = DATA / "removals.json"
     removals = {}
@@ -245,6 +261,9 @@ def main():
             if rec.get("src") == "reconstructed":
                 continue
             keys = [k for k, r in spec.items() if _re.search(r["match"], rec["n"], _re.I)]
+            ing = " ".join(items.get(rid, {}).get("ingredients") or []).lower()
+            if "naan" in ing:                  # a naan wrap has no tortilla to take off
+                keys = [k for k in keys if k != "tortilla"]
             if keys:
                 rec["rm"] = keys
 

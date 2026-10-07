@@ -291,6 +291,20 @@
       "name": "Squeezable Honey",
       "serving": "1 tbsp",
       "parts": [["Honey", 21]]
+    },
+    {
+      "key": "fix-8197",
+      "name": "Tandoori Chicken Wrap",
+      "serving": "1 wrap",
+      "parts": [
+        ["Chicken, broilers or fryers, thigh, meat only, cooked, roasted", 85],
+        ["Bread, naan, plain, commercially prepared, refrigerated", 90],
+        ["Yogurt, Greek, plain, lowfat", 15],
+        ["Oil, olive, salad or cooking", 5],
+        ["Peppers, sweet, red, raw", 15],
+        ["Peppers, sweet, green, raw", 15],
+        ["Lemon juice, raw", 5]
+      ]
     }
   ]
 }
