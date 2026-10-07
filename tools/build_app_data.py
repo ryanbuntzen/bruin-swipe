@@ -42,7 +42,7 @@ PORTION = [
     (r"\bturkey bacon",                                  13,  "strip", "strips", "count"),
     (r"\bbacon\b",                                       15,  "strip", "strips", "count"),
     (r"sausage|link|chorizo|hot ?dog|frank",              28,  "link", "links", "count"),
-    (r"\bmilk\b|juice|spritzer|\bwater\b|kombucha|tea", 240, "glass", "glasses", "count"),
+    (r"\bmilk\b|juice|spritzer|\bwater\b|kombucha|\bteas?\b", 240, "glass", "glasses", "count"),
     (r"yogurt|cottage cheese",                           113, "ladle", "ladles", "halfcup"),
     (r"sliced .*cheese|cheese.*slice|swiss|provolone|american cheese", 28, "slice", "slices", "count"),
     (r"\bham\b|roast beef|pastrami|salami|prosciutto|deli|sliced turkey",
