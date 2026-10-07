@@ -278,6 +278,9 @@ def main():
                 for rows in ms.values() for r in rows}
     other_ids = {r[1] for v in venues if v["kind"] != "ayce" for ms in v["menu"].values()
                  for rows in ms.values() for r in rows}
+    # the filling of a build-your-own is one portion too -- a sandwich gets 3 oz of
+    # carnitas, not the 17 oz pan UCLA's recipe card is written for
+    comp_ids = {c for rec in out.values() for g in rec.get("b", []) for c in g}
     MIXED_DISH = re.compile(r"sandwich|bao|burger|wrap|burrito|taco|torta|hot ?dog|corn ?dog|panini|\bsub\b|"
                             r"slider|quesadilla|flatbread|pizza|calzone|bowl|salad|soup|pasta|fettuccine|"
                             r"alfredo|lasagna|rice|noodle|ramen|nachos|chilaquiles|polenta|marinara|pancake|"
@@ -288,7 +291,7 @@ def main():
     BONE = re.compile(r"\bribs?\b|drumstick|wings?|bone.?in", re.I)
     HAND = re.compile(r"sandwich|\bbao\b|burger|wrap|burrito|torta|panini|\bsub\b|quesadilla", re.I)
     for rid, rec in out.items():
-        if rid not in hall_ids or rid in other_ids or rec.get("note") or not rec.get("g") or not rec.get("v"):
+        if (rid not in hall_ids and rid not in comp_ids) or rid in other_ids or rec.get("note") or not rec.get("g") or not rec.get("v"):
             continue
         n = rec["n"]
         if HAND.search(n):
@@ -303,7 +306,7 @@ def main():
         if rec["g"] <= ref * over or rec["v"][0] / rec["g"] * 100 < dense:
             continue
         rec["note"] = (f"UCLA lists one serving as {rec['g']:.0f} g / {round(rec['v'][0])} kcal -- several "
-                       f"portions; the halls hand out one. Sized to one standard portion of {what} "
+                       f"portions; a plate or a build gets one. Sized to one standard portion of {what} "
                        f"({ref} g, the FDA reference amount), same recipe per gram.")
         rec["v"] = [round_sig(x * ref / rec["g"]) for x in rec["v"]]
         rec.update({"g": ref, "s": f"1 portion ({ref} g)", "p": [0, "portion", "portions", "piece"]})
