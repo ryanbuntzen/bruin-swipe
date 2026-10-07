@@ -1267,6 +1267,7 @@ function suggestPlate(rows, seed, meal, v){
     var deep = p.slot === slots[0] && p.q >= STACK ? STACK / (p.q + 1) : 1;
     return g / p.v[0] * (1 - share) * (1 - heft) * (1 - heft) * deep;
   }
+  var more1 = null;
   for (var guard = 0; guard < 200 && kcal < tK * 0.92; guard++) {
     var pick = null, ps = -Infinity, gainPick = null, gs = 1e-3;
     picks.forEach(function(p){
@@ -1286,7 +1287,7 @@ function suggestPlate(rows, seed, meal, v){
     });
     pick = gainPick || pick;
     // the same meat 3 portions deep: put a second meat next to it if the hall has one
-    var stacked = pick && pick.slot === slots[0] && pick.q >= STACK, more = null;
+    var stacked = pick && pick.slot === slots[0] && pick.q >= STACK && more1 == null, more = null;
     if (!pick || stacked) {                   // every slot is full: open another of the first one
       var more = null, ms = -Infinity;
       pool.forEach(function(p){
@@ -1300,6 +1301,7 @@ function suggestPlate(rows, seed, meal, v){
       if (!more && !pick) break;
     }
     if (more && (!pick || stacked)) {
+      if (stacked) more1 = more;              // one second meat, not a buffet of them
       used[more.id] = 1; more.q = 1; more.slot = slots[0];
       picks.push(more); kcal += more.v[0];
       for (var j = 0; j < plateV.length; j++) plateV[j] += more.av[j];
