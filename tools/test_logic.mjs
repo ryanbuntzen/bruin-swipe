@@ -232,6 +232,7 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
                    "Bruin Fresh Smoothie", "Shredded Coconut", "Cheesesteak", "Ham & Swiss Sandwich",
                    "Daube Beef Provençal", "Beef and Broccoli", "Whole Wheat Sourdough Bread",
                    // cooked greens are in, wherever the hall serves them
+                   "Strawberries", "Wild Blueberries",            // "strawberr" once stopped at the word edge
                    "Roasted Brussels Sprouts", "Roasted Broccoli", "Roasted Broccoli w/ Garlic",
                    "Sauteed Kale", "Roasted Kale", "Sautéed Spinach", "Wilted Collard Greens"]) {
     const it = find(n);
