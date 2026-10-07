@@ -74,7 +74,7 @@ def parse_venue_page(html, venue, out, date="standing"):
     for sec, body in secs:
         meal, _, station = sec.partition("-")
         station = station.replace("-", " ").strip() or meal
-        for card in re.finditer(r"<h3>([^<]+)</h3>(.*?)(?=<section class='recipe-card|</main>)", body, re.S):
+        for card in re.finditer(r"<h3>([^<]+)</h3>(.*?)(?=<section class='recipe-card|</main>|$)", body, re.S):
             name = card.group(1).strip()
             rid = re.search(r"recipe=(\d+)", card.group(2))
             if rid:
