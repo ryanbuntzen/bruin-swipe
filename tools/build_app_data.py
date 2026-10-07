@@ -267,6 +267,48 @@ def main():
             rec["v"] = [round_sig(x * g / rec["g"]) for x in rec["v"]]
             rec.update({"g": g, "s": serving, "p": p})
 
+    # The same pattern, everywhere else: a hall hands out one portion, while some of UCLA's
+    # "servings" are several. The yardstick is the FDA's reference amount for one portion
+    # (21 CFR 101.12): 85 g of cooked meat or fish, about 130 g of it on the bone, 140 g
+    # for a sandwich-type item. A hall item more than twice that (three times for a
+    # sandwich, so a real burger is left alone) is cut to one portion; the panel per gram
+    # stays UCLA's. Mixed dishes -- pasta, bowls, stews and so on -- have no clean
+    # yardstick and are left as published.
+    hall_ids = {r[1] for v in venues if v["kind"] == "ayce" for ms in v["menu"].values()
+                for rows in ms.values() for r in rows}
+    other_ids = {r[1] for v in venues if v["kind"] != "ayce" for ms in v["menu"].values()
+                 for rows in ms.values() for r in rows}
+    MIXED_DISH = re.compile(r"sandwich|bao|burger|wrap|burrito|taco|torta|hot ?dog|corn ?dog|panini|\bsub\b|"
+                            r"slider|quesadilla|flatbread|pizza|calzone|bowl|salad|soup|pasta|fettuccine|"
+                            r"alfredo|lasagna|rice|noodle|ramen|nachos|chilaquiles|polenta|marinara|pancake|"
+                            r"benedict|egg roll|dumpling|\bbun\b|\bbar\b|stew|curry|chili|casserole|pot pie|"
+                            r"\bmac\b|loco moco|omelet|scramble|hash|sukiyaki|vegan|tofu|plant|beyond", re.I)
+    MEAT = re.compile(r"chicken|pork|beef|steak|lamb|turkey|salmon|fish|cod|tilapia|shrimp|\bribs?\b|"
+                      r"drumstick|thigh|wings?|katsu|tenderloin|brisket|carnitas", re.I)
+    BONE = re.compile(r"\bribs?\b|drumstick|wings?|bone.?in", re.I)
+    HAND = re.compile(r"sandwich|\bbao\b|burger|wrap|burrito|torta|panini|\bsub\b|quesadilla", re.I)
+    for rid, rec in out.items():
+        if rid not in hall_ids or rid in other_ids or rec.get("note") or not rec.get("g") or not rec.get("v"):
+            continue
+        n = rec["n"]
+        if HAND.search(n):
+            ref, over, what, dense = 140, 3, "a sandwich-type item", 180
+        elif MEAT.search(n) and not MIXED_DISH.search(n):
+            ref, over, what = (130, 2, "meat on the bone") if BONE.search(n) else (85, 2, "cooked meat or fish")
+            dense = 130
+        else:
+            continue
+        # too light per gram to be the meat or the sandwich: mostly sauce, or the weight is the
+        # wrong number -- either way, scaling by weight would make it worse
+        if rec["g"] <= ref * over or rec["v"][0] / rec["g"] * 100 < dense:
+            continue
+        rec["note"] = (f"UCLA lists one serving as {rec['g']:.0f} g / {round(rec['v'][0])} kcal -- several "
+                       f"portions; the halls hand out one. Sized to one standard portion of {what} "
+                       f"({ref} g, the FDA reference amount), same recipe per gram.")
+        rec["v"] = [round_sig(x * ref / rec["g"]) for x in rec["v"]]
+        rec.update({"g": ref, "s": f"1 portion ({ref} g)", "p": [0, "portion", "portions", "piece"]})
+        rec.pop("batch", None)
+
     for rid, note in FIX.items():
         fix = out.pop("fix-" + rid, None)
         if rid in out and fix:
