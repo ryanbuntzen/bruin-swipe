@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <title>Bruin Swipe Card</title>
 <meta name="description" content="Log what you eat at UCLA dining and see the full nutrient panel: calories, macros and 39 micronutrients.">
 <meta name="theme-color" content="#14202c">
@@ -17,6 +17,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
 <style>
+html{touch-action:pan-x pan-y}   /* no pinch or double-tap zoom; Safari ignores user-scalable=no */
 :root{
   --paper:#e9edf2; --card:#ffffff; --card-2:#f4f7fa;
   --ink:#14202c; --ink-2:#556879; --ink-3:#8496a5;
@@ -437,11 +438,13 @@ html:has(.sheet:not([hidden])){overflow:hidden}
 
 <script>
 "use strict";
+// iOS Safari still pinch-zooms past user-scalable=no; its gesture events are the only stop
+document.addEventListener("gesturestart", function(e){ e.preventDefault(); });
 
 /* ------------------------------------------------------------------ constants */
 
 // A day rolls over at 05:00 local, not midnight — a 2am plate belongs to the night before.
-var BUILD = "2026-10-07a";
+var BUILD = "2026-11-03a";
 var DAY_START_HOUR = 5;
 
 // The allowlist diet and the personal target rules are one person's, not everyone's.
@@ -506,7 +509,7 @@ var DIETS = [
   {k:"animalfruit", n:"Meat, eggs, dairy, fruit",
    meat:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|calamari|squid|cheesesteak)\b/i,
    fused:/(pasta|noodle|ramen|spaghetti|penne|lasagna|macaroni|mac (and|&)|fettuccine|linguine|rigatoni|ravioli|gnocchi|orzo|udon|soba|ziti|lo mein|chow mein|pizza|calzone|flatbread|stromboli|soup|chowder|bisque|stew|chili\b|gumbo|pot pie|casserole|dumpling|potsticker|gyoza|wonton|empanada|egg ?roll|spring roll|lumpia|samosa|nachos|chilaquiles|enchilada|tamale|pho\b|sinigang|quiche|frittata|vegan|vegetarian|meatless|plant|beyond|impossible|veggie|tofu|seitan|tempeh|\bbeans?\b|lentil|chickpea|")/i,   // "Salmon" in quotes is the imitation
-   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr\w*|blueberr\w*|raspberr\w*|blackberr\w*|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam|honey|sourdough|coconut|smoothie|calamari|squid)\b/i,
+   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr\w*|blueberr\w*|raspberr\w*|blackberr\w*|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam|honey|sourdough|coconut|smoothie|calamari|squid|hash ?browns?)\b/i,
    // one exception to "no veg": cooked greens, for vitamin K and fiber -- plain, not a salad,
    // a pesto or a pasta, and not the salad bar's raw spinach
    greens:/^(?=.*\b(roasted|sauteed|sautéed|steamed|wilted|braised|garlicky|stir.?fried|charred|blanched)\b)(?!.*\b(salad|pesto|dip|pasta|spaghetti|quinoa|pilaf|tofu|cheese|cream|gratin|bake|tortellini|rotini)\b).*\b(brussels|broccoli|broccolini|kale|collards?|chard|spinach|bok choy|mustard greens)\b/i,
@@ -1202,7 +1205,7 @@ function suggestPlate(rows, seed, meal, v){
   var pool = [], seen = {};
   function add(rid, station){
     var it = D.items[rid];
-    if (!it || !it.v || !it.v[0] || seen[rid] || it.batch || blocked(it) || offToday(it)) return;
+    if (!it || !it.v || !it.v[0] || seen[rid] || it.batch || it.bad || blocked(it) || offToday(it)) return;
     seen[rid] = 1;
     // the owner diet takes the bread off a meat sandwich, unless it is sourdough
     var skip = isOwner(who) && !/sourdough/i.test(it.n) ? (it.rm || []).slice() : [];
@@ -1218,7 +1221,7 @@ function suggestPlate(rows, seed, meal, v){
       var b = null, bs = -Infinity;
       g.forEach(function(cid){
         var c = D.items[cid];
-        if (!c || !c.v || !c.v[0] || c.batch || blocked(c)) return;   // a batch-size part is no portion
+        if (!c || !c.v || !c.v[0] || c.batch || c.bad || blocked(c)) return;   // a batch-size part is no portion
         var sc = get(c.v, "protein") + scoreItem(c, gl) * 20 + jitter(cid, seed);
         if (sc > bs) { bs = sc; b = cid; }
       });
@@ -2003,7 +2006,7 @@ fetch("build.json", {cache: "no-store"})
     }
   })
   .catch(function(){})
-  .then(function(){ return fetch("data/foods.json?v=" + BUILD); }).then(function(r){
+  .then(function(){ return fetch("data/foods.json", {cache: "no-cache"}); }).then(function(r){   // revalidate: the nightly job replaces it
   if (!r.ok) throw new Error("foods.json " + r.status);
   return r.json();
 }).then(function(db){
