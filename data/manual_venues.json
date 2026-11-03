@@ -312,6 +312,109 @@
       "parts": [
         ["Pork sausage, link/patty, cooked, pan-fried", 40]
       ]
+    },
+    {
+      "key": "fix-6527",
+      "name": "Coney Island Hot Dog",
+      "serving": "1 hot dog",
+      "parts": [
+        ["Rolls, hamburger or hotdog, plain", 60],
+        ["Frankfurter, beef, heated", 91],
+        ["Chili con carne with beans, canned entree", 120],
+        ["Onions, raw", 12]
+      ]
+    },
+    {
+      "key": "fix-6553",
+      "name": "Pitted Kalamata Olives",
+      "serving": "1 oz",
+      "parts": [
+        ["Olives, ripe, canned (small-extra large)", 28]
+      ]
+    },
+    {
+      "key": "fix-7056",
+      "name": "Decaf Coffee",
+      "serving": "16 oz",
+      "parts": [
+        ["Beverages, coffee, brewed, prepared with tap water, decaffeinated", 454]
+      ]
+    },
+    {
+      "key": "fix-7361",
+      "name": "Raspberry Pan Sorbet",
+      "serving": "8 oz",
+      "parts": [
+        ["Raspberries, raw", 110],
+        ["Sugars, granulated", 55],
+        ["Water, tap, drinking", 62]
+      ]
+    },
+    {
+      "key": "fix-7362",
+      "name": "Strawberry Pan Sorbet",
+      "serving": "8 oz",
+      "parts": [
+        ["Strawberries, raw", 120],
+        ["Sugars, granulated", 55],
+        ["Water, tap, drinking", 52]
+      ]
+    },
+    {
+      "key": "fix-7225",
+      "name": "Whipped Cream",
+      "serving": "1 oz",
+      "parts": [
+        ["Cream, whipped, cream topping, pressurized", 28]
+      ]
+    },
+    {
+      "key": "fix-5611",
+      "name": "Boomtown Hazy IPA",
+      "serving": "12 oz",
+      "parts": [
+        ["Alcoholic beverage, beer, regular, all", 355]
+      ]
+    },
+    {
+      "key": "fix-1627",
+      "name": "Common Space Fresh Pils Of LA",
+      "serving": "12 oz",
+      "parts": [
+        ["Alcoholic beverage, beer, regular, all", 355]
+      ]
+    },
+    {
+      "key": "fix-1631",
+      "name": "Lost Coast Downtown Brown",
+      "serving": "12 oz",
+      "parts": [
+        ["Alcoholic beverage, beer, regular, all", 355]
+      ]
+    },
+    {
+      "key": "fix-5610",
+      "name": "Mexican Sonrisa Lager",
+      "serving": "12 oz",
+      "parts": [
+        ["Alcoholic beverage, beer, regular, all", 355]
+      ]
+    },
+    {
+      "key": "fix-1643",
+      "name": "Dark Horse Chardonnay",
+      "serving": "6 oz",
+      "parts": [
+        ["Alcoholic beverage, wine, table, white, Chardonnay", 170]
+      ]
+    },
+    {
+      "key": "fix-1642",
+      "name": "OZV Red Blend",
+      "serving": "6 oz",
+      "parts": [
+        ["Alcoholic beverage, wine, table, red", 170]
+      ]
     }
   ]
 }

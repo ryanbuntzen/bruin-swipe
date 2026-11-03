@@ -73,7 +73,6 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
 }
 
 // 4. targets scale with the calorie goal only when the rule is on, and ceilings never move
-//    (the rule is owner-gated, so this also proves the gate opens for the owner)
 {
   PROFILE.rules = [];
   const plain = targets();
@@ -85,10 +84,10 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
   assert.equal(scaled.satfat, 20, "saturated fat ceiling does not scale");
   assert.equal(scaled.kcal, 3100);
 
-  // ... and stays shut for anyone else, even with the rule ticked
+  // ... for anyone who ticks it, not just the owner
   const other = new Function("DB", "PROFILE", sandbox + "\nreturn RESULT;")(
     DB, { name: "someone else", goal: 3100, diets: [], rules: ["scale"], log: {} });
-  assert.equal(other.targets().protein, 50, "target scaling is owner-only");
+  assert.ok(Math.abs(other.targets().protein - 50 * 3100 / 2000) < 1e-9, "anyone can scale targets");
 
   PROFILE.rules = [];
 }

@@ -220,6 +220,8 @@ def main():
             if it.get("desc"):
                 out[rid]["d"] = it["desc"]
         for v in man["venues"]:
+            for _, rid in v["rows"]:
+                out[rid]["e"] = 1            # a truck item is estimated end to end
             venues.append({"k": v["k"], "n": v["n"], "kind": v["kind"],
                            "note": v.get("note", ""),
                            "menu": {"standing": {"All day": v["rows"]}}})
@@ -263,15 +265,11 @@ def main():
     # Servings UCLA publishes for something other than what you're handed: the panel is
     # replaced with the item rebuilt from its own recipe card (manual_venues.json extras,
     # keyed "fix-<id>"), and the note says what UCLA's number was.
+    EST = "UCLA's numbers for this were impossible, so these are estimates."
     FIX = {
-        "8197": "UCLA's 533 g / {k} kcal serving is the whole plate: the naan wrap plus saffron "
-                "basmati rice and raita. UCLA doesn't publish the wrap alone or how much chicken "
-                "goes in, so this is the wrap as served -- about the size of a deck of cards and "
-                "mostly bread: ~60 g naan, ~40 g cooked chicken thigh, a little yogurt marinade "
-                "and peppers, priced against USDA. A ballpark.",
-        "2031": "UCLA lists two 1 oz (raw) links at {k} kcal -- about 510 kcal per 100 g, fattier than "
-                "any pork sausage USDA has, raw or cooked, while its protein matches plain pork links. "
-                "Rebuilt as two pan-fried links (~20 g each cooked) from USDA.",
+        "8197": "UCLA's number is the whole plate with rice. This is the wrap alone, estimated.",
+        "2031": EST, "6527": EST, "6553": EST, "7056": EST, "7361": EST, "7362": EST, "7225": EST,
+        "5611": EST, "1627": EST, "1631": EST, "5610": EST, "1643": EST, "1642": EST,
     }
     # Servings UCLA weighs as several of what you're handed. The per-gram panel is fine;
     # the serving is cut down to one piece, so a serving in the app is what's on the plate.
@@ -342,61 +340,61 @@ def main():
         rec.update({"g": ref, "s": f"1 portion ({ref} g)", "p": [0, "portion", "portions", "piece"]})
         rec.pop("batch", None)
 
-    BROKEN = {
-        "7056": "UCLA's panel says 1,604 kcal for a cup of decaf, which is broken (black coffee is ~5).",
-        "480": "UCLA lists this at 31 kcal; the same drink at The Study and The Drey is 480. Probably broken.",
-        "321": "UCLA's panel is 1,013 kcal for 4 oz of seitan, which is impossible (seitan is ~140 kcal per 4 oz).",
-        "2457": "UCLA lists 2,163 kcal for one bowl of ramen soup -- several times what a bowl can hold. Probably a batch figure.",
-        "3057": "UCLA lists 1,784 kcal for a 16 oz bowl, denser than the rice and beans in it can be. Probably broken.",
-        "6527": "UCLA lists 1,624 kcal for one 10 oz hot dog -- twice as dense as a chili dog can be. Probably broken.",
-        "5962": "A custom recipe UCLA publishes no nutrition for (it lists 0 kcal).",
-        "5958": "A custom recipe UCLA publishes no nutrition for (it lists 0 kcal).",
-        "3052": "UCLA lists 2,012 kcal for a 16 oz bowl, denser than the rice and meat in it can be. Probably broken.",
-    }
-    for rid, note in BROKEN.items():
-        if rid in out:
-            out[rid]["note"] = note
-    # Pure fat is 900 kcal per 100 g; a dish past ~600 that isn't oil, nuts or a spread is a
-    # broken panel (a 4 oz chicken breast at 1,182 kcal). Flagged, and kept out of plates.
+    # Impossible UCLA panels. Almost all are recipes that count several times the "Olive Oil
+    # Blend" that goes in: protein and carbs look right, the fat does not. Fixed below, in order:
+    # a hand rebuild (FIX), the same dish elsewhere per gram, or the extra oil taken back out.
+    BROKEN = {"2457", "3057", "3052", "321", "480"}   # caught by eye, under the automatic limits
     FATTY = re.compile(r"oil|butter|\bnuts?\b|almond|peanut|pecan|walnut|cashew|seed|chip|mayo|aioli|dressing|"
                        r"vinaigrette|fried garlic|fried shallot|bacon|chocolate|cookie|praline|granola|spread|pesto|tahini|ghee|lard|chicharr", re.I)
     OILY_OK = re.compile(r"cheese|cream|sausage|chorizo|salami|pepperoni|avocado|olive|coconut|fudge|"
                          r"ganache|frosting|nutella|pork belly|popcorn|sauce", re.I)
-    for rid, rec in out.items():
+    def impossible(rid, rec):
+        if rid in BROKEN:
+            return True
         if not rec.get("v") or not rec.get("g") or rec.get("note") or FATTY.search(rec["n"]):
+            return False
+        # pure fat is 900 kcal per 100 g; over ~35% of the weight as fat is oil, not a dish
+        return rec["v"][0] / rec["g"] * 100 > 600 or \
+               rec["v"][2] > 0.35 * rec["g"] and not OILY_OK.search(rec["n"])
+    by_name = defaultdict(list)
+    for rid, rec in out.items():
+        by_name[rec["n"]].append(rid)
+    I_FAT = [ORDER.index(k) for k in ("fat", "satfat", "mufa", "pufa", "omega3_ala", "omega6", "vit_e", "vit_k")]
+    bad = [rid for rid, rec in out.items() if rid not in FIX and impossible(rid, rec)]
+    for rid in bad:
+        rec = out[rid]
+        twin = {"480": "9205"}.get(rid) or next((t for t in by_name[rec["n"]] if t != rid and t not in bad
+                                                and out[t].get("g") and out[t].get("v")), None)
+        if twin:                                   # the same dish at another venue, per gram
+            rec["v"] = [round_sig(x * rec["g"] / out[twin]["g"]) for x in out[twin]["v"]]
+        elif rec["v"][2] > 0.10 * rec["g"]:        # take the extra oil out: fat down to 10% of the weight
+            k = 0.10 * rec["g"] / rec["v"][2]
+            v = list(rec["v"])
+            v[0] -= 9 * v[2] * (1 - k)
+            for i in I_FAT:
+                v[i] *= k
+            rec["v"] = [round_sig(x) for x in v]
+        else:
+            rec["note"] = "UCLA's numbers for this are broken. Left out of suggested plates."
+            rec["bad"] = 1
             continue
-        dens = rec["v"][0] / rec["g"] * 100
-        if dens > 600:
-            rec["note"] = (f"UCLA's panel works out to {dens:.0f} kcal per 100 g, more than this food can "
-                           f"hold (pure fat is 900). Probably broken -- left out of suggested plates.")
-            rec["bad"] = 1
-        # more than ~35% of the weight as fat is oil, not a cooked dish (Bruin Plate's 3 oz of
-        # scrambled egg whites listed with 34 g of fat)
-        elif rec["v"][2] > 0.35 * rec["g"] and not OILY_OK.search(rec["n"]):
-            rec["note"] = (f"UCLA's panel has {rec['v'][2]:.0f} g of fat in {rec['g']:.0f} g -- the recipe "
-                           f"counts far more oil than goes in. Probably broken -- left out of suggested plates.")
-            rec["bad"] = 1
-    for rid in BROKEN:
-        if rid in out:
-            out[rid]["bad"] = 1
-    # Bruin Plate's eggs: same 3.29 oz scoop as De Neve's, panel broken the same way -> De Neve's
+        rec["note"], rec["e"] = EST, 1
+    # Bruin Plate's eggs: same 3.29 oz scoop as De Neve's, whose panel is fine
     for rid, twin in {"506": "6542", "989": "9742"}.items():
         if rid in out and twin in out and abs(out[rid]["g"] - out[twin]["g"]) < 2:
-            out[rid].pop("bad", None)
-            out[rid]["note"] = (f"UCLA lists this at {round(out[rid]['v'][0])} kcal, nearly all of it oil "
-                                f"the recipe over-counts. Same scoop as De Neve's, so this is De Neve's panel.")
+            out[rid]["note"] = "UCLA's numbers for this were broken, so it uses De Neve's (same scoop)."
             out[rid]["v"] = list(out[twin]["v"])
-    for rid, rec in out.items():                      # a 0 kcal sorbet, beer or whipped cream
-        if rec.get("v") and not rec["v"][0] and rid in other_ids and not rec.get("note") and \
-           re.search(r"sorbet|cream|cake|ipa|lager|pils|brown\b|chardonnay|red blend|wine", rec["n"], re.I):
-            rec["note"] = "UCLA publishes 0 kcal for this, which can't be right. Log it with that in mind."
+            out[rid].pop("e", None)
+    for rid, rec in out.items():                   # custom recipes UCLA posts nothing for
+        if rec.get("v") is not None and not rec["v"][0] and "Custom Recipe" in (items.get(rid, {}).get("ingredients_raw") or ""):
+            rec["note"], rec["bad"] = "UCLA doesn't post nutrition for this one.", 1
 
     for rid, note in FIX.items():
         fix = out.pop("fix-" + rid, None)
         if rid in out and fix:
             rec = out[rid]
-            rec["note"] = note.format(k=round(rec["v"][0]))
-            rec.update({"v": fix["v"], "g": fix["g"], "s": fix["s"], "src": "recipe"})
+            rec["note"] = note
+            rec.update({"v": fix["v"], "g": fix["g"], "s": fix["s"], "src": "recipe", "e": 1})
     if "2031" in out:
         out["2031"]["p"] = [20, "link", "links", "count"]     # cooked link, so 1 serving reads "2 links"
 

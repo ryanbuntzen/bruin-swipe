@@ -406,8 +406,9 @@ html:has(.sheet:not([hidden])){overflow:hidden}
       <div class="diets" id="fDiets"></div>
     </div>
     <div class="fld">
-      <label>Personal rules</label>
+      <label>Options</label>
       <div class="diets" id="fRules"></div>
+      <div class="diets"><label><input type="checkbox" id="fAllMeals"> Show every meal on today's menu, not just the current one</label></div>
     </div>
     <div class="btns">
       <button class="btn ghost" id="setupDel" type="button">Delete</button>
@@ -501,7 +502,7 @@ var DIETS = [
   {k:"noredmeat",  n:"No red meat", bad:/\b(beef|steak|lamb|pork|bacon|ham|brisket|tri.?tip|sirloin|veal|carnitas|gyudon|riblet|pastrami|meatball)\b/i},
   {k:"nodairy",    n:"No dairy", bad:/\b(milk|cheese|butter|cream|yogurt|yoghurt|queso|ghee|custard|gelato)\b/i},
   // Defined by what is in rather than what is out, so this one is an allowlist: meat,
-  // eggs, dairy, fruit, carrots, rice and sweet potato, and nothing else. `deny` wins
+  // eggs, dairy, fruit, carrots, rice and potatoes, and nothing else. `deny` wins
   // over `allow`, which is how a vegetable dish that happens to name a meat -- chicken
   // tortilla soup -- still gets filtered out. A dish that names a meat skips `deny`
   // and answers only to `fused`: the broccoli, the bun and the sauce come off the tray,
@@ -509,7 +510,7 @@ var DIETS = [
   {k:"animalfruit", n:"Meat, eggs, dairy, fruit",
    meat:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|calamari|squid|cheesesteak)\b/i,
    fused:/(pasta|noodle|ramen|spaghetti|penne|lasagna|macaroni|mac (and|&)|fettuccine|linguine|rigatoni|ravioli|gnocchi|orzo|udon|soba|ziti|lo mein|chow mein|pizza|calzone|flatbread|stromboli|soup|chowder|bisque|stew|chili\b|gumbo|pot pie|casserole|dumpling|potsticker|gyoza|wonton|empanada|egg ?roll|spring roll|lumpia|samosa|nachos|chilaquiles|enchilada|tamale|pho\b|sinigang|quiche|frittata|vegan|vegetarian|meatless|plant|beyond|impossible|veggie|tofu|seitan|tempeh|\bbeans?\b|lentil|chickpea|")/i,   // "Salmon" in quotes is the imitation
-   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr\w*|blueberr\w*|raspberr\w*|blackberr\w*|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam|honey|sourdough|coconut|smoothie|calamari|squid|hash ?browns?)\b/i,
+   allow:/\b(egg|eggs|omelet|omelette|beef|steak|tri.?tip|sirloin|brisket|burger|cheeseburger|hamburger|patty|meatball|lamb|pork|bacon|ham|sausage|carnitas|chorizo|riblet|pastrami|prosciutto|gyudon|carne|barbacoa|pastor|chicken|turkey|fish|salmon|tuna|shrimp|cod|tilapia|halibut|katsu|milk|cheese|yogurt|yoghurt|cottage|butter|cream|fruit|apple|banana|orange|grape|melon|cantaloupe|watermelon|pineapple|mango|kiwi|berry|berries|strawberr\w*|blueberr\w*|raspberr\w*|blackberr\w*|peach|pear|plum|cherry|papaya|guava|carrot|rice|sweet potato|yam|honey|sourdough|coconut|smoothie|calamari|squid|potato|potatoes|hash ?browns?|tater tots?|fries)\b/i,
    // one exception to "no veg": cooked greens, for vitamin K and fiber -- plain, not a salad,
    // a pesto or a pasta, and not the salad bar's raw spinach
    greens:/^(?=.*\b(roasted|sauteed|sautéed|steamed|wilted|braised|garlicky|stir.?fried|charred|blanched)\b)(?!.*\b(salad|pesto|dip|pasta|spaghetti|quinoa|pilaf|tofu|cheese|cream|gratin|bake|tortellini|rotini)\b).*\b(brussels|broccoli|broccolini|kale|collards?|chard|spinach|bok choy|mustard greens)\b/i,
@@ -544,7 +545,8 @@ function save(){
   catch (e) {}
 }
 function me(){ return people[who] || {goal:2000, diets:[], log:{}, rules:[]}; }
-function hasRule(k){ return isOwner(who) && (me().rules || []).indexOf(k) >= 0; }
+// omega balance is part of the owner diet, not a choice; the rest are per-profile checkboxes
+function hasRule(k){ return k === "omega" ? isOwner(who) : (me().rules || []).indexOf(k) >= 0; }
 
 // Per-nutrient target for the person eating.  The FDA's Daily Values assume a 2,000
 // kcal day, so someone eating 3,100 needs proportionally more of anything the body
@@ -714,6 +716,13 @@ function fmt(n, unit){
 }
 function isEstimated(key){ return NUT.indexOf(key) >= MEASURED; }
 
+function onTruck(rid){
+  return (D.venues || []).some(function(v){
+    return v.kind === "truck" && Object.keys(v.menu).some(function(d){
+      return Object.keys(v.menu[d]).some(function(m){ return v.menu[d][m].some(function(r){ return r[1] === rid; }); });
+    });
+  });
+}
 function nutTable(vec, opts){
   opts = opts || {};
   var T = targets();
@@ -727,7 +736,7 @@ function nutTable(vec, opts){
       if (!val && k !== "kcal" && !MAJOR[k]) return;          // skip empty trace rows
       var dv = T[k];
       var pct = dv ? Math.round(val / dv * 100) : null;
-      var est = isEstimated(k);
+      var est = opts.allEst || isEstimated(k);
       if (est) anyEst = true;
       html += '<tr' + (MAJOR[k] ? ' class="major"' : '') + '>' +
         '<td>' + LABEL[k] + (est ? '<span class="est" title="estimated from ingredients">est</span>' : '') + '</td>' +
@@ -1612,11 +1621,9 @@ function openItem(rid){
   if (it.note) {
     whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) + '<span class="warnline">' + esc(it.note) + '</span>';
   }
-  if (it.src === "reconstructed") {
+  if (it.src === "reconstructed" && onTruck(rid)) {
     whEl.innerHTML = esc(wh.slice(0, 2).join("   ")) +
-      '<span class="warnline">Nobody publishes a panel for a food truck. ' +
-      'Every number here is reconstructed from the vendor\'s own description of the item' +
-      (it.d ? " — " + esc(it.d) : "") + ', priced against USDA. Treat it as a ballpark.</span>';
+      '<span class="warnline">Estimated from the truck\'s menu. They don\'t post nutrition info.</span>';
   }
   document.getElementById("itemServing").textContent =
     it.s ? ("One serving: " + it.s + (it.g ? " (" + it.g + " g)" : "")) : "";
@@ -1687,7 +1694,7 @@ function renderItem(){
   document.getElementById("qVal").textContent =
     (cur.q === 0.5 ? "½" : cur.q) + (cur.q === 1 ? " serving" : " servings") +
     (g ? "  ·  " + Math.round(g * cur.q) + " g" : "");
-  document.getElementById("itemNut").innerHTML = nutTable(vecOf(cur));
+  document.getElementById("itemNut").innerHTML = nutTable(vecOf(cur), {allEst: !!it.e});
 }
 
 document.getElementById("qPlus").onclick = function(){
@@ -1868,8 +1875,7 @@ function paintDietOptions(name){
   });
 }
 var RULES = [
-  {k:"scale", n:"Scale nutrient targets to my calories"},
-  {k:"omega", n:"Hold omega-3:6 between 1:1 and 1:2"}
+  {k:"scale", n:"Scale nutrient targets to my calories"}
 ];
 var fRules = document.getElementById("fRules");
 function paintRuleOptions(name){
@@ -1879,7 +1885,6 @@ function paintRuleOptions(name){
     l.innerHTML = '<input type="checkbox" value="' + r.k + '"> ' + r.n;
     fRules.appendChild(l);
   });
-  fRules.parentNode.hidden = !isOwner(name);
 }
 
 function openSetup(name){
@@ -1904,6 +1909,7 @@ function openSetup(name){
   fGoal.value = p ? p.goal : "";
   setDiets(p ? (p.diets || []) : []);
   setRules(p ? (p.rules || []) : []);
+  document.getElementById("fAllMeals").checked = allMeals;
   fillPlan(p);
   document.getElementById("setupDel").hidden = !editing;
   setupEl.hidden = false;
@@ -1930,6 +1936,7 @@ document.getElementById("setupSave").onclick = function(){
   fDiets.querySelectorAll("input").forEach(function(i){ if (i.checked) diets.push(i.value); });
   var rules = [];
   fRules.querySelectorAll("input").forEach(function(i){ if (i.checked) rules.push(i.value); });
+  allMeals = document.getElementById("fAllMeals").checked;
   var old = (editing && people[editing]) || {};
   var meals = [];
   fMeals.querySelectorAll("input").forEach(function(i){
