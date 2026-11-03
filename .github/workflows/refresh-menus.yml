@@ -1,0 +1,49 @@
+# Re-scrape UCLA's menus and rebuild data/foods.json every night, so the app never runs
+# on a stale week. Pushing to main redeploys GitHub Pages.
+name: Refresh menus
+
+on:
+  schedule:
+    - cron: "0 11 * * *"     # 11:00 UTC = 3-4am in LA
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: pip install numpy
+      - name: USDA SR Legacy
+        run: |
+          curl -sSfLO https://fdc.nal.usda.gov/fdc-datasets/FoodData_Central_sr_legacy_food_json_2018-04.zip
+          unzip -oq FoodData_Central_sr_legacy_food_json_2018-04.zip
+      - name: Rebuild
+        run: |
+          U=FoodData_Central_sr_legacy_food_json_2018-04.json
+          python3 tools/scrape_ucla.py
+          python3 tools/scrape_hours.py
+          python3 tools/ingredients.py
+          python3 tools/usda.py $U
+          python3 tools/overrides.py $U
+          python3 tools/manual_venues.py $U
+          python3 tools/removals.py $U
+          python3 tools/estimate.py
+          python3 tools/build_app_data.py
+          node tools/test_logic.mjs
+      - name: Commit if the menus changed
+        run: |
+          git add data/foods.json data/hours.json data/ing_map.json data/vocab.json data/manual_items.json data/removals.json
+          git diff --cached --quiet && exit 0
+          git config user.name "menu-bot"
+          git config user.email "menu-bot@users.noreply.github.com"
+          git commit -m "Refresh menus $(date -u +%F)"
+          git push
