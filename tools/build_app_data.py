@@ -89,6 +89,7 @@ RENAME = {"10046": "Chicken Bacon Ranch Wrap", "Honey Nut Cherrios": "Honey Nut 
           "5907": "Pepperoni Pizzette", "6540": "Caesar Salad", "634": "Chicken Caesar Salad"}
 def clean_name(rid, n):
     n = RENAME.get(rid) or RENAME.get(n) or n
+    n = re.sub(r"^Iqf\s+|^IQF\s+", "", n)        # "individually quick frozen", a supplier label
     n = re.sub(r"^Smoothie #\d+:\s*(.+)$", r"\1 Smoothie", n)                 # Smoothie #15: Chocolate Banana
     n = re.sub(r"^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) - (.+)$", r"\2 (\1 only)", n)  # Café 1919's daily special
     return n
@@ -219,11 +220,32 @@ def main():
             }
             if it.get("desc"):
                 out[rid]["d"] = it["desc"]
+        # when each truck is actually out, from UCLA's weekly schedule (scrape_trucks.py)
+        tp = DATA / "trucks.json"
+        sched = json.loads(tp.read_text()) if tp.exists() else {}
+        key = lambda n: re.sub(r"[^a-z0-9]", "", n.lower())
+        sched = {key(n): s for n, s in sched.items()}
+        def when(name):
+            s = sched.get(key(name))
+            if not s:
+                return "Not on UCLA's truck schedule this week."
+            s = sorted(s, key=lambda x: (x[1].split()[1], int(x[1].split()[2])))
+            spots = " / ".join(dict.fromkeys(x[0] for x in s))
+            slots = " / ".join(dict.fromkeys(x[2] for x in s))
+            return f"At {spots} {', '.join(x[1] for x in s)}, {slots.rstrip('.')}."
+        def nights(name):                  # "Wed Nov 4" -> ISO, in the year nearest today
+            from datetime import date, datetime
+            today, out_ = date.today(), []
+            for _, d, _ in sched.get(key(name), []):
+                cands = [datetime.strptime(f"{d.split(' ', 1)[1]} {y}", "%b %d %Y").date()
+                         for y in (today.year - 1, today.year, today.year + 1)]
+                out_.append(min(cands, key=lambda c: abs((c - today).days)).isoformat())
+            return sorted(out_)
         for v in man["venues"]:
             for _, rid in v["rows"]:
                 out[rid]["e"] = 1            # a truck item is estimated end to end
-            venues.append({"k": v["k"], "n": v["n"], "kind": v["kind"],
-                           "note": v.get("note", ""),
+            venues.append({"k": v["k"], "n": v["n"], "kind": v["kind"], "days": nights(v["n"]),
+                           "note": (v.get("note", "") + " " + when(v["n"])).strip(),
                            "menu": {"standing": {"All day": v["rows"]}}})
 
     # every yogurt bar has squeezable honey; UCLA lists it at none of them
@@ -270,6 +292,7 @@ def main():
         "8197": "UCLA's number is the whole plate with rice. This is the wrap alone, estimated.",
         "2031": EST, "6527": EST, "6553": EST, "7056": EST, "7361": EST, "7362": EST, "7225": EST,
         "5611": EST, "1627": EST, "1631": EST, "5610": EST, "1643": EST, "1642": EST,
+        "7226": "UCLA lists 0 g of carbs for chocolate chips, so these are USDA's numbers.",
     }
     # Servings UCLA weighs as several of what you're handed. The per-gram panel is fine;
     # the serving is cut down to one piece, so a serving in the app is what's on the plate.

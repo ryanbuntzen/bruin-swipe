@@ -5,7 +5,7 @@
       "key": "smile-hotdog",
       "name": "Smile Hotdog",
       "kind": "truck",
-      "note": "Korean corn dogs. Rotates between the Rieber and Sproul truck spots.",
+      "note": "Korean corn dogs.",
       "station": "Truck",
       "items": [
         {
@@ -191,7 +191,7 @@
       "key": "perro-110",
       "name": "Perro 1-10 Tacos",
       "kind": "truck",
-      "note": "Taco Perrón — a very large skirt-steak taco. Rotates through the Rieber and Sproul truck spots.",
+      "note": "One very large skirt-steak taco.",
       "station": "Truck",
       "items": [
         {
@@ -273,6 +273,1146 @@
             [
               "Sauce, salsa, ready-to-serve",
               22
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "key": "fat-boys",
+      "name": "Fat Boys",
+      "kind": "truck",
+      "note": "Burgers, fried chicken wraps and sandwiches, and loaded fries.",
+      "station": "Truck",
+      "source": "https://www.bestfoodtrucks.com/truck/fat-boys/menu",
+      "items": [
+        {
+          "name": "Famous Mikey w/ Fries",
+          "serving": "1 burger + fries",
+          "desc": "Half-pound beef patty, bacon, sauteed mushrooms and garlic, gouda, lettuce, tomato and garlic aioli on a brioche bun, with fries.",
+          "parts": [
+            [
+              "Rolls, hamburger or hotdog, plain",
+              70
+            ],
+            [
+              "Beef, ground, 80% lean meat / 20% fat, patty, cooked, pan-broiled",
+              160
+            ],
+            [
+              "Pork, cured, bacon, pre-sliced, cooked, pan-fried",
+              16
+            ],
+            [
+              "Mushrooms, white, stir-fried",
+              45
+            ],
+            [
+              "Garlic, raw",
+              5
+            ],
+            [
+              "Cheese, gouda",
+              28
+            ],
+            [
+              "Lettuce, iceberg (includes crisphead types), raw",
+              15
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              30
+            ],
+            [
+              "Salad dressing, mayonnaise, regular",
+              20
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ]
+          ]
+        },
+        {
+          "name": "Bacon Mikey w/ Fries",
+          "serving": "1 burger + fries",
+          "desc": "Beef patty, bacon, American cheese, lettuce, tomato and garlic aioli on a brioche bun, with fries.",
+          "parts": [
+            [
+              "Rolls, hamburger or hotdog, plain",
+              70
+            ],
+            [
+              "Beef, ground, 80% lean meat / 20% fat, patty, cooked, pan-broiled",
+              160
+            ],
+            [
+              "Pork, cured, bacon, pre-sliced, cooked, pan-fried",
+              16
+            ],
+            [
+              "Cheese, pasteurized process, American, fortified with vitamin D",
+              28
+            ],
+            [
+              "Lettuce, iceberg (includes crisphead types), raw",
+              15
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              30
+            ],
+            [
+              "Salad dressing, mayonnaise, regular",
+              20
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ]
+          ]
+        },
+        {
+          "name": "Western Mikey w/ Fries",
+          "serving": "1 burger + fries",
+          "desc": "Half-pound beef patty, bacon, onion rings, BBQ sauce, American cheese and garlic aioli on a brioche bun, with fries.",
+          "parts": [
+            [
+              "Rolls, hamburger or hotdog, plain",
+              70
+            ],
+            [
+              "Beef, ground, 80% lean meat / 20% fat, patty, cooked, pan-broiled",
+              160
+            ],
+            [
+              "Pork, cured, bacon, pre-sliced, cooked, pan-fried",
+              16
+            ],
+            [
+              "Onion rings, breaded, par fried, frozen, unprepared",
+              50
+            ],
+            [
+              "Oil, canola",
+              6
+            ],
+            [
+              "Sauce, barbecue",
+              25
+            ],
+            [
+              "Cheese, pasteurized process, American, fortified with vitamin D",
+              28
+            ],
+            [
+              "Salad dressing, mayonnaise, regular",
+              20
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ]
+          ]
+        },
+        {
+          "name": "Chicken Strips w/ Fries",
+          "serving": "1 plate",
+          "desc": "Fried chicken strips with fries and a dipping sauce.",
+          "parts": [
+            [
+              "Fast foods, chicken, breaded and fried, boneless pieces, plain",
+              200
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ],
+            [
+              "Salad dressing, ranch dressing, regular",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "Hot Honey Chicken Wrap w/ Fries",
+          "serving": "1 wrap + fries",
+          "desc": "Fried chicken in buffalo hot honey sauce with lettuce, tomato, onion and blue cheese sauce in a flour tortilla, with fries.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              75
+            ],
+            [
+              "Fast foods, chicken, breaded and fried, boneless pieces, plain",
+              140
+            ],
+            [
+              "Sauce, ready-to-serve, pepper or hot",
+              15
+            ],
+            [
+              "Honey",
+              15
+            ],
+            [
+              "Lettuce, iceberg (includes crisphead types), raw",
+              20
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              30
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Salad dressing, blue or roquefort cheese dressing, light",
+              25
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ]
+          ]
+        },
+        {
+          "name": "Loaded Steak Fries",
+          "serving": "1 tray",
+          "desc": "Fries topped with cheese sauce, carne asada, tomato, onion, sour cream, queso fresco, guacamole and cilantro.",
+          "parts": [
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              250
+            ],
+            [
+              "Sauce, cheese, ready-to-serve",
+              60
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              120
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              30
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Cream, sour, cultured",
+              30
+            ],
+            [
+              "Cheese, fresh, queso fresco",
+              20
+            ],
+            [
+              "Avocados, raw, California",
+              40
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "key": "cerda-vega",
+      "name": "Cerda Vega",
+      "kind": "truck",
+      "note": "Mexican tacos, burritos and birria, including birria ramen.",
+      "station": "Truck",
+      "source": "https://roaminghunger.com/cerda-vega-tacos/",
+      "items": [
+        {
+          "name": "3 Birria Taco Plate and Chips",
+          "serving": "3 tacos + consomme",
+          "desc": "Three corn tortillas with braised beef, onion and cilantro, with consomme and lemon.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, corn",
+              78
+            ],
+            [
+              "Beef, chuck, arm pot roast, separable lean and fat, trimmed to 1/8\" fat, all grades, cooked, braised",
+              150
+            ],
+            [
+              "Oil, canola",
+              8
+            ],
+            [
+              "Onions, raw",
+              20
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              4
+            ],
+            [
+              "Soup, beef broth or bouillon canned, ready-to-serve",
+              240
+            ],
+            [
+              "Snacks, tortilla chips, plain, white corn, salted",
+              40
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "Birria Ramen",
+          "serving": "1 bowl",
+          "desc": "Ramen noodles in consomme with birria, onion and cilantro, with red salsa and lemon.",
+          "parts": [
+            [
+              "Soup, ramen noodle, any flavor, dry",
+              85
+            ],
+            [
+              "Soup, beef broth or bouillon canned, ready-to-serve",
+              400
+            ],
+            [
+              "Beef, chuck, arm pot roast, separable lean and fat, trimmed to 1/8\" fat, all grades, cooked, braised",
+              120
+            ],
+            [
+              "Onions, raw",
+              20
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              4
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "Quesa Birria",
+          "serving": "1 quesadilla",
+          "desc": "Flour tortilla with cheese, birria, onion and cilantro.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              70
+            ],
+            [
+              "Cheese, mexican, queso asadero",
+              60
+            ],
+            [
+              "Beef, chuck, arm pot roast, separable lean and fat, trimmed to 1/8\" fat, all grades, cooked, braised",
+              120
+            ],
+            [
+              "Oil, canola",
+              6
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ]
+          ]
+        },
+        {
+          "name": "Traditional Burrito and Chips",
+          "serving": "1 burrito + chips",
+          "desc": "Flour tortilla with rice, pinto beans, cheese, carne asada, onion and cilantro, with chips and red salsa.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              100
+            ],
+            [
+              "Rice, white, long-grain, regular, cooked, enriched, with salt",
+              120
+            ],
+            [
+              "Beans, pinto, mature seeds, cooked, boiled, with salt",
+              100
+            ],
+            [
+              "Cheese, Mexican blend",
+              40
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              130
+            ],
+            [
+              "Onions, raw",
+              20
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              4
+            ],
+            [
+              "Snacks, tortilla chips, plain, white corn, salted",
+              50
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              40
+            ]
+          ]
+        },
+        {
+          "name": "Papas Locas (Loaded Fries)",
+          "serving": "1 tray",
+          "desc": "Fries with two-cheese blend, carne asada, onion, cilantro, tomato and crema.",
+          "parts": [
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              250
+            ],
+            [
+              "Cheese, Mexican blend",
+              60
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              120
+            ],
+            [
+              "Onions, raw",
+              20
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              30
+            ],
+            [
+              "Cream, sour, cultured",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "3 Taco Plate with Chips",
+          "serving": "3 tacos + chips",
+          "desc": "Three corn tortillas with carne asada, onion and cilantro, with chips and red salsa.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, corn",
+              78
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              140
+            ],
+            [
+              "Onions, raw",
+              20
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              4
+            ],
+            [
+              "Snacks, tortilla chips, plain, white corn, salted",
+              50
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              40
+            ]
+          ]
+        },
+        {
+          "name": "Shrimp Burrito and Chips",
+          "serving": "1 burrito + chips",
+          "desc": "12-inch flour tortilla with cheese, rice, fried shrimp, cabbage slaw, onion, tomato, guacamole and chipotle aioli, with chips.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              110
+            ],
+            [
+              "Cheese, Mexican blend",
+              40
+            ],
+            [
+              "Rice, white, long-grain, regular, cooked, enriched, with salt",
+              100
+            ],
+            [
+              "Crustaceans, shrimp, mixed species, cooked, breaded and fried",
+              140
+            ],
+            [
+              "Cabbage, raw",
+              40
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              30
+            ],
+            [
+              "Avocados, raw, California",
+              40
+            ],
+            [
+              "Salad dressing, mayonnaise, regular",
+              20
+            ],
+            [
+              "Snacks, tortilla chips, plain, white corn, salted",
+              50
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "key": "kalamaki-greek-street-food",
+      "name": "Kalamaki Greek Street Food",
+      "kind": "truck",
+      "note": "Greek gyros, skewers and salads served with pita.",
+      "station": "Truck",
+      "source": "https://roaminghunger.com/kalamaki-greek-street-food/",
+      "items": [
+        {
+          "name": "Chicken Gyros Pita",
+          "serving": "1 pita + fries",
+          "desc": "Chicken gyro, tzatziki, tomato and red onion in pita, with fries.",
+          "parts": [
+            [
+              "Bread, pita, white, enriched",
+              70
+            ],
+            [
+              "Chicken, broilers or fryers, thigh, meat only, cooked, roasted",
+              130
+            ],
+            [
+              "Yogurt, Greek, plain, whole milk",
+              40
+            ],
+            [
+              "Cucumber, with peel, raw",
+              15
+            ],
+            [
+              "Oil, olive, salad or cooking",
+              5
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              40
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              120
+            ]
+          ]
+        },
+        {
+          "name": "Beef/Lamb Gyros Pita",
+          "serving": "1 pita + fries",
+          "desc": "Beef and lamb gyro, tzatziki, tomato and red onion in pita, with fries.",
+          "parts": [
+            [
+              "Bread, pita, white, enriched",
+              70
+            ],
+            [
+              "Beef, ground, 80% lean meat / 20% fat, patty, cooked, pan-broiled",
+              65
+            ],
+            [
+              "Lamb, ground, cooked, broiled",
+              65
+            ],
+            [
+              "Yogurt, Greek, plain, whole milk",
+              40
+            ],
+            [
+              "Cucumber, with peel, raw",
+              15
+            ],
+            [
+              "Oil, olive, salad or cooking",
+              5
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              40
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              120
+            ]
+          ]
+        },
+        {
+          "name": "Pork Skewers",
+          "serving": "3 skewers",
+          "desc": "Three 5 oz pork skewers with grilled pita and fries.",
+          "parts": [
+            [
+              "Pork, fresh, loin, whole, separable lean and fat, cooked, broiled",
+              300
+            ],
+            [
+              "Bread, pita, white, enriched",
+              60
+            ],
+            [
+              "Oil, olive, salad or cooking",
+              5
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ]
+          ]
+        },
+        {
+          "name": "Chicken Kalamaki skewers",
+          "serving": "2 skewers",
+          "desc": "Two 3.5 oz chicken skewers with pita, fries and yogurt or tzatziki.",
+          "parts": [
+            [
+              "Chicken, broilers or fryers, thigh, meat only, cooked, roasted",
+              140
+            ],
+            [
+              "Bread, pita, white, enriched",
+              60
+            ],
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              150
+            ],
+            [
+              "Yogurt, Greek, plain, whole milk",
+              40
+            ],
+            [
+              "Cucumber, with peel, raw",
+              15
+            ]
+          ]
+        },
+        {
+          "name": "Falafel In Pita",
+          "serving": "1 pita",
+          "desc": "Falafel, tomato, red onion and tzatziki or hummus in pita.",
+          "parts": [
+            [
+              "Bread, pita, white, enriched",
+              70
+            ],
+            [
+              "Falafel, home-prepared",
+              120
+            ],
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              40
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Yogurt, Greek, plain, whole milk",
+              40
+            ],
+            [
+              "Cucumber, with peel, raw",
+              15
+            ]
+          ]
+        },
+        {
+          "name": "Greek salad with chicken gyros on top",
+          "serving": "1 salad",
+          "desc": "Tomato, cucumber, onion, feta, kalamata olives, green pepper and olive oil topped with chicken gyro, with pita.",
+          "parts": [
+            [
+              "Tomatoes, red, ripe, raw, year round average",
+              120
+            ],
+            [
+              "Cucumber, with peel, raw",
+              80
+            ],
+            [
+              "Onions, raw",
+              25
+            ],
+            [
+              "Cheese, feta",
+              40
+            ],
+            [
+              "Olives, ripe, canned (small-extra large)",
+              20
+            ],
+            [
+              "Peppers, sweet, green, raw",
+              40
+            ],
+            [
+              "Oil, olive, salad or cooking",
+              15
+            ],
+            [
+              "Chicken, broilers or fryers, thigh, meat only, cooked, roasted",
+              130
+            ],
+            [
+              "Bread, pita, white, enriched",
+              60
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "key": "the-taco-cartel",
+      "name": "The Taco Cartel",
+      "kind": "truck",
+      "note": "Mexican burritos, tacos, quesadillas, nachos and asada fries.",
+      "station": "Truck",
+      "source": "https://roaminghunger.com/the-taco-cartel/",
+      "items": [
+        {
+          "name": "Pablo Escobar Burrito",
+          "serving": "1 burrito",
+          "desc": "Al pastor, rice, beans, corn, red cabbage, onion, cilantro and green salsa in a flour tortilla.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              100
+            ],
+            [
+              "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean and fat, cooked, braised",
+              140
+            ],
+            [
+              "Rice, white, long-grain, regular, cooked, enriched, with salt",
+              110
+            ],
+            [
+              "Beans, pinto, mature seeds, cooked, boiled, with salt",
+              90
+            ],
+            [
+              "Corn, sweet, yellow, canned, whole kernel, drained solids",
+              30
+            ],
+            [
+              "Cabbage, red, raw",
+              25
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Sauce, salsa, verde, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "El Chapo Burrito",
+          "serving": "1 burrito",
+          "desc": "Carne asada, rice, beans, onion, cilantro, jack cheese and red salsa in a flour tortilla.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              100
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              140
+            ],
+            [
+              "Rice, white, long-grain, regular, cooked, enriched, with salt",
+              110
+            ],
+            [
+              "Beans, pinto, mature seeds, cooked, boiled, with salt",
+              90
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Cheese, monterey",
+              35
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "UCLA Fries (asada fries)",
+          "serving": "1 tray",
+          "desc": "Fries with carne asada, red and green salsa, onion, cilantro and lime.",
+          "parts": [
+            [
+              "Fast foods, potato, french fried in vegetable oil",
+              250
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              130
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              25
+            ],
+            [
+              "Sauce, salsa, verde, ready-to-serve",
+              25
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Limes, raw",
+              10
+            ]
+          ]
+        },
+        {
+          "name": "El Trio (3 tacos)",
+          "serving": "3 tacos",
+          "desc": "Corn tortillas with choice of meat, onion, cilantro, red cabbage and salsa.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, corn",
+              78
+            ],
+            [
+              "Beef, plate, outside skirt steak, separable lean only, trimmed to 0\" fat, all grades, cooked, broiled",
+              135
+            ],
+            [
+              "Onions, raw",
+              20
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              4
+            ],
+            [
+              "Cabbage, red, raw",
+              20
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "La Reina del Sur Quesadilla",
+          "serving": "1 quesadilla",
+          "desc": "Cheddar and jack cheese with carnitas, onion and cilantro, topped with chipotle salsa.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+              100
+            ],
+            [
+              "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
+              35
+            ],
+            [
+              "Cheese, monterey",
+              35
+            ],
+            [
+              "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean and fat, cooked, braised",
+              110
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "5150 Nachos",
+          "serving": "1 tray",
+          "desc": "Chips topped with al pastor, jalapenos, beans, guacamole, onion, cheddar, jack and green salsa.",
+          "parts": [
+            [
+              "Snacks, tortilla chips, plain, white corn, salted",
+              100
+            ],
+            [
+              "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean and fat, cooked, braised",
+              120
+            ],
+            [
+              "Peppers, jalapeno, raw",
+              15
+            ],
+            [
+              "Beans, pinto, mature seeds, cooked, boiled, with salt",
+              80
+            ],
+            [
+              "Avocados, raw, California",
+              50
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
+              30
+            ],
+            [
+              "Cheese, monterey",
+              30
+            ],
+            [
+              "Sauce, salsa, verde, ready-to-serve",
+              30
+            ]
+          ]
+        },
+        {
+          "name": "Los Churritos (fried taquitos)",
+          "serving": "4 taquitos",
+          "desc": "Four rolled taquitos with carnitas, topped with red cabbage, onion, cilantro, cotija and green salsa.",
+          "parts": [
+            [
+              "Tortillas, ready-to-bake or -fry, corn",
+              104
+            ],
+            [
+              "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean and fat, cooked, braised",
+              120
+            ],
+            [
+              "Oil, canola",
+              25
+            ],
+            [
+              "Cabbage, red, raw",
+              25
+            ],
+            [
+              "Onions, raw",
+              15
+            ],
+            [
+              "Coriander (cilantro) leaves, raw",
+              3
+            ],
+            [
+              "Cheese, mexican, queso cotija",
+              20
+            ],
+            [
+              "Sauce, salsa, verde, ready-to-serve",
+              30
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "key": "vchos-pupuseria-moderna",
+      "name": "Vchos Pupusería Moderna",
+      "kind": "truck",
+      "note": "Salvadoran pupusas, bowls and tacos with a modern twist.",
+      "station": "Truck",
+      "source": "https://roaminghunger.com/vchos/",
+      "items": [
+        {
+          "name": "Pupusas (2)",
+          "serving": "2 pupusas",
+          "desc": "Handmade corn tortillas stuffed with pork and cheese, cheese only, or beans.",
+          "parts": [
+            [
+              "Corn flour, masa, enriched, white",
+              90
+            ],
+            [
+              "Cheese, mozzarella, whole milk",
+              50
+            ],
+            [
+              "Pork, fresh, ground, cooked",
+              40
+            ],
+            [
+              "Oil, canola",
+              6
+            ],
+            [
+              "Cabbage, raw",
+              60
+            ],
+            [
+              "Tomato products, canned, sauce",
+              40
+            ]
+          ]
+        },
+        {
+          "name": "Chicken Ropa Vieja Bowl",
+          "serving": "1 bowl",
+          "desc": "Braised chicken breast, white rice, black beans and fried plantains.",
+          "parts": [
+            [
+              "Chicken, broilers or fryers, breast, meat only, cooked, stewed",
+              140
+            ],
+            [
+              "Tomato products, canned, sauce",
+              40
+            ],
+            [
+              "Rice, white, long-grain, regular, cooked, enriched, with salt",
+              180
+            ],
+            [
+              "Beans, black, mature seeds, cooked, boiled, with salt",
+              120
+            ],
+            [
+              "Plantains, yellow, fried, Latino restaurant",
+              80
+            ]
+          ]
+        },
+        {
+          "name": "Vcho Sliders (2)",
+          "serving": "2 sliders",
+          "desc": "Angus beef, slider bun, onion strings, bacon, cheese and chipotle sauce.",
+          "parts": [
+            [
+              "Rolls, hamburger or hotdog, plain",
+              80
+            ],
+            [
+              "Beef, ground, 80% lean meat / 20% fat, patty, cooked, pan-broiled",
+              120
+            ],
+            [
+              "Onion rings, breaded, par fried, frozen, unprepared",
+              30
+            ],
+            [
+              "Oil, canola",
+              4
+            ],
+            [
+              "Pork, cured, bacon, pre-sliced, cooked, pan-fried",
+              12
+            ],
+            [
+              "Cheese, pasteurized process, American, fortified with vitamin D",
+              30
+            ],
+            [
+              "Salad dressing, mayonnaise, regular",
+              15
+            ]
+          ]
+        },
+        {
+          "name": "Shrimp and Potato Tacos (3)",
+          "serving": "3 tacos",
+          "desc": "Hard corn shells stuffed with mashed potato and grilled shrimp, topped with cotija.",
+          "parts": [
+            [
+              "Taco shells, baked",
+              39
+            ],
+            [
+              "Potatoes, mashed, home-prepared, whole milk and butter added",
+              150
+            ],
+            [
+              "Crustaceans, shrimp, cooked",
+              90
+            ],
+            [
+              "Oil, canola",
+              4
+            ],
+            [
+              "Cheese, mexican, queso cotija",
+              20
+            ],
+            [
+              "Sauce, salsa, ready-to-serve",
+              30
             ]
           ]
         }
@@ -414,6 +1554,14 @@
       "serving": "6 oz",
       "parts": [
         ["Alcoholic beverage, wine, table, red", 170]
+      ]
+    },
+    {
+      "key": "fix-7226",
+      "name": "Semi Sweet Chocolate Chips",
+      "serving": "2oz",
+      "parts": [
+        ["Candies, semisweet chocolate", 56.7]
       ]
     }
   ]

@@ -31,6 +31,7 @@ jobs:
           U=FoodData_Central_sr_legacy_food_json_2018-04.json
           python3 tools/scrape_ucla.py
           python3 tools/scrape_hours.py
+          python3 tools/scrape_trucks.py
           python3 tools/ingredients.py
           python3 tools/usda.py $U
           python3 tools/overrides.py $U
@@ -41,7 +42,7 @@ jobs:
           node tools/test_logic.mjs
       - name: Commit if the menus changed
         run: |
-          git add data/foods.json data/hours.json data/ing_map.json data/vocab.json data/manual_items.json data/removals.json
+          git add data/foods.json data/hours.json data/trucks.json data/ing_map.json data/vocab.json data/manual_items.json data/removals.json
           git diff --cached --quiet && exit 0
           git config user.name "menu-bot"
           git config user.email "menu-bot@users.noreply.github.com"

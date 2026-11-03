@@ -234,7 +234,7 @@ html:has(.sheet:not([hidden])){overflow:hidden}
 .comp{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;
   padding:7px 0;border-bottom:1px solid var(--line-soft);font-size:14px}
 .comp .ck{width:20px;height:20px;accent-color:var(--blue)}
-.comp .n2{font-size:11px;color:var(--ink-3)}
+.comp .n2{display:block;font-size:11px;color:var(--ink-3)}
 .grp{font-family:"Barlow Condensed",sans-serif;font-size:12px;letter-spacing:.09em;
   text-transform:uppercase;color:var(--ink-3);font-weight:600;padding:10px 0 2px}
 
@@ -565,6 +565,8 @@ function targets(){
 }
 
 // YYYY-MM-DD for the eating day a moment belongs to
+// a truck only shows on the nights UCLA's schedule has it out
+function outTonight(v){ return v.kind !== "truck" || (v.days || []).indexOf(dayKey()) >= 0; }
 function dayKey(d){
   d = new Date(d || Date.now());
   if (d.getHours() < DAY_START_HOUR) d.setDate(d.getDate() - 1);
@@ -908,7 +910,7 @@ function renderGaps(){
   var gl = gaps();
   if (!gl.length) { el.hidden = true; recIds = {}; return; }
 
-  var cands = D.venues.map(function(v){
+  var cands = D.venues.filter(outTonight).map(function(v){
     var meals = v.menu[pickDay(v, day[v.kind === "ayce" ? 0 : 1])] || {};
     var meal = focusMeal(v, Object.keys(meals));
     if (!meal) return null;
@@ -2021,7 +2023,7 @@ fetch("build.json", {cache: "no-store"})
   NUT = D.nutrients;
   MEASURED = D.measured;
   decks[0] = D.venues.filter(function(v){ return v.kind === "ayce"; });
-  decks[1] = D.venues.filter(function(v){ return v.kind !== "ayce"; });
+  decks[1] = D.venues.filter(function(v){ return v.kind !== "ayce" && outTonight(v); });
   load();
   syncDeckBar();
   if (!who) openSetup(); else afterProfile();
