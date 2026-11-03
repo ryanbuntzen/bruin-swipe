@@ -21,6 +21,7 @@ CANON = {
     "de-neve-dining": "De Neve Dining",
     "spice-kitchen": "Feast at Rieber",
     "covel-dining-2": "Covel Dining",
+    "Epicuria at Covel": "Covel Dining",      # the at-a-glance page renamed it (Nov 2026)
     "bruin-plate": "Bruin Plate",
 }
 AYCE = {"De Neve Dining", "Covel Dining", "Feast at Rieber", "Bruin Plate"}
@@ -37,6 +38,9 @@ VENUE_NAME = {
 # turns weight x servings into "5 eggs" or "3 scoops = 1 cup".
 # (unit grams, singular, plural, style)  -- style drives the hint the app appends.
 PORTION = [
+    # first: a sandwich is one sandwich, not the slices of ham inside it
+    (r"burger|sandwich|wrap|burrito|taco\b|calzone|panini|roll\b|bowl\b|plate\b|platter|croissant\b.*(ham|egg)|\bbox\b|hot ?dog|banh mi|stromboli|flatbread",
+                                                            0,  "", "", "whole"),
     (r"\bhard cooked egg|\bfried egg|poached egg",      50,  "egg", "eggs", "count"),
     (r"scrambled egg|omelet|egg white|^egg\b",           47,  "egg", "eggs", "worth"),
     (r"\bturkey bacon",                                  13,  "strip", "strips", "count"),
@@ -45,7 +49,7 @@ PORTION = [
     (r"\bmilk\b|juice|spritzer|\bwater\b|kombucha|\bteas?\b", 240, "glass", "glasses", "count"),
     (r"yogurt|cottage cheese",                           113, "ladle", "ladles", "halfcup"),
     (r"sliced .*cheese|cheese.*slice|swiss|provolone|american cheese", 28, "slice", "slices", "count"),
-    (r"\bham\b|roast beef|pastrami|salami|prosciutto|deli|sliced turkey",
+    (r"\bham\b|roast beef|pastrami|salami|prosciutto|\bdeli\b|sliced turkey",
                                                            28,  "slice", "slices", "count"),
     (r"grape",                                             5,  "grape", "grapes", "handful"),
     (r"cantaloupe|watermelon|honeydew|\bmelon",           14,  "cube", "cubes", "cup"),
@@ -55,13 +59,16 @@ PORTION = [
                                                             0,  "piece", "pieces", "piece"),
     (r"\bfries\b|tater tot",                             5.3, "fry", "fries", "basket"),
     (r"\brice\b|quinoa|grain|couscous|farro",            79,  "scoop", "scoops", "rice"),
-    (r"burger|sandwich|wrap|burrito|taco\b|calzone|panini|roll\b|bowl\b|plate\b|platter",
-                                                            0,  "", "", "whole"),
     (r"bar\b|salad bar|yogurt bar",                       0,  "", "", "whole"),
 ]
 
 def portion_for(name, grams):
     import re as _r
+    # a dish that only mentions an egg or a sausage (soup, stew, "x, y and polenta") is
+    # served by the spoon, not counted in eggs or links
+    if _r.search(r"soup|stew|chili|curry|polenta|casserole|pasta|,|\band\b", name, _r.I) and \
+       not _r.search(PORTION[0][0], name, _r.I):
+        return [120, "scoop", "scoops", "plain"] if grams else None
     for pat, unit, sing, plur, style in PORTION:
         if _r.search(pat, name, _r.I):
             if style in ("whole", "piece"):      # counted as-is, no unit weight needed
@@ -73,6 +80,18 @@ def portion_for(name, grams):
         return [120, "scoop", "scoops", "plain"]     # a serving spoon of something hot
     return None
 
+
+# UCLA's own names, tidied: menu numbers, weekday prefixes, typos, and one wrap UCLA
+# calls just "Bacon" (crispy chicken, bacon, ranch and blue cheese in a tortilla)
+RENAME = {"10046": "Chicken Bacon Ranch Wrap", "Honey Nut Cherrios": "Honey Nut Cheerios",
+          "Speical K Berry": "Special K Berry", "Vegetarian Fettucine": "Vegetarian Fettuccine",
+          "7200": "Salted Pretzel", "8008": "Jalapeño Pretzel", "8007": "Pepperoni Pretzel",
+          "5907": "Pepperoni Pizzette", "6540": "Caesar Salad", "634": "Chicken Caesar Salad"}
+def clean_name(rid, n):
+    n = RENAME.get(rid) or RENAME.get(n) or n
+    n = re.sub(r"^Smoothie #\d+:\s*(.+)$", r"\1 Smoothie", n)                 # Smoothie #15: Chocolate Banana
+    n = re.sub(r"^(Mon|Tue|Wed|Thu|Fri|Sat|Sun) - (.+)$", r"\2 (\1 only)", n)  # Café 1919's daily special
+    return n
 
 def round_sig(x):
     if x is None:
@@ -92,6 +111,8 @@ def main():
         for w in v.get("where", []):
             if "sproul" in w["venue"].lower():
                 continue        # UCLA's menu site still lists Sproul, but it doesn't serve
+            if "kcal" in v and not v["kcal"] and v.get("grams", 0) < 5:
+                continue        # theme-night banners ("Northeast", "Brunch"): 3 g of water, not food
             ven = CANON.get(w["venue"], w["venue"])
             day, meal, st = w["date"], w["meal"] or "All day", w["station"]
             menus[ven][day][meal].append([st, rid])
@@ -142,9 +163,9 @@ def main():
     # ---- items
     out = {}
     for rid, v in items.items():
-        if "kcal" not in v and not v.get("build_groups"):
+        if "kcal" not in v and not v.get("build_groups") or "kcal" in v and not v["kcal"] and v.get("grams", 0) < 5:
             continue
-        rec = {"n": v["name"]}
+        rec = {"n": clean_name(rid, v["name"])}
         if v.get("serving"):
             rec["s"] = v["serving"]
         if v.get("grams"):
@@ -161,7 +182,7 @@ def main():
         # app can warn rather than silently logging a whole hotel pan.
         if (v.get("grams") or 0) > 600:
             rec["batch"] = True
-        pf = portion_for(v["name"], v.get("grams"))
+        pf = portion_for(rec["n"], v.get("grams"))
         if pf:
             rec["p"] = pf
         if v.get("build_groups"):
@@ -248,6 +269,9 @@ def main():
                 "goes in, so this is the wrap as served -- about the size of a deck of cards and "
                 "mostly bread: ~60 g naan, ~40 g cooked chicken thigh, a little yogurt marinade "
                 "and peppers, priced against USDA. A ballpark.",
+        "2031": "UCLA lists two 1 oz (raw) links at {k} kcal -- about 510 kcal per 100 g, fattier than "
+                "any pork sausage USDA has, raw or cooked, while its protein matches plain pork links. "
+                "Rebuilt as two pan-fried links (~20 g each cooked) from USDA.",
     }
     # Servings UCLA weighs as several of what you're handed. The per-gram panel is fine;
     # the serving is cut down to one piece, so a serving in the app is what's on the plate.
@@ -278,6 +302,12 @@ def main():
                 for rows in ms.values() for r in rows}
     other_ids = {r[1] for v in venues if v["kind"] != "ayce" for ms in v["menu"].values()
                  for rows in ms.values() for r in rows}
+    # a takeout item is bought whole -- a smoothie is one smoothie, not "5 scoops"
+    for rid in other_ids - hall_ids:
+        rec = out.get(rid)
+        if rec and rec.get("p"):                # "1 medium" is only for a piece of fruit
+            fruit = re.fullmatch(r"(fuji |granny smith |pink lady )?(apple|banana|oranges?|pear|peach|kiwi)", rec["n"], re.I)
+            rec["p"] = [0, "medium", "medium", "whole"] if fruit else [0, "", "", "whole"]
     # the filling of a build-your-own is one portion too -- a sandwich gets 3 oz of
     # carnitas, not the 17 oz pan UCLA's recipe card is written for
     comp_ids = {c for rec in out.values() for g in rec.get("b", []) for c in g}
@@ -312,12 +342,63 @@ def main():
         rec.update({"g": ref, "s": f"1 portion ({ref} g)", "p": [0, "portion", "portions", "piece"]})
         rec.pop("batch", None)
 
+    BROKEN = {
+        "7056": "UCLA's panel says 1,604 kcal for a cup of decaf, which is broken (black coffee is ~5).",
+        "480": "UCLA lists this at 31 kcal; the same drink at The Study and The Drey is 480. Probably broken.",
+        "321": "UCLA's panel is 1,013 kcal for 4 oz of seitan, which is impossible (seitan is ~140 kcal per 4 oz).",
+        "2457": "UCLA lists 2,163 kcal for one bowl of ramen soup -- several times what a bowl can hold. Probably a batch figure.",
+        "3057": "UCLA lists 1,784 kcal for a 16 oz bowl, denser than the rice and beans in it can be. Probably broken.",
+        "6527": "UCLA lists 1,624 kcal for one 10 oz hot dog -- twice as dense as a chili dog can be. Probably broken.",
+        "5962": "A custom recipe UCLA publishes no nutrition for (it lists 0 kcal).",
+        "5958": "A custom recipe UCLA publishes no nutrition for (it lists 0 kcal).",
+        "3052": "UCLA lists 2,012 kcal for a 16 oz bowl, denser than the rice and meat in it can be. Probably broken.",
+    }
+    for rid, note in BROKEN.items():
+        if rid in out:
+            out[rid]["note"] = note
+    # Pure fat is 900 kcal per 100 g; a dish past ~600 that isn't oil, nuts or a spread is a
+    # broken panel (a 4 oz chicken breast at 1,182 kcal). Flagged, and kept out of plates.
+    FATTY = re.compile(r"oil|butter|\bnuts?\b|almond|peanut|pecan|walnut|cashew|seed|chip|mayo|aioli|dressing|"
+                       r"vinaigrette|fried garlic|fried shallot|bacon|chocolate|cookie|praline|granola|spread|pesto|tahini|ghee|lard|chicharr", re.I)
+    OILY_OK = re.compile(r"cheese|cream|sausage|chorizo|salami|pepperoni|avocado|olive|coconut|fudge|"
+                         r"ganache|frosting|nutella|pork belly|popcorn|sauce", re.I)
+    for rid, rec in out.items():
+        if not rec.get("v") or not rec.get("g") or rec.get("note") or FATTY.search(rec["n"]):
+            continue
+        dens = rec["v"][0] / rec["g"] * 100
+        if dens > 600:
+            rec["note"] = (f"UCLA's panel works out to {dens:.0f} kcal per 100 g, more than this food can "
+                           f"hold (pure fat is 900). Probably broken -- left out of suggested plates.")
+            rec["bad"] = 1
+        # more than ~35% of the weight as fat is oil, not a cooked dish (Bruin Plate's 3 oz of
+        # scrambled egg whites listed with 34 g of fat)
+        elif rec["v"][2] > 0.35 * rec["g"] and not OILY_OK.search(rec["n"]):
+            rec["note"] = (f"UCLA's panel has {rec['v'][2]:.0f} g of fat in {rec['g']:.0f} g -- the recipe "
+                           f"counts far more oil than goes in. Probably broken -- left out of suggested plates.")
+            rec["bad"] = 1
+    for rid in BROKEN:
+        if rid in out:
+            out[rid]["bad"] = 1
+    # Bruin Plate's eggs: same 3.29 oz scoop as De Neve's, panel broken the same way -> De Neve's
+    for rid, twin in {"506": "6542", "989": "9742"}.items():
+        if rid in out and twin in out and abs(out[rid]["g"] - out[twin]["g"]) < 2:
+            out[rid].pop("bad", None)
+            out[rid]["note"] = (f"UCLA lists this at {round(out[rid]['v'][0])} kcal, nearly all of it oil "
+                                f"the recipe over-counts. Same scoop as De Neve's, so this is De Neve's panel.")
+            out[rid]["v"] = list(out[twin]["v"])
+    for rid, rec in out.items():                      # a 0 kcal sorbet, beer or whipped cream
+        if rec.get("v") and not rec["v"][0] and rid in other_ids and not rec.get("note") and \
+           re.search(r"sorbet|cream|cake|ipa|lager|pils|brown\b|chardonnay|red blend|wine", rec["n"], re.I):
+            rec["note"] = "UCLA publishes 0 kcal for this, which can't be right. Log it with that in mind."
+
     for rid, note in FIX.items():
         fix = out.pop("fix-" + rid, None)
         if rid in out and fix:
             rec = out[rid]
             rec["note"] = note.format(k=round(rec["v"][0]))
             rec.update({"v": fix["v"], "g": fix["g"], "s": fix["s"], "src": "recipe"})
+    if "2031" in out:
+        out["2031"]["p"] = [20, "link", "links", "count"]     # cooked link, so 1 serving reads "2 links"
 
     # parts you can leave on the tray, attached to the items whose names imply them
     rp = DATA / "removals.json"

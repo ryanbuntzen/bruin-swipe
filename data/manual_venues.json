@@ -304,6 +304,14 @@
         ["Peppers, sweet, green, raw", 5],
         ["Oil, olive, salad or cooking", 2]
       ]
+    },
+    {
+      "key": "fix-2031",
+      "name": "Pork Sausage",
+      "serving": "2 links",
+      "parts": [
+        ["Pork sausage, link/patty, cooked, pan-fried", 40]
+      ]
     }
   ]
 }
