@@ -287,7 +287,7 @@ def main():
     # Servings UCLA publishes for something other than what you're handed: the panel is
     # replaced with the item rebuilt from its own recipe card (manual_venues.json extras,
     # keyed "fix-<id>"), and the note says what UCLA's number was.
-    EST = "UCLA's numbers for this were impossible, so these are estimates."
+    EST = "UCLA published incorrect data for this item, so these are estimates."
     FIX = {
         "8197": "UCLA's number is the whole plate with rice. This is the wrap alone, estimated.",
         "2031": EST, "6527": EST, "6553": EST, "7056": EST, "7361": EST, "7362": EST, "7225": EST,
