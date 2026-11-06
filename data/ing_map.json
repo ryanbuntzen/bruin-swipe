@@ -3,34 +3,34 @@
 "fdc": "173468",
 "score": 1.0,
 "desc": "Salt, table",
-"count": 520,
+"count": 528,
 "curated": true
 },
 "Water": {
 "fdc": "__zero__",
 "score": 1.0,
 "desc": "(water / no nutrients)",
-"count": 435,
+"count": 443,
 "curated": true
 },
 "Garlic Clove Peeled": {
 "fdc": "169230",
 "score": 0.685,
 "desc": "Garlic, raw",
-"count": 354
-},
-"Table Grind Black Pepper": {
-"fdc": "170931",
-"score": 0.917,
-"desc": "Spices, pepper, black",
-"count": 318
+"count": 345
 },
 "Canola Oil": {
 "fdc": "172336",
 "score": 1.0,
 "desc": "Oil, canola",
-"count": 304,
+"count": 313,
 "curated": true
+},
+"Table Grind Black Pepper": {
+"fdc": "170931",
+"score": 0.917,
+"desc": "Spices, pepper, black",
+"count": 311
 },
 "SP Sea Salt": {
 "fdc": "173468",
@@ -43,55 +43,55 @@
 "fdc": "169655",
 "score": 1.0,
 "desc": "Sugars, granulated",
-"count": 172,
-"curated": true
-},
-"Extra Virgin Olive Oil": {
-"fdc": "171413",
-"score": 1.0,
-"desc": "Oil, olive, salad or cooking",
-"count": 143,
-"curated": true
-},
-"Olive Oil Blend": {
-"fdc": "171413",
-"score": 1.0,
-"desc": "Oil, olive, salad or cooking",
-"count": 137,
+"count": 170,
 "curated": true
 },
 "Yeast Dry Red SAF": {
 "fdc": "175043",
 "score": 1.0,
 "desc": "Leavening agents, yeast, baker's, active dry",
-"count": 136,
+"count": 141,
+"curated": true
+},
+"Olive Oil Blend": {
+"fdc": "171413",
+"score": 1.0,
+"desc": "Oil, olive, salad or cooking",
+"count": 132,
+"curated": true
+},
+"Extra Virgin Olive Oil": {
+"fdc": "171413",
+"score": 1.0,
+"desc": "Oil, olive, salad or cooking",
+"count": 128,
 "curated": true
 },
 "Parsley Italian": {
 "fdc": "170416",
 "score": 0.625,
 "desc": "Parsley, fresh",
-"count": 122
+"count": 121
 },
 "High-Gluten Bread Flour": {
 "fdc": "168896",
 "score": 1.0,
 "desc": "Wheat flour, white, bread, enriched",
-"count": 110,
+"count": 117,
 "curated": true
 },
 "Lemon Juice": {
 "fdc": "167747",
 "score": 1.0,
 "desc": "Lemon juice, raw",
-"count": 107,
+"count": 95,
 "curated": true
 },
 "Herb Thyme Fresh": {
 "fdc": "173470",
 "score": 0.625,
 "desc": "Thyme, fresh",
-"count": 92
+"count": 91
 },
 "SP Bay Leaf Dry Whole": {
 "fdc": "170917",
@@ -103,27 +103,33 @@
 "fdc": "170051",
 "score": 1.0,
 "desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
-"count": 81,
+"count": 80,
 "curated": true
 },
 "Yellow Onion Diced 1\"": {
 "fdc": "170000",
 "score": 1.0,
 "desc": "Onions, raw",
-"count": 76,
+"count": 75,
 "curated": true
 },
 "Carrots Diced 1/2\"": {
 "fdc": "170393",
 "score": 1.06,
 "desc": "Carrots, raw",
-"count": 76
+"count": 75
 },
 "Celery Bias Cut": {
 "fdc": "169988",
 "score": 1.06,
 "desc": "Celery, raw",
 "count": 75
+},
+"Whole Wheat Flour": {
+"fdc": "168944",
+"score": 0.875,
+"desc": "Wheat flour, whole-grain, soft wheat",
+"count": 67
 },
 "SP Dried Oregano Leaf": {
 "fdc": "171328",
@@ -132,55 +138,43 @@
 "count": 67,
 "curated": true
 },
-"Whole Wheat Flour": {
-"fdc": "168944",
-"score": 0.875,
-"desc": "Wheat flour, whole-grain, soft wheat",
-"count": 66
+"All-purpose Flour": {
+"fdc": "168894",
+"score": 1.0,
+"desc": "Wheat flour, white, all-purpose, enriched, bleached",
+"count": 55,
+"curated": true
 },
 "Cilantro Fresh": {
 "fdc": "169997",
 "score": 1.0,
 "desc": "Coriander (cilantro) leaves, raw",
-"count": 65,
-"curated": true
-},
-"Yellow Onion Diced 1/4\"": {
-"fdc": "170000",
-"score": 1.0,
-"desc": "Onions, raw",
-"count": 61,
+"count": 55,
 "curated": true
 },
 "SP Pepper Red Chili Crushed": {
 "fdc": "170106",
 "score": 0.56,
 "desc": "Peppers, hot chili, red, raw",
-"count": 60
-},
-"Herb Basil Fresh": {
-"fdc": "172232",
-"score": 0.625,
-"desc": "Basil, fresh",
 "count": 55
-},
-"Ground SP Cumin": {
-"fdc": "170923",
-"score": 0.833,
-"desc": "Spices, cumin seed",
-"count": 54
-},
-"All-purpose Flour": {
-"fdc": "168894",
-"score": 1.0,
-"desc": "Wheat flour, white, all-purpose, enriched, bleached",
-"count": 52,
-"curated": true
 },
 "Egg Liquid": {
 "fdc": "171287",
 "score": 1.0,
 "desc": "Egg, whole, raw, fresh",
+"count": 53,
+"curated": true
+},
+"Ground SP Cumin": {
+"fdc": "170923",
+"score": 0.833,
+"desc": "Spices, cumin seed",
+"count": 53
+},
+"Yellow Onion Diced 1/4\"": {
+"fdc": "170000",
+"score": 1.0,
+"desc": "Onions, raw",
 "count": 51,
 "curated": true
 },
@@ -191,32 +185,24 @@
 "count": 50,
 "curated": true
 },
+"Herb Basil Fresh": {
+"fdc": "172232",
+"score": 0.625,
+"desc": "Basil, fresh",
+"count": 50
+},
 "Yellow Onion Diced 3/8\"": {
 "fdc": "170000",
 "score": 1.0,
 "desc": "Onions, raw",
-"count": 49,
-"curated": true
-},
-"Honey Strained Light Amber": {
-"fdc": "169640",
-"score": 1.0,
-"desc": "Honey",
-"count": 46,
+"count": 48,
 "curated": true
 },
 "SP Garlic Powder": {
 "fdc": "171325",
 "score": 0.917,
 "desc": "Spices, garlic powder",
-"count": 43
-},
-"Mustard Dijon": {
-"fdc": "172234",
-"score": 1.0,
-"desc": "Mustard, prepared, yellow",
-"count": 42,
-"curated": true
+"count": 45
 },
 "Fresh Rosemary": {
 "fdc": "173473",
@@ -224,22 +210,23 @@
 "desc": "Rosemary, fresh",
 "count": 42
 },
-"Garlic Chopped": {
-"fdc": "169230",
-"score": 1.06,
-"desc": "Garlic, raw",
-"count": 40
+"Honey Strained Light Amber": {
+"fdc": "169640",
+"score": 1.0,
+"desc": "Honey",
+"count": 42,
+"curated": true
 },
 "SP Garlic Granulated": {
 "fdc": "169230",
 "score": 1.06,
 "desc": "Garlic, raw",
-"count": 40
+"count": 41
 },
-"Lime Juice": {
-"fdc": "168156",
+"Mustard Dijon": {
+"fdc": "172234",
 "score": 1.0,
-"desc": "Lime juice, raw",
+"desc": "Mustard, prepared, yellow",
 "count": 39,
 "curated": true
 },
@@ -250,36 +237,62 @@
 "count": 39,
 "curated": true
 },
+"SP Cayenne Pepper": {
+"fdc": "170932",
+"score": 0.875,
+"desc": "Spices, pepper, red or cayenne",
+"count": 39
+},
 "Heavy Whipping Cream": {
 "fdc": "170859",
 "score": 1.0,
 "desc": "Cream, fluid, heavy whipping",
-"count": 37,
+"count": 38,
+"curated": true
+},
+"Garlic Chopped": {
+"fdc": "169230",
+"score": 1.06,
+"desc": "Garlic, raw",
+"count": 38
+},
+"Lime Juice": {
+"fdc": "168156",
+"score": 1.0,
+"desc": "Lime juice, raw",
+"count": 35,
+"curated": true
+},
+"Tomato San Marzano Style": {
+"fdc": "170051",
+"score": 1.0,
+"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
+"count": 34,
+"curated": true
+},
+"SP Onion Powder": {
+"fdc": "171327",
+"score": 0.917,
+"desc": "Spices, onion powder",
+"count": 34
+},
+"Dark Brown Sugar": {
+"fdc": "168833",
+"score": 1.0,
+"desc": "Sugars, brown",
+"count": 32,
 "curated": true
 },
 "Fresh Oregano": {
 "fdc": "171328",
 "score": 0.875,
 "desc": "Spices, oregano, dried",
-"count": 35
+"count": 32
 },
 "Jalapeno Peppers": {
 "fdc": "168576",
 "score": 1.06,
 "desc": "Peppers, jalapeno, raw",
-"count": 34
-},
-"Tomato San Marzano Style": {
-"fdc": "170051",
-"score": 1.0,
-"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
-"count": 33,
-"curated": true
-},
-"SP Cayenne Pepper": {
-"fdc": "170932",
-"score": 0.875,
-"desc": "Spices, pepper, red or cayenne",
 "count": 32
 },
 "Dark Brown Sugar Bulk": {
@@ -289,10 +302,10 @@
 "count": 31,
 "curated": true
 },
-"Dark Brown Sugar": {
-"fdc": "168833",
+"5% White Vinegar": {
+"fdc": "172237",
 "score": 1.0,
-"desc": "Sugars, brown",
+"desc": "Vinegar, distilled",
 "count": 31,
 "curated": true
 },
@@ -300,100 +313,99 @@
 "fdc": "170459",
 "score": 1.0,
 "desc": "Tomato products, canned, paste, without salt added (Includes foods for USDA's Food Distribution Program)",
-"count": 30,
+"count": 29,
+"curated": true
+},
+"Unsalted Butter 55#": {
+"fdc": "173430",
+"score": 1.0,
+"desc": "Butter, without salt",
+"count": 28,
 "curated": true
 },
 "Peeled Shallots": {
 "fdc": "170499",
 "score": 1.06,
 "desc": "Shallots, raw",
-"count": 30
-},
-"Unsalted Butter 55#": {
-"fdc": "173430",
-"score": 1.0,
-"desc": "Butter, without salt",
-"count": 29,
-"curated": true
-},
-"5% White Vinegar": {
-"fdc": "172237",
-"score": 1.0,
-"desc": "Vinegar, distilled",
-"count": 29,
-"curated": true
-},
-"SP Onion Powder": {
-"fdc": "171327",
-"score": 0.917,
-"desc": "Spices, onion powder",
 "count": 28
+},
+"SP Paprika": {
+"fdc": "171329",
+"score": 0.875,
+"desc": "Spices, paprika",
+"count": 27
 },
 "Milk Whole GAL": {
 "fdc": "171265",
 "score": 1.0,
 "desc": "Milk, whole, 3.25% milkfat, with added vitamin D",
-"count": 27,
-"curated": true
-},
-"Tomato Crushed VOL PK": {
-"fdc": "170051",
-"score": 1.0,
-"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
-"count": 25,
+"count": 26,
 "curated": true
 },
 "SP Paprika Smoked": {
 "fdc": "171329",
 "score": 0.5,
 "desc": "Spices, paprika",
+"count": 26
+},
+"SP Thyme Whole Leaf Dried": {
+"fdc": "173470",
+"score": 0.625,
+"desc": "Thyme, fresh",
 "count": 25
 },
-"Corn Starch": {
-"fdc": "169698",
+"Pure Sesame Oil": {
+"fdc": "171016",
 "score": 1.0,
-"desc": "Cornstarch",
-"count": 25,
+"desc": "Oil, sesame, salad or cooking",
+"count": 24,
 "curated": true
 },
 "Soy Sauce Low Sodium 5gal": {
 "fdc": "174277",
 "score": 1.0,
 "desc": "Soy sauce made from soy and wheat (shoyu)",
-"count": 24,
+"count": 23,
 "curated": true
-},
-"SP Paprika": {
-"fdc": "171329",
-"score": 0.875,
-"desc": "Spices, paprika",
-"count": 24
 },
 "Ground SP White Pepper": {
 "fdc": "170933",
 "score": 0.917,
 "desc": "Spices, pepper, white",
-"count": 24
-},
-"2% Milk Gallon": {
-"fdc": "171267",
-"score": 1.0,
-"desc": "Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D",
-"count": 23,
-"curated": true
-},
-"Parmesan Cheese Grated": {
-"fdc": "171247",
-"score": 1.0,
-"desc": "Cheese, parmesan, grated",
-"count": 23,
-"curated": true
+"count": 23
 },
 "Whole Black Pepper": {
 "fdc": "170931",
 "score": 1.0,
 "desc": "Spices, pepper, black",
 "count": 22,
+"curated": true
+},
+"Tomato Crushed VOL PK": {
+"fdc": "170051",
+"score": 1.0,
+"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
+"count": 22,
+"curated": true
+},
+"2% Milk Gallon": {
+"fdc": "171267",
+"score": 1.0,
+"desc": "Milk, reduced fat, fluid, 2% milkfat, with added vitamin A and vitamin D",
+"count": 22,
+"curated": true
+},
+"Ginger Root": {
+"fdc": "169231",
+"score": 1.06,
+"desc": "Ginger root, raw",
+"count": 21
+},
+"Skinless Boneless Chicken Breast": {
+"fdc": "171052",
+"score": 1.0,
+"desc": "Chicken, broilers or fryers, meat only, raw",
+"count": 21,
 "curated": true
 },
 "Extra Virgin Olive Oil Aerosol": {
@@ -403,48 +415,37 @@
 "count": 21,
 "curated": true
 },
-"High Gluten AP Flour": {
-"fdc": "168896",
+"SP Chili Powder Light/Mild": {
+"fdc": "171319",
+"score": 0.542,
+"desc": "Spices, chili powder",
+"count": 21
+},
+"Parmesan Cheese Grated": {
+"fdc": "171247",
 "score": 1.0,
-"desc": "Wheat flour, white, bread, enriched",
+"desc": "Cheese, parmesan, grated",
 "count": 21,
 "curated": true
 },
-"SP Thyme Whole Leaf Dried": {
-"fdc": "173470",
-"score": 0.625,
-"desc": "Thyme, fresh",
-"count": 21
+"Corn Starch": {
+"fdc": "169698",
+"score": 1.0,
+"desc": "Cornstarch",
+"count": 21,
+"curated": true
 },
-"Serrano Peppers": {
-"fdc": "169395",
-"score": 1.06,
-"desc": "Peppers, serrano, raw",
-"count": 20
+"SP Italian Seasoning": {
+"fdc": "171328",
+"score": 1.0,
+"desc": "Spices, oregano, dried",
+"count": 20,
+"curated": true
 },
 "Base Sapore Multi Grains Sweet": {
 "fdc": "170008",
 "score": 0.335,
 "desc": "Onions, sweet, raw",
-"count": 20
-},
-"Molasses": {
-"fdc": "168820",
-"score": 1.02,
-"desc": "Molasses",
-"count": 20
-},
-"Skinless Boneless Chicken Breast": {
-"fdc": "171052",
-"score": 1.0,
-"desc": "Chicken, broilers or fryers, meat only, raw",
-"count": 19,
-"curated": true
-},
-"5% Red Wine Vinegar": {
-"fdc": "172240",
-"score": 1.0,
-"desc": "Vinegar, red wine",
 "count": 19
 },
 "Chipotle Peppers in Adobo": {
@@ -454,56 +455,48 @@
 "count": 19,
 "curated": true
 },
-"Pure Sesame Oil": {
-"fdc": "171016",
-"score": 1.0,
-"desc": "Oil, sesame, salad or cooking",
-"count": 19,
-"curated": true
-},
-"SP Chili Powder Light/Mild": {
-"fdc": "171319",
-"score": 0.542,
-"desc": "Spices, chili powder",
+"Ground Cinnamon": {
+"fdc": "171320",
+"score": 0.875,
+"desc": "Spices, cinnamon, ground",
 "count": 19
 },
-"SP Italian Seasoning": {
-"fdc": "171328",
+"High Gluten AP Flour": {
+"fdc": "168896",
 "score": 1.0,
-"desc": "Spices, oregano, dried",
+"desc": "Wheat flour, white, bread, enriched",
 "count": 19,
 "curated": true
+},
+"5% Red Wine Vinegar": {
+"fdc": "172240",
+"score": 1.0,
+"desc": "Vinegar, red wine",
+"count": 18
+},
+"Molasses": {
+"fdc": "168820",
+"score": 1.02,
+"desc": "Molasses",
+"count": 18
+},
+"Serrano Peppers": {
+"fdc": "169395",
+"score": 1.06,
+"desc": "Peppers, serrano, raw",
+"count": 17
 },
 "SP Basil Leaves": {
 "fdc": "172232",
 "score": 0.625,
 "desc": "Basil, fresh",
-"count": 18
+"count": 17
 },
-"Ginger Root": {
-"fdc": "169231",
-"score": 1.06,
-"desc": "Ginger root, raw",
-"count": 18
-},
-"Ground Cinnamon": {
-"fdc": "171320",
-"score": 0.875,
-"desc": "Spices, cinnamon, ground",
-"count": 18
-},
-"Orange Juice": {
-"fdc": "169098",
+"Ketchup Volume Pack": {
+"fdc": "168556",
 "score": 1.0,
-"desc": "Orange juice, raw (Includes foods for USDA's Food Distribution Program)",
-"count": 18,
-"curated": true
-},
-"Egg Shell Large Grade A": {
-"fdc": "171287",
-"score": 1.0,
-"desc": "Egg, whole, raw, fresh",
-"count": 17,
+"desc": "Catsup",
+"count": 15,
 "curated": true
 },
 "Yellow Onion Julienne 1/4\"": {
@@ -513,17 +506,32 @@
 "count": 15,
 "curated": true
 },
-"Baking Soda": {
-"fdc": "175040",
-"score": 0.875,
-"desc": "Leavening agents, baking soda",
+"Cider Vinegar": {
+"fdc": "173469",
+"score": 1.0,
+"desc": "Vinegar, cider",
 "count": 15
 },
-"SP Onion Granulated": {
-"fdc": "169844",
-"score": 0.875,
-"desc": "DENNY'S, onion rings",
-"count": 15
+"Ground Mustard Powder": {
+"fdc": "170929",
+"score": 1.0,
+"desc": "Spices, mustard seed, ground",
+"count": 15,
+"curated": true
+},
+"Shortening Crisco All Purpose": {
+"fdc": "173584",
+"score": 1.0,
+"desc": "Shortening, vegetable, household, composite",
+"count": 14,
+"curated": true
+},
+"Egg Shell Large Grade A": {
+"fdc": "171287",
+"score": 1.0,
+"desc": "Egg, whole, raw, fresh",
+"count": 14,
+"curated": true
 },
 "Kikoman Soy Sauce": {
 "fdc": "174277",
@@ -532,17 +540,29 @@
 "count": 14,
 "curated": true
 },
-"Ketchup Volume Pack": {
-"fdc": "168556",
+"SP Nutmeg Ground": {
+"fdc": "171326",
+"score": 0.875,
+"desc": "Spices, nutmeg, ground",
+"count": 14
+},
+"Orange Juice": {
+"fdc": "169098",
 "score": 1.0,
-"desc": "Catsup",
+"desc": "Orange juice, raw (Includes foods for USDA's Food Distribution Program)",
 "count": 14,
 "curated": true
 },
-"Cider Vinegar": {
-"fdc": "173469",
-"score": 1.0,
-"desc": "Vinegar, cider",
+"SP Onion Granulated": {
+"fdc": "169844",
+"score": 0.875,
+"desc": "DENNY'S, onion rings",
+"count": 14
+},
+"Sesame Seeds Whole Roasted": {
+"fdc": "170151",
+"score": 0.9,
+"desc": "Seeds, sesame seeds, whole, roasted and toasted",
 "count": 14
 },
 "Grape Seed Oil": {
@@ -552,18 +572,6 @@
 "count": 13,
 "curated": true
 },
-"Baking Powder": {
-"fdc": "172805",
-"score": 0.875,
-"desc": "Leavening agents, baking powder, low-sodium",
-"count": 13
-},
-"SP Nutmeg Ground": {
-"fdc": "171326",
-"score": 0.875,
-"desc": "Spices, nutmeg, ground",
-"count": 13
-},
 "Yellow Onion Whole Peeled": {
 "fdc": "170000",
 "score": 1.0,
@@ -571,26 +579,31 @@
 "count": 13,
 "curated": true
 },
-"Ground Mustard Powder": {
-"fdc": "170929",
+"Baking Soda": {
+"fdc": "175040",
+"score": 0.875,
+"desc": "Leavening agents, baking soda",
+"count": 13
+},
+"Vinegar Rice": {
+"fdc": "172237",
 "score": 1.0,
-"desc": "Spices, mustard seed, ground",
+"desc": "Vinegar, distilled",
 "count": 13,
 "curated": true
 },
-"Green Onion": {
-"fdc": "170005",
+"Egg Whites Frozen": {
+"fdc": "172183",
 "score": 1.0,
-"desc": "Onions, spring or scallions (includes tops and bulb), raw",
-"count": 13,
-"curated": true
-},
-"Shortening Crisco All Purpose": {
-"fdc": "173584",
-"score": 1.0,
-"desc": "Shortening, vegetable, household, composite",
+"desc": "Egg, white, raw, fresh",
 "count": 12,
 "curated": true
+},
+"Baking Powder": {
+"fdc": "172805",
+"score": 0.875,
+"desc": "Leavening agents, baking powder, low-sodium",
+"count": 12
 },
 "Creme Cake Mix": {
 "fdc": "172701",
@@ -598,39 +611,24 @@
 "desc": "Cake, gingerbread, dry mix",
 "count": 12
 },
-"Tomato Diced 3/8\"": {
-"fdc": "170051",
+"Green Onion": {
+"fdc": "170005",
 "score": 1.0,
-"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
+"desc": "Onions, spring or scallions (includes tops and bulb), raw",
 "count": 12,
 "curated": true
 },
-"Egg Whites Frozen": {
-"fdc": "172183",
-"score": 1.0,
-"desc": "Egg, white, raw, fresh",
-"count": 11,
-"curated": true
+"Liquid Smoke 154": {
+"fdc": "167682",
+"score": 0.5,
+"desc": "Pectin, liquid",
+"count": 12
 },
 "Rice Flour Mochiko": {
 "fdc": "168898",
 "score": 0.667,
 "desc": "Rice flour, brown",
 "count": 11
-},
-"Mayonnaise Extra Heavy Bulk Ken's": {
-"fdc": "171009",
-"score": 1.0,
-"desc": "Salad dressing, mayonnaise, regular",
-"count": 11,
-"curated": true
-},
-"Sour Cream": {
-"fdc": "171257",
-"score": 1.0,
-"desc": "Cream, sour, cultured",
-"count": 11,
-"curated": true
 },
 "Oats Rolled": {
 "fdc": "173904",
@@ -646,18 +644,25 @@
 "count": 11,
 "curated": true
 },
-"Vinegar Rice": {
-"fdc": "172237",
-"score": 1.0,
-"desc": "Vinegar, distilled",
-"count": 11,
-"curated": true
-},
 "Black Beans": {
 "fdc": "173735",
 "score": 1.0,
 "desc": "Beans, black, mature seeds, cooked, boiled, without salt",
 "count": 11,
+"curated": true
+},
+"Mayonnaise Extra Heavy Bulk Ken's": {
+"fdc": "171009",
+"score": 1.0,
+"desc": "Salad dressing, mayonnaise, regular",
+"count": 10,
+"curated": true
+},
+"Avocado": {
+"fdc": "171706",
+"score": 1.0,
+"desc": "Avocados, raw, California",
+"count": 10,
 "curated": true
 },
 "Black Forest Ham": {
@@ -673,37 +678,37 @@
 "desc": "Margarine-like spread, SMART BALANCE Light Buttery Spread",
 "count": 10
 },
+"Sour Cream": {
+"fdc": "171257",
+"score": 1.0,
+"desc": "Cream, sour, cultured",
+"count": 10,
+"curated": true
+},
+"Spinach Washed & Cleaned": {
+"fdc": "168462",
+"score": 1.0,
+"desc": "Spinach, raw",
+"count": 10,
+"curated": true
+},
+"Celery": {
+"fdc": "169988",
+"score": 1.06,
+"desc": "Celery, raw",
+"count": 10
+},
 "Bacon 18-22 CT": {
 "fdc": "171640",
 "score": 0.875,
 "desc": "Bacon, turkey, low sodium",
 "count": 10
 },
-"Lowfat Greek Yogurt": {
-"fdc": "170903",
-"score": 1.0,
-"desc": "Yogurt, Greek, plain, lowfat",
-"count": 10,
-"curated": true
-},
-"Avocado": {
-"fdc": "171706",
-"score": 1.0,
-"desc": "Avocados, raw, California",
-"count": 10,
-"curated": true
-},
-"Liquid Smoke 154": {
-"fdc": "167682",
-"score": 0.5,
-"desc": "Pectin, liquid",
+"Carrots Shredded": {
+"fdc": "170393",
+"score": 1.06,
+"desc": "Carrots, raw",
 "count": 10
-},
-"Chicken Base": {
-"fdc": "171116",
-"score": 0.685,
-"desc": "Chicken, ground, raw",
-"count": 9
 },
 "Turkey Breast Oven Roast": {
 "fdc": "172941",
@@ -731,23 +736,18 @@
 "count": 9,
 "curated": true
 },
-"Sriracha Sauce": {
-"fdc": "171186",
-"score": 0.875,
-"desc": "Sauce, hot chile, sriracha",
-"count": 9
-},
 "White Beans": {
 "fdc": "173749",
 "score": 0.935,
 "desc": "Beans, small white, mature seeds, raw",
 "count": 9
 },
-"Cucumber": {
-"fdc": "169225",
-"score": 1.06,
-"desc": "Cucumber, peeled, raw",
-"count": 9
+"Lowfat Greek Yogurt": {
+"fdc": "170903",
+"score": 1.0,
+"desc": "Yogurt, Greek, plain, lowfat",
+"count": 9,
+"curated": true
 },
 "Tapioca Pearls": {
 "fdc": "169717",
@@ -760,6 +760,13 @@
 "score": 0.52,
 "desc": "Honey",
 "count": 9
+},
+"Tomato Diced 3/8\"": {
+"fdc": "170051",
+"score": 1.0,
+"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
+"count": 9,
+"curated": true
 },
 "2% Buttermilk": {
 "fdc": "170874",
@@ -775,23 +782,47 @@
 "count": 8,
 "curated": true
 },
+"Worcestershire Sauce Vegan": {
+"fdc": "171610",
+"score": 0.75,
+"desc": "Sauce, worcestershire",
+"count": 8
+},
+"SP Turmeric Ground": {
+"fdc": "172231",
+"score": 0.875,
+"desc": "Spices, turmeric, ground",
+"count": 8
+},
 "SP Coriander Ground": {
 "fdc": "169997",
 "score": 0.893,
 "desc": "Coriander (cilantro) leaves, raw",
 "count": 8
 },
-"Spinach Washed & Cleaned": {
-"fdc": "168462",
+"Apple Juice": {
+"fdc": "170959",
+"score": 0.917,
+"desc": "Babyfood, juice, apple",
+"count": 8
+},
+"Goma Kadoya Sesame Oil": {
+"fdc": "171016",
 "score": 1.0,
-"desc": "Spinach, raw",
+"desc": "Oil, sesame, salad or cooking",
 "count": 8,
 "curated": true
 },
-"Celery": {
-"fdc": "169988",
+"Worcestershire Sauce": {
+"fdc": "171610",
+"score": 1.0,
+"desc": "Sauce, worcestershire",
+"count": 8
+},
+"Cucumber": {
+"fdc": "169225",
 "score": 1.06,
-"desc": "Celery, raw",
+"desc": "Cucumber, peeled, raw",
 "count": 8
 },
 "Guajillo Chile Pods": {
@@ -801,92 +832,28 @@
 "count": 8,
 "curated": true
 },
-"Red Bell Pepper": {
-"fdc": "170108",
-"score": 1.0,
-"desc": "Peppers, sweet, red, raw",
-"count": 8,
-"curated": true
-},
-"Roasted Red Peppers": {
-"fdc": "170108",
-"score": 1.0,
-"desc": "Peppers, sweet, red, raw",
-"count": 8,
-"curated": true
-},
-"Tortilla Flour Brown Rice": {
-"fdc": "175037",
-"score": 1.0,
-"desc": "Tortillas, ready-to-bake or -fry, flour, refrigerated",
-"count": 8,
-"curated": true
-},
-"Sesame Seeds Whole Roasted": {
-"fdc": "170151",
-"score": 0.9,
-"desc": "Seeds, sesame seeds, whole, roasted and toasted",
-"count": 8
-},
-"Sliced Almonds": {
-"fdc": "170567",
-"score": 0.875,
-"desc": "Nuts, almonds",
-"count": 8
-},
-"Balsamic Vinegar": {
-"fdc": "172241",
-"score": 1.0,
-"desc": "Vinegar, balsamic",
-"count": 8
-},
-"Worcestershire Sauce": {
-"fdc": "171610",
-"score": 1.0,
-"desc": "Sauce, worcestershire",
-"count": 8
-},
-"Worcestershire Sauce Vegan": {
-"fdc": "171610",
-"score": 0.75,
-"desc": "Sauce, worcestershire",
-"count": 8
-},
 "Coffee Espresso Whole Bean": {
 "fdc": "171891",
 "score": 0.583,
 "desc": "Beverages, coffee, brewed, espresso, restaurant-prepared",
 "count": 8
 },
-"Potato Mashed Dehydrated Instant": {
-"fdc": "169305",
+"Sugar Med Brown Golden": {
+"fdc": "170675",
 "score": 0.5,
-"desc": "Sweet potato, canned, mashed",
+"desc": "Sweeteners, sugar substitute, granulated, brown",
 "count": 7
 },
-"Red Onion Diced 1/2\"": {
-"fdc": "170000",
-"score": 1.0,
-"desc": "Onions, raw",
-"count": 7,
-"curated": true
+"Chicken Base": {
+"fdc": "171116",
+"score": 0.685,
+"desc": "Chicken, ground, raw",
+"count": 7
 },
 "Coconut Milk": {
 "fdc": "170172",
 "score": 0.86,
 "desc": "Nuts, coconut milk, raw (liquid expressed from grated meat and water)",
-"count": 7
-},
-"Agave Nectar": {
-"fdc": "169814",
-"score": 0.56,
-"desc": "Agave, raw (Southwest)",
-"count": 7
-},
-"SP Turmeric Ground": {
-"fdc": "172231",
-"score": 0.875,
-"desc": "Spices, turmeric, ground",
 "count": 7
 },
 "Red Onion Whole Washed & Peeled": {
@@ -908,45 +875,44 @@
 "desc": "Kale, raw",
 "count": 7
 },
-"Orange Juice 5+1 Concentrate": {
-"fdc": "169098",
-"score": 1.0,
-"desc": "Orange juice, raw (Includes foods for USDA's Food Distribution Program)",
-"count": 7,
-"curated": true
-},
-"Avocado Pulp": {
-"fdc": "171706",
-"score": 1.0,
-"desc": "Avocados, raw, California",
-"count": 7,
-"curated": true
-},
-"Tomato 5x6": {
-"fdc": "170457",
-"score": 1.0,
-"desc": "Tomatoes, red, ripe, raw, year round average",
-"count": 7,
-"curated": true
-},
-"Carrots Shredded": {
+"Peeled Carrots": {
 "fdc": "170393",
 "score": 1.06,
 "desc": "Carrots, raw",
 "count": 7
 },
-"Fresh Tarragon": {
-"fdc": "170937",
-"score": 0.875,
-"desc": "Spices, tarragon, dried",
-"count": 7
-},
-"Brown Rice Medium Grain": {
-"fdc": "169704",
+"Red Bell Pepper": {
+"fdc": "170108",
 "score": 1.0,
-"desc": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+"desc": "Peppers, sweet, red, raw",
 "count": 7,
 "curated": true
+},
+"Roasted Red Peppers": {
+"fdc": "170108",
+"score": 1.0,
+"desc": "Peppers, sweet, red, raw",
+"count": 7,
+"curated": true
+},
+"Sriracha Sauce": {
+"fdc": "171186",
+"score": 0.875,
+"desc": "Sauce, hot chile, sriracha",
+"count": 7
+},
+"Tortilla Flour Brown Rice": {
+"fdc": "175037",
+"score": 1.0,
+"desc": "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+"count": 7,
+"curated": true
+},
+"Sliced Almonds": {
+"fdc": "170567",
+"score": 0.875,
+"desc": "Nuts, almonds",
+"count": 7
 },
 "Garbanzo Beans Canned": {
 "fdc": "173757",
@@ -961,10 +927,41 @@
 "desc": "Seeds, sesame butter, paste",
 "count": 7
 },
-"Sugar Med Brown Golden": {
-"fdc": "170675",
+"Half & Half Milk Creamer": {
+"fdc": "170875",
+"score": 0.375,
+"desc": "Milk, low sodium, fluid",
+"count": 7
+},
+"Fresh Mint": {
+"fdc": "170663",
+"score": 0.778,
+"desc": "Ice creams, BREYERS, All Natural Light Mint Chocolate Chip",
+"count": 7
+},
+"Potato Mashed Dehydrated Instant": {
+"fdc": "169305",
 "score": 0.5,
-"desc": "Sweeteners, sugar substitute, granulated, brown",
+"desc": "Sweet potato, canned, mashed",
+"count": 6
+},
+"Dinner Roll Easy Soft'r Mix": {
+"fdc": "167590",
+"score": 0.575,
+"desc": "Andrea's, Gluten Free Soft Dinner Roll",
+"count": 6
+},
+"Red Onion Diced 1/2\"": {
+"fdc": "170000",
+"score": 1.0,
+"desc": "Onions, raw",
+"count": 6,
+"curated": true
+},
+"Agave Nectar": {
+"fdc": "169814",
+"score": 0.56,
+"desc": "Agave, raw (Southwest)",
 "count": 6
 },
 "Chocolate Muffin Mix": {
@@ -979,10 +976,16 @@
 "desc": "Sauce, oyster, ready-to-serve",
 "count": 6
 },
-"Apple Juice": {
-"fdc": "170959",
-"score": 0.917,
-"desc": "Babyfood, juice, apple",
+"Tofu Firm": {
+"fdc": "172475",
+"score": 0.893,
+"desc": "Tofu, raw, firm, prepared with calcium sulfate",
+"count": 6
+},
+"Shiitake Mushrooms": {
+"fdc": "169242",
+"score": 1.06,
+"desc": "Mushrooms, shiitake, raw",
 "count": 6
 },
 "Buttermilk": {
@@ -998,17 +1001,29 @@
 "desc": "Cocoa, dry powder, unsweetened",
 "count": 6
 },
-"Tomato Sauce": {
-"fdc": "170054",
+"Yellow Onion Fresh": {
+"fdc": "170000",
 "score": 1.0,
-"desc": "Tomato products, canned, sauce",
+"desc": "Onions, raw",
 "count": 6,
 "curated": true
+},
+"Fresh Tarragon": {
+"fdc": "170937",
+"score": 0.875,
+"desc": "Spices, tarragon, dried",
+"count": 6
 },
 "Cabbage Coleslaw Shred 3-Way": {
 "fdc": "169975",
 "score": 0.497,
 "desc": "Cabbage, raw",
+"count": 6
+},
+"Cornmeal Yellow Ground Coarse": {
+"fdc": "168039",
+"score": 0.667,
+"desc": "Cornmeal, yellow (Navajo)",
 "count": 6
 },
 "Mushroom Portobello 3\"- 4\"": {
@@ -1017,16 +1032,10 @@
 "desc": "Mushroom, white, exposed to ultraviolet light, raw",
 "count": 6
 },
-"Harissa Mild Paste": {
-"fdc": "171631",
-"score": 0.372,
-"desc": "Sausage, Italian, pork, mild, raw",
-"count": 6
-},
-"Horseradish Pure": {
-"fdc": "171833",
-"score": 0.5,
-"desc": "Sauce, horseradish",
+"Balsamic Vinegar": {
+"fdc": "172241",
+"score": 1.0,
+"desc": "Vinegar, balsamic",
 "count": 6
 },
 "Red Wine Vinegar": {
@@ -1041,11 +1050,26 @@
 "desc": "Strawberries, raw",
 "count": 6
 },
-"Fresh Mint": {
-"fdc": "170663",
-"score": 0.778,
-"desc": "Ice creams, BREYERS, All Natural Light Mint Chocolate Chip",
-"count": 6
+"Tomato 5x6": {
+"fdc": "170457",
+"score": 1.0,
+"desc": "Tomatoes, red, ripe, raw, year round average",
+"count": 6,
+"curated": true
+},
+"Brown Rice Medium Grain": {
+"fdc": "169704",
+"score": 1.0,
+"desc": "Rice, brown, long-grain, cooked (Includes foods for USDA's Food Distribution Program)",
+"count": 6,
+"curated": true
+},
+"Tomato Sauce": {
+"fdc": "170054",
+"score": 1.0,
+"desc": "Tomato products, canned, sauce",
+"count": 6,
+"curated": true
 },
 "Red Beans": {
 "fdc": "173744",
@@ -1060,12 +1084,6 @@
 "count": 6,
 "curated": true
 },
-"Dinner Roll Easy Soft'r Mix": {
-"fdc": "167590",
-"score": 0.575,
-"desc": "Andrea's, Gluten Free Soft Dinner Roll",
-"count": 5
-},
 "Chocolate Wafer Dark 65%": {
 "fdc": "170271",
 "score": 0.625,
@@ -1079,23 +1097,10 @@
 "count": 5,
 "curated": true
 },
-"Green Onion Chopped 1/4\"": {
-"fdc": "170000",
-"score": 1.0,
-"desc": "Onions, raw",
-"count": 5,
-"curated": true
-},
 "3/4\" Diced Tri-Color Bell Pepper": {
 "fdc": "169394",
 "score": 0.372,
 "desc": "Pepper, banana, raw",
-"count": 5
-},
-"Tofu Firm": {
-"fdc": "172475",
-"score": 0.893,
-"desc": "Tofu, raw, firm, prepared with calcium sulfate",
 "count": 5
 },
 "Baby Spinach": {
@@ -1111,29 +1116,10 @@
 "count": 5,
 "curated": true
 },
-"Goma Kadoya Sesame Oil": {
-"fdc": "171016",
-"score": 1.0,
-"desc": "Oil, sesame, salad or cooking",
-"count": 5,
-"curated": true
-},
 "Pesto Sauce": {
 "fdc": "171579",
 "score": 0.85,
 "desc": "Sauce, pesto, ready-to-serve, refrigerated",
-"count": 5
-},
-"Grain Wheat Berry": {
-"fdc": "168944",
-"score": 0.625,
-"desc": "Wheat flour, whole-grain, soft wheat",
-"count": 5
-},
-"Peeled Carrots": {
-"fdc": "170393",
-"score": 1.06,
-"desc": "Carrots, raw",
 "count": 5
 },
 "Bourbon Vanilla Bean Paste": {
@@ -1142,11 +1128,18 @@
 "desc": "Yardlong bean, raw",
 "count": 5
 },
-"Straight Cut Coated Skin On Fries": {
-"fdc": "170032",
-"score": 0.372,
-"desc": "Potatoes, raw, skin",
+"Horseradish Pure": {
+"fdc": "171833",
+"score": 0.5,
+"desc": "Sauce, horseradish",
 "count": 5
+},
+"Mustard Dijon Whole Grain": {
+"fdc": "172234",
+"score": 1.0,
+"desc": "Mustard, prepared, yellow",
+"count": 5,
+"curated": true
 },
 "Egg Medium Grade AA": {
 "fdc": "171287",
@@ -1161,36 +1154,30 @@
 "count": 5,
 "curated": true
 },
-"Cornmeal Yellow Ground Coarse": {
-"fdc": "168039",
-"score": 0.667,
-"desc": "Cornmeal, yellow (Navajo)",
-"count": 5
-},
-"Grain Farro": {
-"fdc": "168884",
-"score": 0.52,
-"desc": "Rye grain",
-"count": 5
-},
-"Pork Tenderloin": {
-"fdc": "168249",
-"score": 0.893,
-"desc": "Pork, fresh, loin, tenderloin, separable lean only, raw",
-"count": 5
-},
-"Miso Paste Red": {
-"fdc": "172442",
-"score": 0.52,
-"desc": "Miso",
-"count": 5
-},
-"Tomato Roma": {
-"fdc": "170051",
+"Beef Tri-Tip Halal": {
+"fdc": "172174",
 "score": 1.0,
-"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
+"desc": "Beef, loin, top sirloin cap steak, boneless, separable lean only, trimmed to 1/8\" fat, choice, raw",
 "count": 5,
 "curated": true
+},
+"Daikon Root White": {
+"fdc": "168583",
+"score": 0.435,
+"desc": "Wasabi, root, raw",
+"count": 5
+},
+"Cauliflower Florets": {
+"fdc": "169986",
+"score": 1.06,
+"desc": "Cauliflower, raw",
+"count": 5
+},
+"Dill Weed": {
+"fdc": "172233",
+"score": 1.0,
+"desc": "Dill weed, fresh",
+"count": 5
 },
 "Anchovy Paste": {
 "fdc": "169396",
@@ -1199,10 +1186,16 @@
 "count": 5,
 "curated": true
 },
-"Yellow Onion Fresh": {
-"fdc": "170000",
+"Oil from Fryer": {
+"fdc": "171015",
+"score": 0.375,
+"desc": "Oil, palm",
+"count": 5
+},
+"Avocado Pulp": {
+"fdc": "171706",
 "score": 1.0,
-"desc": "Onions, raw",
+"desc": "Avocados, raw, California",
 "count": 5,
 "curated": true
 },
@@ -1212,25 +1205,6 @@
 "desc": "Spices, cloves, ground",
 "count": 5
 },
-"Half & Half Milk Creamer": {
-"fdc": "170875",
-"score": 0.375,
-"desc": "Milk, low sodium, fluid",
-"count": 5
-},
-"Anaheim Peppers": {
-"fdc": "168576",
-"score": 0.56,
-"desc": "Peppers, jalapeno, raw",
-"count": 5
-},
-"Refried Beans": {
-"fdc": "172438",
-"score": 1.0,
-"desc": "Refried beans, canned, traditional style",
-"count": 5,
-"curated": true
-},
 "Vegan Light Mayonnaise": {
 "fdc": "171009",
 "score": 1.0,
@@ -1238,12 +1212,11 @@
 "count": 5,
 "curated": true
 },
-"Mustard Dijon Whole Grain": {
-"fdc": "172234",
-"score": 1.0,
-"desc": "Mustard, prepared, yellow",
-"count": 5,
-"curated": true
+"Miso Paste Shiro White": {
+"fdc": "172442",
+"score": 0.458,
+"desc": "Miso",
+"count": 5
 },
 "Sesame Seeds White": {
 "fdc": "170150",
@@ -1251,31 +1224,17 @@
 "desc": "Seeds, sesame seeds, whole, dried",
 "count": 5
 },
-"Sherry Vinegar": {
-"fdc": "172237",
-"score": 0.5,
-"desc": "Vinegar, distilled",
+"Sugar Pearl": {
+"fdc": "168175",
+"score": 0.518,
+"desc": "Sugar-apples, (sweetsop), raw",
 "count": 5
-},
-"Green Bell Pepper": {
-"fdc": "170427",
-"score": 1.0,
-"desc": "Peppers, sweet, green, raw",
-"count": 5,
-"curated": true
 },
 "Chives Fresh": {
 "fdc": "169994",
 "score": 1.06,
 "desc": "Chives, raw",
 "count": 5
-},
-"Ground Beef 75/25": {
-"fdc": "171796",
-"score": 1.0,
-"desc": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
-"count": 5,
-"curated": true
 },
 "Walnuts Pieces & Halves": {
 "fdc": "170186",
@@ -1287,6 +1246,12 @@
 "fdc": "171430",
 "score": 0.6,
 "desc": "Oil, PAM cooking spray, original",
+"count": 5
+},
+"Bacon": {
+"fdc": "171640",
+"score": 0.875,
+"desc": "Bacon, turkey, low sodium",
 "count": 5
 },
 "Yeast Gold SAF": {
@@ -1326,11 +1291,12 @@
 "desc": "Sauce, hoisin, ready-to-serve",
 "count": 4
 },
-"Aji-Mirin Rice Cooking Wine": {
-"fdc": "169070",
-"score": 0.425,
-"desc": "Alcoholic beverage, wine, cooking",
-"count": 4
+"Green Onion Chopped 1/4\"": {
+"fdc": "170000",
+"score": 1.0,
+"desc": "Onions, raw",
+"count": 4,
+"curated": true
 },
 "Salt": {
 "fdc": "173468",
@@ -1346,11 +1312,12 @@
 "count": 4,
 "curated": true
 },
-"Shiitake Mushrooms": {
-"fdc": "169242",
-"score": 1.06,
-"desc": "Mushrooms, shiitake, raw",
-"count": 4
+"Cinnamon Stick Whole": {
+"fdc": "171320",
+"score": 1.0,
+"desc": "Spices, cinnamon, ground",
+"count": 4,
+"curated": true
 },
 "water": {
 "fdc": "__zero__",
@@ -1359,17 +1326,16 @@
 "count": 4,
 "curated": true
 },
-"sugar": {
-"fdc": "169655",
-"score": 1.0,
-"desc": "Sugars, granulated",
-"count": 4,
-"curated": true
+"Grain Wheat Berry": {
+"fdc": "168944",
+"score": 0.625,
+"desc": "Wheat flour, whole-grain, soft wheat",
+"count": 4
 },
-"Beets Gold Diced": {
-"fdc": "169145",
-"score": 0.685,
-"desc": "Beets, raw",
+"Leeks": {
+"fdc": "169246",
+"score": 0.852,
+"desc": "Leeks, (bulb and lower leaf-portion), raw",
 "count": 4
 },
 "Red Food Coloring": {
@@ -1384,37 +1350,10 @@
 "desc": "Fish, salmon, coho (silver), raw (Alaska Native)",
 "count": 4
 },
-"Gluten-Free Tamari Soy Sauce": {
-"fdc": "174277",
-"score": 1.0,
-"desc": "Soy sauce made from soy and wheat (shoyu)",
-"count": 4,
-"curated": true
-},
-"White Rice Long Grain": {
-"fdc": "169753",
-"score": 1.0,
-"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
-"count": 4,
-"curated": true
-},
 "5% White Wine Vinegar": {
 "fdc": "172240",
 "score": 0.667,
 "desc": "Vinegar, red wine",
-"count": 4
-},
-"Ground Beef": {
-"fdc": "171796",
-"score": 1.0,
-"desc": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
-"count": 4,
-"curated": true
-},
-"Egg Large Grade A Pasteurized": {
-"fdc": "170893",
-"score": 0.977,
-"desc": "Egg, whole, raw, frozen, salted, pasteurized",
 "count": 4
 },
 "Jalapeno Pepper Can": {
@@ -1427,6 +1366,24 @@
 "fdc": "169376",
 "score": 0.86,
 "desc": "Mushroom, white, exposed to ultraviolet light, raw",
+"count": 4
+},
+"Grain Farro": {
+"fdc": "168884",
+"score": 0.52,
+"desc": "Rye grain",
+"count": 4
+},
+"Legume Black Lentils": {
+"fdc": "172420",
+"score": 0.56,
+"desc": "Lentils, raw",
+"count": 4
+},
+"Pork Tenderloin": {
+"fdc": "168249",
+"score": 0.893,
+"desc": "Pork, fresh, loin, tenderloin, separable lean only, raw",
 "count": 4
 },
 "Sweet Relish": {
@@ -1447,16 +1404,28 @@
 "desc": "Yam, raw",
 "count": 4
 },
+"Miso Paste Red": {
+"fdc": "172442",
+"score": 0.52,
+"desc": "Miso",
+"count": 4
+},
+"Tofu Soft": {
+"fdc": "174292",
+"score": 0.875,
+"desc": "MORI-NU, Tofu, silken, soft",
+"count": 4
+},
 "Grain Bulgur Wheat": {
 "fdc": "168944",
 "score": 0.625,
 "desc": "Wheat flour, whole-grain, soft wheat",
 "count": 4
 },
-"Beef Tri-Tip Halal": {
-"fdc": "172174",
+"Tomato Roma": {
+"fdc": "170051",
 "score": 1.0,
-"desc": "Beef, loin, top sirloin cap steak, boneless, separable lean only, trimmed to 1/8\" fat, choice, raw",
+"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
 "count": 4,
 "curated": true
 },
@@ -1466,30 +1435,12 @@
 "desc": "Frozen novelties, ice type, italian, restaurant-prepared",
 "count": 4
 },
-"Cauliflower Florets": {
-"fdc": "169986",
-"score": 1.06,
-"desc": "Cauliflower, raw",
-"count": 4
-},
-"Dill Weed": {
-"fdc": "172233",
-"score": 1.0,
-"desc": "Dill weed, fresh",
-"count": 4
-},
 "Parmesan Cheese Shredded": {
 "fdc": "171247",
 "score": 1.0,
 "desc": "Cheese, parmesan, grated",
 "count": 4,
 "curated": true
-},
-"Oil from Fryer": {
-"fdc": "171015",
-"score": 0.375,
-"desc": "Oil, palm",
-"count": 4
 },
 "Watermelon": {
 "fdc": "167765",
@@ -1515,16 +1466,23 @@
 "desc": "Seeds, sesame seeds, whole, dried",
 "count": 4
 },
+"Orange Juice 5+1 Concentrate": {
+"fdc": "169098",
+"score": 1.0,
+"desc": "Orange juice, raw (Includes foods for USDA's Food Distribution Program)",
+"count": 4,
+"curated": true
+},
 "Wine Chablis": {
 "fdc": "172240",
 "score": 0.458,
 "desc": "Vinegar, red wine",
 "count": 4
 },
-"Habanero Peppers": {
-"fdc": "168576",
-"score": 0.56,
-"desc": "Peppers, jalapeno, raw",
+"Squash Butternut Cubes 1'": {
+"fdc": "169295",
+"score": 0.977,
+"desc": "Squash, winter, butternut, raw",
 "count": 4
 },
 "Quinoa": {
@@ -1552,12 +1510,6 @@
 "desc": "Pasta, dry, unenriched",
 "count": 4
 },
-"Spaghetti Pasta": {
-"fdc": "171192",
-"score": 0.833,
-"desc": "Sauce, pasta, spaghetti/marinara, ready-to-serve",
-"count": 4
-},
 "Boneless Chicken Breast": {
 "fdc": "171052",
 "score": 1.0,
@@ -1565,10 +1517,10 @@
 "count": 4,
 "curated": true
 },
-"Miso Paste Shiro White": {
-"fdc": "172442",
-"score": 0.458,
-"desc": "Miso",
+"Sherry Vinegar": {
+"fdc": "172237",
+"score": 0.5,
+"desc": "Vinegar, distilled",
 "count": 4
 },
 "Wine Sherry": {
@@ -1577,6 +1529,20 @@
 "desc": "Vinegar, red wine",
 "count": 4
 },
+"Green Bell Pepper": {
+"fdc": "170427",
+"score": 1.0,
+"desc": "Peppers, sweet, green, raw",
+"count": 4,
+"curated": true
+},
+"Ground Beef 75/25": {
+"fdc": "171796",
+"score": 1.0,
+"desc": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
+"count": 4,
+"curated": true
+},
 "Shredded Cheddar Cheese": {
 "fdc": "173414",
 "score": 1.0,
@@ -1584,22 +1550,10 @@
 "count": 4,
 "curated": true
 },
-"Canned Tomatillo Crushed": {
-"fdc": "170501",
-"score": 0.667,
-"desc": "Tomatoes, crushed, canned",
-"count": 4
-},
 "Dried Cranberries": {
 "fdc": "171722",
 "score": 1.06,
 "desc": "Cranberries, raw",
-"count": 4
-},
-"Sugar Pearl": {
-"fdc": "168175",
-"score": 0.518,
-"desc": "Sugar-apples, (sweetsop), raw",
 "count": 4
 },
 "Bourbon Vanilla Extract Bulk": {
@@ -1608,17 +1562,18 @@
 "desc": "Vanilla extract",
 "count": 4
 },
-"Bacon": {
-"fdc": "171640",
-"score": 0.875,
-"desc": "Bacon, turkey, low sodium",
-"count": 4
-},
 "Toasted Coconut": {
 "fdc": "170579",
 "score": 0.85,
 "desc": "Nuts, coconut meat, dried (desiccated), toasted",
 "count": 3
+},
+"Milk Whole 6 Gal": {
+"fdc": "171265",
+"score": 1.0,
+"desc": "Milk, whole, 3.25% milkfat, with added vitamin D",
+"count": 3,
+"curated": true
 },
 "Mozzarella Cheese Shredded": {
 "fdc": "170845",
@@ -1627,24 +1582,36 @@
 "count": 3,
 "curated": true
 },
+"Aji-Mirin Rice Cooking Wine": {
+"fdc": "169070",
+"score": 0.425,
+"desc": "Alcoholic beverage, wine, cooking",
+"count": 3
+},
 "Eggplant": {
 "fdc": "169228",
 "score": 1.06,
 "desc": "Eggplant, raw",
 "count": 3
 },
-"Cinnamon Stick Whole": {
-"fdc": "171320",
+"Curry Powder": {
+"fdc": "170924",
+"score": 0.917,
+"desc": "Spices, curry powder",
+"count": 3
+},
+"SP Cumin Seed": {
+"fdc": "170923",
+"score": 0.917,
+"desc": "Spices, cumin seed",
+"count": 3
+},
+"Pinto Beans": {
+"fdc": "175200",
 "score": 1.0,
-"desc": "Spices, cinnamon, ground",
+"desc": "Beans, pinto, mature seeds, cooked, boiled, without salt",
 "count": 3,
 "curated": true
-},
-"Peas Frozen": {
-"fdc": "170419",
-"score": 0.935,
-"desc": "Peas, green, raw",
-"count": 3
 },
 "Egg Yolk With Sugar": {
 "fdc": "168832",
@@ -1658,23 +1625,61 @@
 "desc": "Peppers, hot chili, red, raw",
 "count": 3
 },
-"Beef Flap": {
-"fdc": "172174",
+"sugar": {
+"fdc": "169655",
 "score": 1.0,
-"desc": "Beef, loin, top sirloin cap steak, boneless, separable lean only, trimmed to 1/8\" fat, choice, raw",
+"desc": "Sugars, granulated",
 "count": 3,
 "curated": true
 },
-"Beef Fajita Halal": {
-"fdc": "168608",
-"score": 0.518,
-"desc": "Beef, grass-fed, ground, raw",
+"Beef Ribeye Sliced": {
+"fdc": "174699",
+"score": 0.855,
+"desc": "Beef, ribeye cap steak, boneless, separable lean only, trimmed to 0\" fat, choice, raw",
 "count": 3
 },
-"Daikon Root White": {
-"fdc": "168583",
-"score": 0.435,
-"desc": "Wasabi, root, raw",
+"Soy Sauce Lite": {
+"fdc": "174277",
+"score": 1.0,
+"desc": "Soy sauce made from soy and wheat (shoyu)",
+"count": 3,
+"curated": true
+},
+"Beets Gold Diced": {
+"fdc": "169145",
+"score": 0.685,
+"desc": "Beets, raw",
+"count": 3
+},
+"Chicken Bones": {
+"fdc": "171116",
+"score": 0.685,
+"desc": "Chicken, ground, raw",
+"count": 3
+},
+"Tabasco Sauce Bulk": {
+"fdc": "174528",
+"score": 0.85,
+"desc": "Sauce, ready-to-serve, pepper, TABASCO",
+"count": 3
+},
+"White Rice Long Grain Parboiled": {
+"fdc": "169753",
+"score": 1.0,
+"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
+"count": 3,
+"curated": true
+},
+"Seaweed Kombu": {
+"fdc": "168456",
+"score": 0.56,
+"desc": "Seaweed, irishmoss, raw",
+"count": 3
+},
+"Lemons": {
+"fdc": "167746",
+"score": 0.893,
+"desc": "Lemons, raw, without peel",
 "count": 3
 },
 "SP Salt Seasoned Lawry's": {
@@ -1695,16 +1700,30 @@
 "desc": "Cheese, ricotta, whole milk",
 "count": 3
 },
+"Ground Beef": {
+"fdc": "171796",
+"score": 1.0,
+"desc": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
+"count": 3,
+"curated": true
+},
 "Ground Pork": {
 "fdc": "167902",
 "score": 1.06,
 "desc": "Pork, fresh, ground, raw",
 "count": 3
 },
-"Wine Burgundy": {
-"fdc": "173208",
-"score": 0.85,
-"desc": "Alcoholic Beverage, wine, table, red, Burgundy",
+"White Rice Calrose": {
+"fdc": "169753",
+"score": 1.0,
+"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
+"count": 3,
+"curated": true
+},
+"Limes": {
+"fdc": "168155",
+"score": 1.06,
+"desc": "Limes, raw",
 "count": 3
 },
 "Pecans Medium Pieces": {
@@ -1713,28 +1732,10 @@
 "desc": "Nuts, pecans",
 "count": 3
 },
-"Legume Black Lentils": {
-"fdc": "172420",
-"score": 0.56,
-"desc": "Lentils, raw",
-"count": 3
-},
 "Cabbage Coleslaw Shredded 3/16\"": {
 "fdc": "169975",
 "score": 0.685,
 "desc": "Cabbage, raw",
-"count": 3
-},
-"Niacin": {
-"fdc": "171870",
-"score": 0.767,
-"desc": "Beverages, Energy drink, RED BULL, sugar free, with added caffeine, niacin, pantothenic acid, vitamins B6 and B12",
-"count": 3
-},
-"Folic Acid": {
-"fdc": "171281",
-"score": 0.5,
-"desc": "Whey, acid, dried",
 "count": 3
 },
 "Sushi Rice": {
@@ -1749,35 +1750,29 @@
 "desc": "Amaranth leaves, raw",
 "count": 3
 },
-"Tofu Soft": {
-"fdc": "174292",
-"score": 0.875,
-"desc": "MORI-NU, Tofu, silken, soft",
-"count": 3
-},
 "Wakame Seaweed": {
 "fdc": "170496",
 "score": 1.06,
 "desc": "Seaweed, wakame, raw",
 "count": 3
 },
+"Vegan Mayonnaise": {
+"fdc": "171009",
+"score": 1.0,
+"desc": "Salad dressing, mayonnaise, regular",
+"count": 3,
+"curated": true
+},
+"Harissa Mild Paste": {
+"fdc": "171631",
+"score": 0.372,
+"desc": "Sausage, Italian, pork, mild, raw",
+"count": 3
+},
 "Jasmine Rice Brown": {
 "fdc": "169753",
 "score": 1.0,
 "desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
-"count": 3,
-"curated": true
-},
-"Potato Russet": {
-"fdc": "168446",
-"score": 0.52,
-"desc": "Potato flour",
-"count": 3
-},
-"Chopped Romaine Lettuce": {
-"fdc": "169247",
-"score": 1.0,
-"desc": "Lettuce, cos or romaine, raw",
 "count": 3,
 "curated": true
 },
@@ -1817,17 +1812,12 @@
 "desc": "Salad dressing, honey mustard dressing, reduced calorie",
 "count": 3
 },
-"niacin": {
-"fdc": "171870",
-"score": 0.767,
-"desc": "Beverages, Energy drink, RED BULL, sugar free, with added caffeine, niacin, pantothenic acid, vitamins B6 and B12",
-"count": 3
-},
-"folic acid": {
-"fdc": "171281",
-"score": 0.5,
-"desc": "Whey, acid, dried",
-"count": 3
+"Sharp Cheddar Cheese Loaf": {
+"fdc": "173414",
+"score": 1.0,
+"desc": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
+"count": 3,
+"curated": true
 },
 "Salami Genoa": {
 "fdc": "172935",
@@ -1847,16 +1837,35 @@
 "desc": "Kale, raw",
 "count": 3
 },
-"Sugar Palm": {
-"fdc": "167714",
-"score": 0.56,
-"desc": "Hearts of palm, raw",
+"Yellow Bell Pepper": {
+"fdc": "169130",
+"score": 0.435,
+"desc": "Plantains, yellow, raw",
 "count": 3
 },
-"Squash Butternut Cubes 1'": {
-"fdc": "169295",
-"score": 0.977,
-"desc": "Squash, winter, butternut, raw",
+"Anaheim Peppers": {
+"fdc": "168576",
+"score": 0.56,
+"desc": "Peppers, jalapeno, raw",
+"count": 3
+},
+"White Rice Long Grain": {
+"fdc": "169753",
+"score": 1.0,
+"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
+"count": 3,
+"curated": true
+},
+"Brussel Sprouts Shredded": {
+"fdc": "170383",
+"score": 0.56,
+"desc": "Brussels sprouts, raw",
+"count": 3
+},
+"Habanero Peppers": {
+"fdc": "168576",
+"score": 0.56,
+"desc": "Peppers, jalapeno, raw",
 "count": 3
 },
 "Tortilla Chips Corn": {
@@ -1865,11 +1874,12 @@
 "desc": "Snacks, tortilla chips, unsalted, white corn",
 "count": 3
 },
-"SP Ras El Hanout Moroccan": {
-"fdc": "171182",
-"score": 0.3,
-"desc": "SMART SOUP, Moroccan Chick Pea",
-"count": 3
+"Refried Beans": {
+"fdc": "172438",
+"score": 1.0,
+"desc": "Refried beans, canned, traditional style",
+"count": 3,
+"curated": true
 },
 "Beets Diced Canned": {
 "fdc": "169966",
@@ -1895,37 +1905,6 @@
 "desc": "Seeds, breadfruit seeds, roasted",
 "count": 3
 },
-"Yellow Onion Julienne 3/16\"": {
-"fdc": "170000",
-"score": 1.0,
-"desc": "Onions, raw",
-"count": 3,
-"curated": true
-},
-"Granny Smith Apple": {
-"fdc": "168203",
-"score": 0.602,
-"desc": "Apples, raw, granny smith, with skin (Includes foods for USDA's Food Distribution Program)",
-"count": 3
-},
-"White Balsamic Vinegar": {
-"fdc": "172241",
-"score": 0.75,
-"desc": "Vinegar, balsamic",
-"count": 3
-},
-"Orange": {
-"fdc": "169103",
-"score": 0.935,
-"desc": "Orange peel, raw",
-"count": 3
-},
-"Almond Milk": {
-"fdc": "174820",
-"score": 0.833,
-"desc": "Beverages, almond milk, chocolate, ready-to-drink",
-"count": 3
-},
 "Coffee Rainforest Bold": {
 "fdc": "175224",
 "score": 0.333,
@@ -1936,6 +1915,18 @@
 "fdc": "168544",
 "score": 0.446,
 "desc": "Corn, sweet, white, frozen, kernels cut off cob, unprepared",
+"count": 3
+},
+"Penne Rigate Pasta Barilla": {
+"fdc": "168927",
+"score": 0.312,
+"desc": "Pasta, dry, unenriched",
+"count": 3
+},
+"Canned Tomatillo Crushed": {
+"fdc": "170501",
+"score": 0.667,
+"desc": "Tomatoes, crushed, canned",
 "count": 3
 },
 "Bacon Applewood Smoked": {
@@ -1968,6 +1959,24 @@
 "desc": "Rye flour, light",
 "count": 3
 },
+"Straight Cut Coated Skin On Fries": {
+"fdc": "170032",
+"score": 0.372,
+"desc": "Potatoes, raw, skin",
+"count": 3
+},
+"Egg Large Grade A Pasteurized": {
+"fdc": "170893",
+"score": 0.977,
+"desc": "Egg, whole, raw, frozen, salted, pasteurized",
+"count": 3
+},
+"Sugar Palm": {
+"fdc": "167714",
+"score": 0.56,
+"desc": "Hearts of palm, raw",
+"count": 3
+},
 "Raspberries": {
 "fdc": "167755",
 "score": 1.06,
@@ -1978,6 +1987,12 @@
 "fdc": "171571",
 "score": 0.938,
 "desc": "Soup, chicken noodle, dry, mix",
+"count": 3
+},
+"Oatmeal": {
+"fdc": "172678",
+"score": 0.875,
+"desc": "Bread, oatmeal",
 "count": 3
 },
 "Pepperoni Pizza": {
@@ -2079,62 +2094,23 @@
 "desc": "Pineapple, raw, all varieties",
 "count": 2
 },
-"Curry Powder": {
-"fdc": "170924",
-"score": 0.917,
-"desc": "Spices, curry powder",
-"count": 2
-},
 "Julienne Tri-Color Bell Pepper": {
 "fdc": "169394",
 "score": 0.372,
 "desc": "Pepper, banana, raw",
 "count": 2
 },
-"SP Cumin Seed": {
-"fdc": "170923",
-"score": 0.917,
-"desc": "Spices, cumin seed",
+"Peas Frozen": {
+"fdc": "170419",
+"score": 0.935,
+"desc": "Peas, green, raw",
 "count": 2
-},
-"Pinto Beans": {
-"fdc": "175200",
-"score": 1.0,
-"desc": "Beans, pinto, mature seeds, cooked, boiled, without salt",
-"count": 2,
-"curated": true
 },
 "Potato Diced 3/4\"": {
 "fdc": "168446",
 "score": 0.895,
 "desc": "Potato flour",
 "count": 2
-},
-"Yeast Nutritional": {
-"fdc": "175043",
-"score": 1.0,
-"desc": "Leavening agents, yeast, baker's, active dry",
-"count": 2,
-"curated": true
-},
-"citric acid": {
-"fdc": "171281",
-"score": 0.5,
-"desc": "Whey, acid, dried",
-"count": 2
-},
-"Beef Ribeye Sliced": {
-"fdc": "174699",
-"score": 0.855,
-"desc": "Beef, ribeye cap steak, boneless, separable lean only, trimmed to 0\" fat, choice, raw",
-"count": 2
-},
-"Soy Sauce Lite": {
-"fdc": "174277",
-"score": 1.0,
-"desc": "Soy sauce made from soy and wheat (shoyu)",
-"count": 2,
-"curated": true
 },
 "Tabasco Sauce 5oz": {
 "fdc": "174528",
@@ -2154,12 +2130,6 @@
 "desc": "Broccoli, raw",
 "count": 2
 },
-"Chicken Bones": {
-"fdc": "171116",
-"score": 0.685,
-"desc": "Chicken, ground, raw",
-"count": 2
-},
 "Chicken Leg": {
 "fdc": "173619",
 "score": 0.893,
@@ -2172,54 +2142,17 @@
 "desc": "Chicken, feet, boiled",
 "count": 2
 },
-"Leeks": {
-"fdc": "169246",
-"score": 0.852,
-"desc": "Leeks, (bulb and lower leaf-portion), raw",
-"count": 2
-},
-"Seaweed Kombu": {
-"fdc": "168456",
-"score": 0.56,
-"desc": "Seaweed, irishmoss, raw",
-"count": 2
-},
-"Jalapeno Juice": {
-"fdc": "167747",
-"score": 0.56,
-"desc": "Lemon juice, raw",
-"count": 2
-},
-"Panko Bread Crumbs": {
-"fdc": "172806",
-"score": 0.625,
-"desc": "Bread, crumbs, dry, grated, seasoned",
-"count": 2
-},
 "Farfalle Bowtie Pasta": {
 "fdc": "168927",
 "score": 0.375,
 "desc": "Pasta, dry, unenriched",
 "count": 2
 },
-"Tabasco Sauce Bulk": {
-"fdc": "174528",
+"Wine Burgundy": {
+"fdc": "173208",
 "score": 0.85,
-"desc": "Sauce, ready-to-serve, pepper, TABASCO",
+"desc": "Alcoholic Beverage, wine, table, red, Burgundy",
 "count": 2
-},
-"Baby Arugula": {
-"fdc": "169387",
-"score": 0.685,
-"desc": "Arugula, raw",
-"count": 2
-},
-"Soy Sauce Mushroom": {
-"fdc": "174277",
-"score": 1.0,
-"desc": "Soy sauce made from soy and wheat (shoyu)",
-"count": 2,
-"curated": true
 },
 "Cotija Cheese": {
 "fdc": "170898",
@@ -2270,10 +2203,22 @@
 "desc": "Yam, raw",
 "count": 2
 },
+"Niacin": {
+"fdc": "171870",
+"score": 0.767,
+"desc": "Beverages, Energy drink, RED BULL, sugar free, with added caffeine, niacin, pantothenic acid, vitamins B6 and B12",
+"count": 2
+},
 "Ferrous Sulfate": {
 "fdc": "172475",
 "score": 0.477,
 "desc": "Tofu, raw, firm, prepared with calcium sulfate",
+"count": 2
+},
+"Folic Acid": {
+"fdc": "171281",
+"score": 0.5,
+"desc": "Whey, acid, dried",
 "count": 2
 },
 "Pearled Barley": {
@@ -2307,10 +2252,10 @@
 "desc": "Yardlong bean, raw",
 "count": 2
 },
-"Rainbow Swiss Chard": {
-"fdc": "169991",
-"score": 0.81,
-"desc": "Chard, swiss, raw",
+"Potato Russet": {
+"fdc": "168446",
+"score": 0.52,
+"desc": "Potato flour",
 "count": 2
 },
 "Hot House Cucumber": {
@@ -2331,10 +2276,23 @@
 "desc": "Lettuce, red leaf, raw",
 "count": 2
 },
+"Chopped Romaine Lettuce": {
+"fdc": "169247",
+"score": 1.0,
+"desc": "Lettuce, cos or romaine, raw",
+"count": 2,
+"curated": true
+},
 "Chili Sauce": {
 "fdc": "171595",
 "score": 0.833,
 "desc": "Sauce, tomato chili sauce, bottled, with salt",
+"count": 2
+},
+"SP Cajun Spice": {
+"fdc": "171332",
+"score": 0.438,
+"desc": "Spices, pumpkin pie spice",
 "count": 2
 },
 "Melon Cantaloupe": {
@@ -2360,18 +2318,6 @@
 "fdc": "169295",
 "score": 0.977,
 "desc": "Squash, winter, butternut, raw",
-"count": 2
-},
-"wheat flour": {
-"fdc": "168944",
-"score": 0.875,
-"desc": "Wheat flour, whole-grain, soft wheat",
-"count": 2
-},
-"reduced iron": {
-"fdc": "174640",
-"score": 0.792,
-"desc": "Cereals, QUAKER, Quick Oats with Iron, Dry",
 "count": 2
 },
 "Soy Milk": {
@@ -2411,16 +2357,10 @@
 "desc": "Milk, low sodium, fluid",
 "count": 2
 },
-"Yellow Bell Pepper": {
-"fdc": "169130",
-"score": 0.435,
-"desc": "Plantains, yellow, raw",
-"count": 2
-},
-"Rice Sticky CRC": {
-"fdc": "169726",
-"score": 0.435,
-"desc": "Wild rice, raw",
+"Asian Vegetable Mix": {
+"fdc": "169777",
+"score": 0.542,
+"desc": "Spanish rice mix, dry mix, prepared (with canola/vegetable oil blend or diced tomatoes and margarine)",
 "count": 2
 },
 "Mushroom Sliced 1/2\"": {
@@ -2429,10 +2369,22 @@
 "desc": "Mushroom, white, exposed to ultraviolet light, raw",
 "count": 2
 },
+"Ginger": {
+"fdc": "169231",
+"score": 0.935,
+"desc": "Ginger root, raw",
+"count": 2
+},
 "Tomato Sun Dried Julienne": {
 "fdc": "170461",
 "score": 0.52,
 "desc": "Tomato powder",
+"count": 2
+},
+"Potato Red Diced 1/2\"": {
+"fdc": "169977",
+"score": 0.56,
+"desc": "Cabbage, red, raw",
 "count": 2
 },
 "Achiote Paste": {
@@ -2441,22 +2393,46 @@
 "desc": "Nuts, almond paste",
 "count": 2
 },
-"Lemongrass": {
-"fdc": "171184",
-"score": 0.8,
-"desc": "SMART SOUP, Vietnamese Carrot Lemongrass",
+"Cabbage Napa": {
+"fdc": "168572",
+"score": 0.917,
+"desc": "Cabbage, napa, cooked",
 "count": 2
 },
-"Sauce Fish 3 Crabs Vietnamese": {
-"fdc": "174531",
+"Rock Sugar": {
+"fdc": "168175",
+"score": 0.518,
+"desc": "Sugar-apples, (sweetsop), raw",
+"count": 2
+},
+"Seasoning Pho Vegetable": {
+"fdc": "169277",
+"score": 0.393,
+"desc": "Salsify, (vegetable oyster), raw",
+"count": 2
+},
+"Bean Sprouts": {
+"fdc": "169222",
+"score": 0.56,
+"desc": "Yardlong bean, raw",
+"count": 2
+},
+"Herb Basil Thai Fresh": {
+"fdc": "172232",
 "score": 0.5,
-"desc": "Sauce, fish, ready-to-serve",
+"desc": "Basil, fresh",
 "count": 2
 },
-"Ginger": {
-"fdc": "169231",
-"score": 0.935,
-"desc": "Ginger root, raw",
+"niacin": {
+"fdc": "171870",
+"score": 0.767,
+"desc": "Beverages, Energy drink, RED BULL, sugar free, with added caffeine, niacin, pantothenic acid, vitamins B6 and B12",
+"count": 2
+},
+"folic acid": {
+"fdc": "171281",
+"score": 0.5,
+"desc": "Whey, acid, dried",
 "count": 2
 },
 "Sliced Oyster Mushrooms": {
@@ -2465,12 +2441,30 @@
 "desc": "Mushrooms, oyster, raw",
 "count": 2
 },
+"Cheese Sauce": {
+"fdc": "171584",
+"score": 0.917,
+"desc": "Sauce, cheese sauce mix, dry",
+"count": 2
+},
 "Yellow Onion Diced 1/2\"": {
 "fdc": "170000",
 "score": 1.0,
 "desc": "Onions, raw",
 "count": 2,
 "curated": true
+},
+"SP Ras El Hanout Moroccan": {
+"fdc": "171182",
+"score": 0.3,
+"desc": "SMART SOUP, Moroccan Chick Pea",
+"count": 2
+},
+"Spaghetti Pasta": {
+"fdc": "171192",
+"score": 0.833,
+"desc": "Sauce, pasta, spaghetti/marinara, ready-to-serve",
+"count": 2
 },
 "SP Berbere Mix": {
 "fdc": "174869",
@@ -2522,22 +2516,29 @@
 "count": 2,
 "curated": true
 },
+"Dried Shiitake Mushrooms": {
+"fdc": "169242",
+"score": 1.06,
+"desc": "Mushrooms, shiitake, raw",
+"count": 2
+},
 "Maple Syrup 100%": {
 "fdc": "170276",
 "score": 0.917,
 "desc": "Syrup, maple, Canadian",
 "count": 2
 },
+"Yellow Onion Julienne 3/16\"": {
+"fdc": "170000",
+"score": 1.0,
+"desc": "Onions, raw",
+"count": 2,
+"curated": true
+},
 "Forbidden Black Rice": {
 "fdc": "168064",
 "score": 0.55,
 "desc": "Restaurant, Latino, Arroz con frijoles negros (rice and black beans)",
-"count": 2
-},
-"Lamb Halal Leg BRT": {
-"fdc": "172486",
-"score": 0.61,
-"desc": "Lamb, leg, shank half, separable lean only, trimmed to 1/4\" fat, choice, raw",
 "count": 2
 },
 "Tamarind Paste": {
@@ -2547,28 +2548,16 @@
 "count": 2,
 "curated": true
 },
-"Fries 3/16\" Julienne": {
-"fdc": "167672",
-"score": 0.833,
-"desc": "DENNY'S, french fries",
-"count": 2
-},
 "Hamburger Bun Base Silky": {
 "fdc": "173318",
 "score": 0.411,
 "desc": "Fast foods, hamburger; single, regular patty; double decker bun with condiments and special sauce",
 "count": 2
 },
-"Lemons": {
-"fdc": "167746",
-"score": 0.893,
-"desc": "Lemons, raw, without peel",
-"count": 2
-},
-"Brussel Sprouts Shredded": {
-"fdc": "170383",
-"score": 0.56,
-"desc": "Brussels sprouts, raw",
+"Almond Milk": {
+"fdc": "174820",
+"score": 0.833,
+"desc": "Beverages, almond milk, chocolate, ready-to-drink",
 "count": 2
 },
 "Velveeta Cheese": {
@@ -2577,17 +2566,16 @@
 "desc": "KRAFT VELVEETA Pasteurized Process Cheese Spread",
 "count": 2
 },
-"Sharp Cheddar Cheese Loaf": {
-"fdc": "173414",
-"score": 1.0,
-"desc": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
-"count": 2,
-"curated": true
-},
 "Salted Butter": {
 "fdc": "173410",
 "score": 1.0,
 "desc": "Butter, salted",
+"count": 2
+},
+"Pork Butt Fresh": {
+"fdc": "168260",
+"score": 0.866,
+"desc": "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean only, raw",
 "count": 2
 },
 "Beef Tenderloin Strips": {
@@ -2665,32 +2653,23 @@
 "desc": "Alcoholic beverage, creme de menthe, 72 proof",
 "count": 2
 },
-"Parmesan Cheese Romano Blend": {
-"fdc": "171247",
-"score": 1.0,
-"desc": "Cheese, parmesan, grated",
-"count": 2,
-"curated": true
-},
-"Tomato Roasted Diced 3/4\"": {
-"fdc": "170051",
-"score": 1.0,
-"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
-"count": 2,
-"curated": true
-},
 "Yellow Mustard": {
 "fdc": "172234",
 "score": 0.917,
 "desc": "Mustard, prepared, yellow",
 "count": 2
 },
-"Vegan Mayonnaise": {
-"fdc": "171009",
-"score": 1.0,
-"desc": "Salad dressing, mayonnaise, regular",
-"count": 2,
-"curated": true
+"Lemongrass": {
+"fdc": "171184",
+"score": 0.8,
+"desc": "SMART SOUP, Vietnamese Carrot Lemongrass",
+"count": 2
+},
+"Sauce Fish 3 Crabs Vietnamese": {
+"fdc": "174531",
+"score": 0.5,
+"desc": "Sauce, fish, ready-to-serve",
+"count": 2
 },
 "Mozzarella Cheese": {
 "fdc": "170845",
@@ -2754,6 +2733,13 @@
 "desc": "Blackberries, raw",
 "count": 2
 },
+"Gluten-Free Tamari Soy Sauce": {
+"fdc": "174277",
+"score": 1.0,
+"desc": "Soy sauce made from soy and wheat (shoyu)",
+"count": 2,
+"curated": true
+},
 "Peach Cobbler": {
 "fdc": "171375",
 "score": 0.85,
@@ -2765,6 +2751,13 @@
 "score": 0.518,
 "desc": "Salsify, (vegetable oyster), raw",
 "count": 2
+},
+"Chicken Parmesan Sandwich": {
+"fdc": "171247",
+"score": 1.0,
+"desc": "Cheese, parmesan, grated",
+"count": 2,
+"curated": true
 },
 "Ranch Dressing": {
 "fdc": "173592",
@@ -2792,16 +2785,17 @@
 "desc": "Brussels sprouts, raw",
 "count": 2
 },
-"Young Chow Vegetable Fried Rice": {
-"fdc": "167668",
-"score": 0.383,
-"desc": "Restaurant, Chinese, fried rice, without meat",
-"count": 2
+"Grilled Dijon Chicken Thigh": {
+"fdc": "173627",
+"score": 1.0,
+"desc": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
+"count": 2,
+"curated": true
 },
-"Oatmeal": {
-"fdc": "172678",
-"score": 0.875,
-"desc": "Bread, oatmeal",
+"Bulgogi Korean Beef": {
+"fdc": "168608",
+"score": 0.393,
+"desc": "Beef, grass-fed, ground, raw",
 "count": 2
 },
 "Roasted Mushrooms": {
@@ -2826,12 +2820,6 @@
 "fdc": "174608",
 "score": 0.475,
 "desc": "Chicken breast, roll, oven-roasted",
-"count": 2
-},
-"Miso Soup": {
-"fdc": "172442",
-"score": 0.645,
-"desc": "Miso",
 "count": 2
 },
 "Chicken Caesar Salad": {
@@ -2876,10 +2864,10 @@
 "desc": "Pepper, banana, raw",
 "count": 2
 },
-"Carne Asada Bowl": {
-"fdc": "172097",
-"score": 0.286,
-"desc": "Chili con carne with beans, canned entree",
+"Peanut Butter": {
+"fdc": "169869",
+"score": 0.917,
+"desc": "Peanut butter, reduced sodium",
 "count": 2
 },
 "Pizza Dough": {
@@ -2902,12 +2890,6 @@
 "count": 2,
 "curated": true
 },
-"Pumpkin Muffin": {
-"fdc": "168448",
-"score": 0.685,
-"desc": "Pumpkin, raw",
-"count": 2
-},
 "Avocado BLT Sandwich": {
 "fdc": "171706",
 "score": 1.0,
@@ -2927,6 +2909,12 @@
 "desc": "Ham, sliced, pre-packaged, deli meat (96%fat free, water added)",
 "count": 2,
 "curated": true
+},
+"Barley Pilaf": {
+"fdc": "170284",
+"score": 0.56,
+"desc": "Barley, pearled, raw",
+"count": 2
 },
 "Cantaloupe": {
 "fdc": "169092",
@@ -2952,40 +2940,34 @@
 "desc": "Eggs, scrambled, frozen mixture",
 "count": 2
 },
-"Spaghetti & Meatballs": {
-"fdc": "169845",
-"score": 0.875,
-"desc": "DENNY'S, spaghetti and meatballs",
-"count": 2
-},
 "Pepperoni": {
 "fdc": "174593",
 "score": 0.82,
 "desc": "Hormel Pillow Pak Sliced Turkey Pepperoni",
 "count": 2
 },
-"Chow Mein Noodles": {
-"fdc": "168905",
-"score": 0.938,
-"desc": "Noodles, chinese, chow mein",
+"Vegetarian Japchae": {
+"fdc": "169068",
+"score": 0.52,
+"desc": "Vegetarian fillets",
 "count": 2
 },
-"Vegetable Potstickers": {
-"fdc": "169277",
-"score": 0.518,
-"desc": "Salsify, (vegetable oyster), raw",
-"count": 2
-},
-"Chinese Broccoli": {
-"fdc": "169404",
-"score": 1.06,
-"desc": "Broccoli, chinese, raw",
+"Korean Eggplant": {
+"fdc": "169228",
+"score": 0.685,
+"desc": "Eggplant, raw",
 "count": 2
 },
 "Salad Bar": {
 "fdc": "173477",
 "score": 0.52,
 "desc": "Clif Z bar",
+"count": 2
+},
+"Mezze Special": {
+"fdc": "172775",
+"score": 0.438,
+"desc": "Pancakes, special dietary, dry mix",
 "count": 2
 },
 "Fried Eggs": {
@@ -3049,6 +3031,12 @@
 "desc": "Fish, tuna salad",
 "count": 2
 },
+"Vegetable Egg Roll": {
+"fdc": "172105",
+"score": 0.625,
+"desc": "Egg rolls, vegetable, frozen, prepared",
+"count": 2
+},
 "Cinnamon Raisin Bagel": {
 "fdc": "172664",
 "score": 0.667,
@@ -3105,6 +3093,19 @@
 "desc": "Pork, fresh, ground, raw",
 "count": 2
 },
+"Feta Cheese": {
+"fdc": "173420",
+"score": 1.0,
+"desc": "Cheese, feta",
+"count": 2
+},
+"Flour Tortilla": {
+"fdc": "175037",
+"score": 1.0,
+"desc": "Tortillas, ready-to-bake or -fry, flour, refrigerated",
+"count": 2,
+"curated": true
+},
 "Pistachio Nuts Raw": {
 "fdc": "170184",
 "score": 1.06,
@@ -3115,6 +3116,12 @@
 "fdc": "172617",
 "score": 0.372,
 "desc": "Lamb, New Zealand, imported, ground lamb, raw",
+"count": 1
+},
+"Wheat Gluten Vital": {
+"fdc": "168147",
+"score": 1.02,
+"desc": "Vital wheat gluten",
 "count": 1
 },
 "Whipped Topping Non-Dairy": {
@@ -3227,6 +3234,13 @@
 "desc": "Asparagus, raw",
 "count": 1
 },
+"Yeast Nutritional": {
+"fdc": "175043",
+"score": 1.0,
+"desc": "Leavening agents, yeast, baker's, active dry",
+"count": 1,
+"curated": true
+},
 "Pork": {
 "fdc": "167902",
 "score": 1.06,
@@ -3322,6 +3336,12 @@
 "desc": "Toppings, butterscotch or caramel",
 "count": 1
 },
+"citric acid": {
+"fdc": "171281",
+"score": 0.5,
+"desc": "Whey, acid, dried",
+"count": 1
+},
 "Green Chili Peppers Diced Can": {
 "fdc": "170497",
 "score": 0.81,
@@ -3335,18 +3355,37 @@
 "count": 1,
 "curated": true
 },
+"Halal Chicken Breast Cutlet": {
+"fdc": "171052",
+"score": 1.0,
+"desc": "Chicken, broilers or fryers, meat only, raw",
+"count": 1,
+"curated": true
+},
+"Panko Bread Crumbs": {
+"fdc": "172806",
+"score": 0.625,
+"desc": "Bread, crumbs, dry, grated, seasoned",
+"count": 1
+},
+"Beef Flap": {
+"fdc": "172174",
+"score": 1.0,
+"desc": "Beef, loin, top sirloin cap steak, boneless, separable lean only, trimmed to 1/8\" fat, choice, raw",
+"count": 1,
+"curated": true
+},
 "Aleppo Peppers": {
 "fdc": "168576",
 "score": 0.56,
 "desc": "Peppers, jalapeno, raw",
 "count": 1
 },
-"White Rice Long Grain Parboiled": {
-"fdc": "169753",
-"score": 1.0,
-"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
-"count": 1,
-"curated": true
+"Louisiana Hot Sauce": {
+"fdc": "171186",
+"score": 0.625,
+"desc": "Sauce, hot chile, sriracha",
+"count": 1
 },
 "Potato Red Diced 3/4\"": {
 "fdc": "169977",
@@ -3359,13 +3398,6 @@
 "score": 0.458,
 "desc": "Onions, dehydrated flakes",
 "count": 1
-},
-"Halal Chicken Breast Cutlet": {
-"fdc": "171052",
-"score": 1.0,
-"desc": "Chicken, broilers or fryers, meat only, raw",
-"count": 1,
-"curated": true
 },
 "Korean Red Pepper Flakes": {
 "fdc": "170932",
@@ -3380,6 +3412,18 @@
 "count": 1,
 "curated": true
 },
+"Greek Yogurt": {
+"fdc": "170901",
+"score": 0.935,
+"desc": "Yogurt, Greek, strawberry, nonfat",
+"count": 1
+},
+"SP Cardamom Seeds": {
+"fdc": "168591",
+"score": 0.56,
+"desc": "Seeds, lotus seeds, raw",
+"count": 1
+},
 "Canadian Bacon": {
 "fdc": "167869",
 "score": 0.917,
@@ -3392,12 +3436,11 @@
 "desc": "Parsley, fresh",
 "count": 1
 },
-"Milk Whole 6 Gal": {
-"fdc": "171265",
-"score": 1.0,
-"desc": "Milk, whole, 3.25% milkfat, with added vitamin D",
-"count": 1,
-"curated": true
+"Baby Arugula": {
+"fdc": "169387",
+"score": 0.685,
+"desc": "Arugula, raw",
+"count": 1
 },
 "Ground Beef 80/20": {
 "fdc": "171796",
@@ -3405,19 +3448,6 @@
 "desc": "Beef, ground, 85% lean meat / 15% fat, raw (Includes foods for USDA's Food Distribution Program)",
 "count": 1,
 "curated": true
-},
-"White Rice Calrose": {
-"fdc": "169753",
-"score": 1.0,
-"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
-"count": 1,
-"curated": true
-},
-"Limes": {
-"fdc": "168155",
-"score": 1.06,
-"desc": "Limes, raw",
-"count": 1
 },
 "Linguine Pasta Barilla": {
 "fdc": "168927",
@@ -3429,6 +3459,18 @@
 "fdc": "169948",
 "score": 0.9,
 "desc": "Pineapple juice, frozen concentrate, unsweetened, undiluted",
+"count": 1
+},
+"Granny Smith Apple Diced 1/4\"": {
+"fdc": "168203",
+"score": 0.602,
+"desc": "Apples, raw, granny smith, with skin (Includes foods for USDA's Food Distribution Program)",
+"count": 1
+},
+"Cranberries IQF": {
+"fdc": "171722",
+"score": 1.06,
+"desc": "Cranberries, raw",
 "count": 1
 },
 "Tuna Fresh Ground": {
@@ -3443,23 +3485,10 @@
 "desc": "Milk, imitation, non-soy",
 "count": 1
 },
-"Pork Soup Base": {
-"fdc": "171142",
-"score": 0.583,
-"desc": "Soup, bean with pork, canned, condensed",
-"count": 1
-},
-"Chickpea Flour": {
-"fdc": "173757",
-"score": 1.0,
-"desc": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
-"count": 1,
-"curated": true
-},
-"Shaoxing Rice Wine": {
-"fdc": "169726",
-"score": 0.435,
-"desc": "Wild rice, raw",
+"Rainbow Swiss Chard": {
+"fdc": "169991",
+"score": 0.81,
+"desc": "Chard, swiss, raw",
 "count": 1
 },
 "Salmon Portion Atlantic": {
@@ -3484,12 +3513,6 @@
 "fdc": "172750",
 "score": 0.375,
 "desc": "Cracker, meal",
-"count": 1
-},
-"SP Cajun Spice": {
-"fdc": "171332",
-"score": 0.438,
-"desc": "Spices, pumpkin pie spice",
 "count": 1
 },
 "Beef Pastrami": {
@@ -3540,12 +3563,6 @@
 "desc": "Vegetarian fillets",
 "count": 1
 },
-"malted barley flour": {
-"fdc": "169739",
-"score": 0.687,
-"desc": "Barley flour or meal",
-"count": 1
-},
 "Fennel Fresh": {
 "fdc": "169385",
 "score": 0.935,
@@ -3564,6 +3581,12 @@
 "desc": "Edamame, frozen, unprepared",
 "count": 1
 },
+"Rice Sticky CRC": {
+"fdc": "169726",
+"score": 0.435,
+"desc": "Wild rice, raw",
+"count": 1
+},
 "Battered Chicken Thigh for Stir Fry": {
 "fdc": "173627",
 "score": 1.0,
@@ -3571,22 +3594,23 @@
 "count": 1,
 "curated": true
 },
-"Asian Vegetable Mix": {
-"fdc": "169777",
-"score": 0.542,
-"desc": "Spanish rice mix, dry mix, prepared (with canola/vegetable oil blend or diced tomatoes and margarine)",
+"Skinless Boneless Chicken Thigh": {
+"fdc": "173627",
+"score": 1.0,
+"desc": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
+"count": 1,
+"curated": true
+},
+"Impossible Meat/Beyond": {
+"fdc": "174268",
+"score": 0.395,
+"desc": "Meat extender",
 "count": 1
 },
-"Potato Red Diced 1/2\"": {
-"fdc": "169977",
-"score": 0.56,
-"desc": "Cabbage, red, raw",
-"count": 1
-},
-"Pork Butt Sliced": {
-"fdc": "168260",
-"score": 0.866,
-"desc": "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean only, raw",
+"Tomato Juice": {
+"fdc": "167708",
+"score": 0.875,
+"desc": "Tomato and vegetable juice, low sodium",
 "count": 1
 },
 "Black Quinoa": {
@@ -3595,16 +3619,28 @@
 "desc": "Currants, european black, raw",
 "count": 1
 },
-"Rhubarb Frozen IQF": {
-"fdc": "167758",
-"score": 1.06,
-"desc": "Rhubarb, raw",
+"Rice Noodle": {
+"fdc": "169726",
+"score": 0.56,
+"desc": "Wild rice, raw",
 "count": 1
 },
-"Cranberry Juice Concentrate": {
-"fdc": "173653",
-"score": 0.938,
-"desc": "Cranberry juice cocktail, frozen concentrate",
+"Baby Bok Choy": {
+"fdc": "168568",
+"score": 0.435,
+"desc": "Carrots, baby, raw",
+"count": 1
+},
+"Baked Tofu": {
+"fdc": "167722",
+"score": 0.52,
+"desc": "Tofu yogurt",
+"count": 1
+},
+"Seasoning Pho Beef": {
+"fdc": "168608",
+"score": 0.393,
+"desc": "Beef, grass-fed, ground, raw",
 "count": 1
 },
 "Cream Cheese Light": {
@@ -3630,6 +3666,12 @@
 "fdc": "170402",
 "score": 0.56,
 "desc": "Chayote, fruit, raw",
+"count": 1
+},
+"Black-Eyed Peas": {
+"fdc": "170419",
+"score": 0.435,
+"desc": "Peas, green, raw",
 "count": 1
 },
 "ferrous sulfate": {
@@ -3680,12 +3722,6 @@
 "desc": "Mushroom, white, exposed to ultraviolet light, raw",
 "count": 1
 },
-"Cheese Sauce": {
-"fdc": "171584",
-"score": 0.917,
-"desc": "Sauce, cheese sauce mix, dry",
-"count": 1
-},
 "Monterey Jack Cheese Shredded Feather": {
 "fdc": "170844",
 "score": 0.625,
@@ -3696,12 +3732,6 @@
 "fdc": "170199",
 "score": 0.935,
 "desc": "Beef, cured, corned beef, brisket, raw",
-"count": 1
-},
-"Louisiana Hot Sauce": {
-"fdc": "171186",
-"score": 0.625,
-"desc": "Sauce, hot chile, sriracha",
 "count": 1
 },
 "Whole Pasilla Peppers": {
@@ -3758,6 +3788,12 @@
 "desc": "Seeds, hemp seed, hulled",
 "count": 1
 },
+"Bourbon Vanilla Extract": {
+"fdc": "173471",
+"score": 0.77,
+"desc": "Vanilla extract",
+"count": 1
+},
 "Strawberry Juice": {
 "fdc": "174111",
 "score": 0.91,
@@ -3776,12 +3812,6 @@
 "desc": "Onions, raw",
 "count": 1,
 "curated": true
-},
-"Dried Shiitake Mushrooms": {
-"fdc": "169242",
-"score": 1.06,
-"desc": "Mushrooms, shiitake, raw",
-"count": 1
 },
 "Squash Spaghetti": {
 "fdc": "169298",
@@ -3843,23 +3873,22 @@
 "desc": "Tomato products, canned, sauce, with herbs and cheese",
 "count": 1
 },
+"Lamb Halal Leg BRT": {
+"fdc": "172486",
+"score": 0.61,
+"desc": "Lamb, leg, shank half, separable lean only, trimmed to 1/4\" fat, choice, raw",
+"count": 1
+},
 "Mango IQF Large": {
 "fdc": "169091",
 "score": 0.875,
 "desc": "Mango, dried, sweetened",
 "count": 1
 },
-"Green Garbanzo Beans": {
-"fdc": "173757",
-"score": 1.0,
-"desc": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
-"count": 1,
-"curated": true
-},
-"Whole Saffron": {
-"fdc": "170934",
-"score": 0.875,
-"desc": "Spices, saffron",
+"Elbow Macaroni Pasta": {
+"fdc": "168953",
+"score": 0.583,
+"desc": "Pasta mix, classic cheeseburger macaroni, unprepared",
 "count": 1
 },
 "Honeydew Melon": {
@@ -3885,6 +3914,18 @@
 "fdc": "171881",
 "score": 0.35,
 "desc": "Beverages, coffee, brewed, breakfast blend",
+"count": 1
+},
+"Fries 3/16\" Julienne": {
+"fdc": "167672",
+"score": 0.833,
+"desc": "DENNY'S, french fries",
+"count": 1
+},
+"White Balsamic Vinegar": {
+"fdc": "172241",
+"score": 0.75,
+"desc": "Vinegar, balsamic",
 "count": 1
 },
 "Ground Oregano": {
@@ -3935,12 +3976,6 @@
 "desc": "Egg, yolk, raw, frozen, pasteurized",
 "count": 1
 },
-"Penne Rigate Pasta Barilla": {
-"fdc": "168927",
-"score": 0.312,
-"desc": "Pasta, dry, unenriched",
-"count": 1
-},
 "3/8\" Diced Red Bell Pepper": {
 "fdc": "170108",
 "score": 1.0,
@@ -3948,24 +3983,36 @@
 "count": 1,
 "curated": true
 },
-"Cereal Grits Hominy Quick": {
-"fdc": "174629",
-"score": 0.688,
-"desc": "Cereals, QUAKER, hominy grits, white, quick, dry",
-"count": 1
-},
 "Hershey's Chocolate Syrup": {
 "fdc": "168834",
 "score": 0.857,
 "desc": "Syrups, chocolate, HERSHEY'S Genuine Chocolate Flavored Lite Syrup",
 "count": 1
 },
-"Jasmine Rice Broken": {
-"fdc": "169753",
+"Beef Chuck Halal Grassfed": {
+"fdc": "170809",
+"score": 0.616,
+"desc": "Beef, chuck for stew, separable lean and fat, select, raw",
+"count": 1
+},
+"Tortilla Corn 6\"": {
+"fdc": "175036",
 "score": 1.0,
-"desc": "Rice, white, long-grain, regular, cooked, enriched, with salt",
+"desc": "Tortillas, ready-to-bake or -fry, corn",
 "count": 1,
 "curated": true
+},
+"Pork Bones": {
+"fdc": "167902",
+"score": 0.685,
+"desc": "Pork, fresh, ground, raw",
+"count": 1
+},
+"Shaoxing Rice Wine": {
+"fdc": "169726",
+"score": 0.435,
+"desc": "Wild rice, raw",
+"count": 1
 },
 "Vanilla Extract Imitation 32oz": {
 "fdc": "172235",
@@ -4028,6 +4075,18 @@
 "desc": "Onions, raw",
 "count": 1,
 "curated": true
+},
+"wheat flour": {
+"fdc": "168944",
+"score": 0.875,
+"desc": "Wheat flour, whole-grain, soft wheat",
+"count": 1
+},
+"reduced iron": {
+"fdc": "174640",
+"score": 0.792,
+"desc": "Cereals, QUAKER, Quick Oats with Iron, Dry",
+"count": 1
 },
 "processed with alkali": {
 "fdc": "169594",
@@ -4095,133 +4154,6 @@
 "desc": "Ginger root, raw",
 "count": 1
 },
-"Japanese Java Curry": {
-"fdc": "169941",
-"score": 0.435,
-"desc": "Persimmons, japanese, raw",
-"count": 1
-},
-"sauteed onion paste": {
-"fdc": "169844",
-"score": 0.375,
-"desc": "DENNY'S, onion rings",
-"count": 1
-},
-"yeast extract": {
-"fdc": "175043",
-"score": 1.0,
-"desc": "Leavening agents, yeast, baker's, active dry",
-"count": 1,
-"curated": true
-},
-"defatted soybean": {
-"fdc": "172445",
-"score": 0.518,
-"desc": "Soy meal, defatted, raw",
-"count": 1
-},
-"soy lecithin": {
-"fdc": "172445",
-"score": 0.518,
-"desc": "Soy meal, defatted, raw",
-"count": 1
-},
-"roasted onion powder": {
-"fdc": "171327",
-"score": 0.667,
-"desc": "Spices, onion powder",
-"count": 1
-},
-"sesame paste": {
-"fdc": "170191",
-"score": 0.875,
-"desc": "Seeds, sesame butter, paste",
-"count": 1
-},
-"sucrose fatty acid esters": {
-"fdc": "171281",
-"score": 0.312,
-"desc": "Whey, acid, dried",
-"count": 1
-},
-"glycerin fatty acid esters": {
-"fdc": "171281",
-"score": 0.312,
-"desc": "Whey, acid, dried",
-"count": 1
-},
-"onion powder": {
-"fdc": "171327",
-"score": 0.917,
-"desc": "Spices, onion powder",
-"count": 1
-},
-"malc acid": {
-"fdc": "171281",
-"score": 0.5,
-"desc": "Whey, acid, dried",
-"count": 1
-},
-"roasted garlic powder": {
-"fdc": "171325",
-"score": 0.667,
-"desc": "Spices, garlic powder",
-"count": 1
-},
-"onion seasoning": {
-"fdc": "169844",
-"score": 0.5,
-"desc": "DENNY'S, onion rings",
-"count": 1
-},
-"fermented wheat seassoning": {
-"fdc": "167533",
-"score": 0.375,
-"desc": "Bagels, wheat",
-"count": 1
-},
-"garlic extract": {
-"fdc": "169230",
-"score": 0.685,
-"desc": "Garlic, raw",
-"count": 1
-},
-"glucose": {
-"fdc": "173425",
-"score": 0.833,
-"desc": "Egg, whole, dried, stabilized, glucose reduced",
-"count": 1
-},
-"lactic acid": {
-"fdc": "171281",
-"score": 0.5,
-"desc": "Whey, acid, dried",
-"count": 1
-},
-"natural and artifical flavors": {
-"fdc": "173769",
-"score": 0.431,
-"desc": "Soymilk (All flavors), lowfat, with added calcium, vitamins A and D",
-"count": 1
-},
-"Ground Allspice": {
-"fdc": "171315",
-"score": 0.875,
-"desc": "Spices, allspice, ground",
-"count": 1
-},
-"Reduced Iron": {
-"fdc": "174640",
-"score": 0.792,
-"desc": "Cereals, QUAKER, Quick Oats with Iron, Dry",
-"count": 1
-},
-"Greek Yogurt": {
-"fdc": "170901",
-"score": 0.935,
-"desc": "Yogurt, Greek, strawberry, nonfat",
-"count": 1
-},
 "Swiss Cheese Sliced 0.75 oz": {
 "fdc": "171251",
 "score": 1.0,
@@ -4245,6 +4177,19 @@
 "fdc": "169376",
 "score": 0.485,
 "desc": "Mushroom, white, exposed to ultraviolet light, raw",
+"count": 1
+},
+"Tomato Roasted Diced 3/4\"": {
+"fdc": "170051",
+"score": 1.0,
+"desc": "Tomatoes, red, ripe, canned, packed in tomato juice",
+"count": 1,
+"curated": true
+},
+"Salmon Fillet": {
+"fdc": "173688",
+"score": 0.518,
+"desc": "Fish, salmon, chinook, raw",
 "count": 1
 },
 "Diced Pepperoni": {
@@ -4271,16 +4216,16 @@
 "desc": "Cheese, gruyere",
 "count": 1
 },
+"Red Curry Paste": {
+"fdc": "169977",
+"score": 0.435,
+"desc": "Cabbage, red, raw",
+"count": 1
+},
 "Capsicum Chili Sauce": {
 "fdc": "171595",
 "score": 0.583,
 "desc": "Sauce, tomato chili sauce, bottled, with salt",
-"count": 1
-},
-"Sauce Red Hot Frank's Original": {
-"fdc": "171604",
-"score": 0.557,
-"desc": "Sauce, peppers, hot, chili, mature red, canned",
 "count": 1
 },
 "Soybean Oil": {
@@ -4346,6 +4291,13 @@
 "desc": "Oil, nutmeg butter",
 "count": 1
 },
+"Parmesan Cheese Romano Blend": {
+"fdc": "171247",
+"score": 1.0,
+"desc": "Cheese, parmesan, grated",
+"count": 1,
+"curated": true
+},
 "Fish Cod Battered": {
 "fdc": "171955",
 "score": 0.727,
@@ -4406,12 +4358,6 @@
 "fdc": "170497",
 "score": 0.56,
 "desc": "Peppers, hot chili, green, raw",
-"count": 1
-},
-"Pork Butt Fresh": {
-"fdc": "168260",
-"score": 0.866,
-"desc": "Pork, fresh, shoulder, (Boston butt), blade (steaks), separable lean only, raw",
 "count": 1
 },
 "Banana Leaf": {
@@ -4565,6 +4511,12 @@
 "fdc": "173270",
 "score": 0.725,
 "desc": "Fast foods, croissant, with egg, cheese, and ham",
+"count": 1
+},
+"Tuna & Lentil Hummus Stacker": {
+"fdc": "173706",
+"score": 0.331,
+"desc": "Fish, tuna, fresh, bluefin, raw",
 "count": 1
 },
 "Strawberry Iced Mocha Coffee": {
@@ -4731,18 +4683,6 @@
 "desc": "Chicken, ground, raw",
 "count": 1
 },
-"Roasted Salmon": {
-"fdc": "173688",
-"score": 0.518,
-"desc": "Fish, salmon, chinook, raw",
-"count": 1
-},
-"Sofrito Rice": {
-"fdc": "169726",
-"score": 0.56,
-"desc": "Wild rice, raw",
-"count": 1
-},
 "Build Your Own Sushi Bowl": {
 "fdc": "173339",
 "score": 0.169,
@@ -4767,10 +4707,10 @@
 "desc": "Eggplant, pickled",
 "count": 1
 },
-"Oogie Boogie Matcha Cinnamon Roll": {
-"fdc": "171320",
-"score": 0.275,
-"desc": "Spices, cinnamon, ground",
+"Zero Dog Bone Rice Krispy": {
+"fdc": "169726",
+"score": 0.335,
+"desc": "Wild rice, raw",
 "count": 1
 },
 "Dim Sum Plate Special": {
@@ -4978,10 +4918,10 @@
 "desc": "Formulated bar, MARS SNACKFOOD US, SNICKERS MARATHON Honey Nut Oat Bar",
 "count": 1
 },
-"Central America": {
-"fdc": "168661",
-"score": 0.456,
-"desc": "Beef, chuck eye roast, boneless, America's Beef Roast, separable lean and fat, trimmed to 0\" fat, choice, raw",
+"Mushroom Pizza": {
+"fdc": "169376",
+"score": 0.485,
+"desc": "Mushroom, white, exposed to ultraviolet light, raw",
 "count": 1
 },
 "Fudgy Protein Brownie": {
@@ -4990,22 +4930,29 @@
 "desc": "Soy protein isolate",
 "count": 1
 },
+"Roasted Tomato Salsa": {
+"fdc": "174524",
+"score": 1.0,
+"desc": "Sauce, salsa, ready-to-serve",
+"count": 1,
+"curated": true
+},
 "Spiced Apple Bread": {
 "fdc": "169909",
 "score": 0.393,
 "desc": "Mammy-apple, (mamey), raw",
 "count": 1
 },
-"Pork Pozole": {
-"fdc": "167902",
-"score": 0.685,
-"desc": "Pork, fresh, ground, raw",
-"count": 1
-},
 "Dark Chocolate Loaf": {
 "fdc": "170271",
 "score": 0.625,
 "desc": "Chocolate, dark, 45- 59% cacao solids",
+"count": 1
+},
+"Crusty Gruyere Grilled Cheese Sandwich": {
+"fdc": "171242",
+"score": 0.55,
+"desc": "Cheese, gruyere",
 "count": 1
 },
 "Pickled Vegetables": {
@@ -5032,12 +4979,23 @@
 "desc": "Garlic, raw",
 "count": 1
 },
-"Chipotle BBQ Pork Ribs": {
-"fdc": "169396",
-"score": 1.0,
-"desc": "Peppers, ancho, dried",
-"count": 1,
-"curated": true
+"Tabasco Beef Burger": {
+"fdc": "168608",
+"score": 0.393,
+"desc": "Beef, grass-fed, ground, raw",
+"count": 1
+},
+"Shrimp Po Boy Sandwich": {
+"fdc": "175179",
+"score": 0.435,
+"desc": "Crustaceans, shrimp, raw",
+"count": 1
+},
+"Young Chow Vegetable Fried Rice": {
+"fdc": "167668",
+"score": 0.383,
+"desc": "Restaurant, Chinese, fried rice, without meat",
+"count": 1
 },
 "Seafood, Leek & Tomato Chowder": {
 "fdc": "170461",
@@ -5069,28 +5027,10 @@
 "desc": "POPEYES, Spicy Chicken Strips, analyzed 2006",
 "count": 1
 },
-"Green Bean Stir Fry": {
-"fdc": "167745",
-"score": 0.372,
-"desc": "Turtle, green, raw",
-"count": 1
-},
-"California Steak Burrito": {
-"fdc": "170335",
-"score": 0.583,
-"desc": "TACO BELL, BURRITO SUPREME with steak",
-"count": 1
-},
 "Chicken": {
 "fdc": "171116",
 "score": 1.06,
 "desc": "Chicken, ground, raw",
-"count": 1
-},
-"California Veggie Burrito": {
-"fdc": "171706",
-"score": 0.435,
-"desc": "Avocados, raw, California",
 "count": 1
 },
 "Lemon Poppy Bread": {
@@ -5149,12 +5089,6 @@
 "count": 1,
 "curated": true
 },
-"Chicken Katsu Cutlet Curry Bowl": {
-"fdc": "171116",
-"score": 0.46,
-"desc": "Chicken, ground, raw",
-"count": 1
-},
 "Jasmine Rice": {
 "fdc": "169753",
 "score": 1.0,
@@ -5204,12 +5138,6 @@
 "desc": "Spinach, raw",
 "count": 1
 },
-"Black Pepper Steak Bao Bun": {
-"fdc": "170931",
-"score": 0.467,
-"desc": "Spices, pepper, black",
-"count": 1
-},
 "Citrus Basmati Rice": {
 "fdc": "169726",
 "score": 0.435,
@@ -5238,6 +5166,18 @@
 "fdc": "169892",
 "score": 0.375,
 "desc": "Eggplant, pickled",
+"count": 1
+},
+"Spiced Baby Carrots w/ Cardamom Yogurt": {
+"fdc": "168568",
+"score": 0.61,
+"desc": "Carrots, baby, raw",
+"count": 1
+},
+"Creamy Spinach w/ Paneer Cheese": {
+"fdc": "168462",
+"score": 0.497,
+"desc": "Spinach, raw",
 "count": 1
 },
 "Tunisian Vegetable Dip": {
@@ -5313,6 +5253,13 @@
 "fdc": "171706",
 "score": 1.0,
 "desc": "Avocados, raw, California",
+"count": 1,
+"curated": true
+},
+"Yogurt Ranch Dressing": {
+"fdc": "173592",
+"score": 1.0,
+"desc": "Salad dressing, ranch dressing, regular",
 "count": 1,
 "curated": true
 },
@@ -5407,12 +5354,6 @@
 "desc": "HOT POCKETS, CROISSANT POCKETS Chicken, Broccoli, and Cheddar Stuffed Sandwich, frozen",
 "count": 1
 },
-"Beef & Broccoli": {
-"fdc": "170379",
-"score": 0.685,
-"desc": "Broccoli, raw",
-"count": 1
-},
 "Brunch Burger": {
 "fdc": "170328",
 "score": 0.458,
@@ -5473,12 +5414,6 @@
 "desc": "Snacks, potato chips, made from dried potatoes, reduced fat",
 "count": 1
 },
-"Arugula Pesto": {
-"fdc": "169387",
-"score": 0.685,
-"desc": "Arugula, raw",
-"count": 1
-},
 "Greek Salad": {
 "fdc": "170901",
 "score": 0.497,
@@ -5507,12 +5442,6 @@
 "fdc": "169225",
 "score": 0.685,
 "desc": "Cucumber, peeled, raw",
-"count": 1
-},
-"Orange Chicken": {
-"fdc": "167679",
-"score": 0.875,
-"desc": "Restaurant, Chinese, orange chicken",
 "count": 1
 },
 "Penne Pasta": {
@@ -5626,6 +5555,12 @@
 "desc": "Pineapple, raw, traditional varieties",
 "count": 1
 },
+"Moroccan Salmon": {
+"fdc": "173688",
+"score": 0.518,
+"desc": "Fish, salmon, chinook, raw",
+"count": 1
+},
 "Banana Pecan Buckwheat Pancake": {
 "fdc": "170286",
 "score": 0.458,
@@ -5710,6 +5645,18 @@
 "desc": "Balsam-pear (bitter gourd), pods, raw",
 "count": 1
 },
+"Cinnamon Polenta Pancake w/ Apple Cranberry Compote": {
+"fdc": "172825",
+"score": 0.366,
+"desc": "Danish pastry, fruit, unenriched (includes apple, cinnamon, raisin, strawberry)",
+"count": 1
+},
+"Cajun Tofu, Polenta, & Spinach Bowl": {
+"fdc": "168462",
+"score": 0.46,
+"desc": "Spinach, raw",
+"count": 1
+},
 "Grilled Tri Tip with Sumac": {
 "fdc": "172174",
 "score": 1.0,
@@ -5723,23 +5670,10 @@
 "desc": "Martha White Foods, Martha White's Chewy Fudge Brownie Mix, dry",
 "count": 1
 },
-"Fresh Herb Marinated Grilled Chicken Thigh": {
-"fdc": "173627",
-"score": 1.0,
-"desc": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
-"count": 1,
-"curated": true
-},
 "Sauteed Spinach": {
 "fdc": "168462",
 "score": 0.685,
 "desc": "Spinach, raw",
-"count": 1
-},
-"Mediterranean Roasted Chicken": {
-"fdc": "174608",
-"score": 0.6,
-"desc": "Chicken breast, roll, oven-roasted",
 "count": 1
 },
 "Blackberry Peach Crisp": {
@@ -5821,6 +5755,12 @@
 "desc": "Sauce, worcestershire",
 "count": 1
 },
+"Plant-Based Tofu & Vegetable Sandwich": {
+"fdc": "167722",
+"score": 0.295,
+"desc": "Tofu yogurt",
+"count": 1
+},
 "Olive Tapenade": {
 "fdc": "172926",
 "score": 0.458,
@@ -5831,18 +5771,6 @@
 "fdc": "173312",
 "score": 0.571,
 "desc": "McDONALD'S, Bacon Ranch Salad with Grilled Chicken",
-"count": 1
-},
-"Grilled Persian Style Tofu": {
-"fdc": "167722",
-"score": 0.333,
-"desc": "Tofu yogurt",
-"count": 1
-},
-"Tan Tan Ramen Noodle Soup": {
-"fdc": "171177",
-"score": 0.713,
-"desc": "Soup, ramen noodle, any flavor, dry",
 "count": 1
 },
 "Banana Bread Pudding": {
@@ -5864,29 +5792,10 @@
 "desc": "Cake, coffeecake, cheese",
 "count": 1
 },
-"Chickpea Panisse, Mixed Grains, & Rapini Bowl": {
-"fdc": "173757",
-"score": 1.0,
-"desc": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
-"count": 1,
-"curated": true
-},
-"Chicken Potsticker": {
-"fdc": "171116",
-"score": 0.685,
-"desc": "Chicken, ground, raw",
-"count": 1
-},
 "Lebanese Rice": {
 "fdc": "169726",
 "score": 0.56,
 "desc": "Wild rice, raw",
-"count": 1
-},
-"Chicken Katsu Bento Box": {
-"fdc": "171116",
-"score": 0.497,
-"desc": "Chicken, ground, raw",
 "count": 1
 },
 "White Hoagie Torpedo Roll": {
@@ -5914,12 +5823,6 @@
 "count": 1,
 "curated": true
 },
-"Tofu-Shiitake Stacker": {
-"fdc": "169242",
-"score": 0.435,
-"desc": "Mushrooms, shiitake, raw",
-"count": 1
-},
 "Mozzarella Pizza": {
 "fdc": "170845",
 "score": 1.0,
@@ -5927,22 +5830,10 @@
 "count": 1,
 "curated": true
 },
-"BBQ Roast Pork": {
-"fdc": "168371",
-"score": 0.61,
-"desc": "Pork, Leg sirloin tip roast, boneless, separable lean and fat, raw",
-"count": 1
-},
 "Mini Apple Danish": {
 "fdc": "172825",
 "score": 0.616,
 "desc": "Danish pastry, fruit, unenriched (includes apple, cinnamon, raisin, strawberry)",
-"count": 1
-},
-"Crispy Seitan Bento Box": {
-"fdc": "170341",
-"score": 0.271,
-"desc": "KFC, Crispy Chicken Strips",
 "count": 1
 },
 "Blondie w/ Walnuts": {
@@ -5975,12 +5866,6 @@
 "desc": "Cake, coffeecake, cinnamon with crumb topping, dry mix, prepared",
 "count": 1
 },
-"Nacho Burger": {
-"fdc": "170328",
-"score": 0.458,
-"desc": "BURGER KING, Hamburger",
-"count": 1
-},
 "Col. Karapet's Yardbird Cruncher": {
 "fdc": "169663",
 "score": 0.237,
@@ -6005,6 +5890,13 @@
 "desc": "BURGER KING, Hamburger",
 "count": 1
 },
+"Grilled Tri Tip Persian Style": {
+"fdc": "172174",
+"score": 1.0,
+"desc": "Beef, loin, top sirloin cap steak, boneless, separable lean only, trimmed to 1/8\" fat, choice, raw",
+"count": 1,
+"curated": true
+},
 "Chocolate Cinnamon Cream Cheese Coffee Cake": {
 "fdc": "173418",
 "score": 1.0,
@@ -6022,6 +5914,12 @@
 "fdc": "170402",
 "score": 0.56,
 "desc": "Chayote, fruit, raw",
+"count": 1
+},
+"Horseradish Coleslaw": {
+"fdc": "169020",
+"score": 0.5,
+"desc": "APPLEBEE'S, coleslaw",
 "count": 1
 },
 "Apple Fritter": {
@@ -6122,6 +6020,12 @@
 "count": 1,
 "curated": true
 },
+"Roasted Yams": {
+"fdc": "170595",
+"score": 0.458,
+"desc": "Seeds, breadfruit seeds, roasted",
+"count": 1
+},
 "Lemon Spinach Rice": {
 "fdc": "168462",
 "score": 0.56,
@@ -6148,6 +6052,12 @@
 "count": 1,
 "curated": true
 },
+"Grilled Potato & Brussel Sprouts Cake": {
+"fdc": "170383",
+"score": 0.335,
+"desc": "Brussels sprouts, raw",
+"count": 1
+},
 "Pork Patty w/ Rice & Egg": {
 "fdc": "167902",
 "score": 0.497,
@@ -6160,23 +6070,31 @@
 "desc": "Cookies, fig bars",
 "count": 1
 },
-"Apple & Asian Pear Compote": {
-"fdc": "168198",
-"score": 0.42,
-"desc": "Juice, apple, grape and pear blend, with added ascorbic acid and calcium",
-"count": 1
-},
-"Vegetable Stuffed Whole Wheat Crepe": {
-"fdc": "169277",
-"score": 0.331,
-"desc": "Salsify, (vegetable oyster), raw",
-"count": 1
-},
 "Fried Calamari, Spinach, & Fennel Pita Sandwich": {
 "fdc": "168462",
 "score": 0.435,
 "desc": "Spinach, raw",
 "count": 1
+},
+"Beef Pho Noodle Soup": {
+"fdc": "171539",
+"score": 0.713,
+"desc": "Soup, beef noodle, canned, condensed",
+"count": 1
+},
+"Southern Braised Collard Greens & Cheddar Grits": {
+"fdc": "173414",
+"score": 1.0,
+"desc": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
+"count": 1,
+"curated": true
+},
+"Cheddar Cheese Grits": {
+"fdc": "173414",
+"score": 1.0,
+"desc": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
+"count": 1,
+"curated": true
 },
 "Cheesecake": {
 "fdc": "172711",
@@ -6256,6 +6174,12 @@
 "desc": "SILK Coffee, soymilk",
 "count": 1
 },
+"Korean Beef Bulgogi Bento Box": {
+"fdc": "168608",
+"score": 0.293,
+"desc": "Beef, grass-fed, ground, raw",
+"count": 1
+},
 "Milk Tea Boba": {
 "fdc": "170875",
 "score": 0.375,
@@ -6272,6 +6196,12 @@
 "fdc": "171910",
 "score": 0.475,
 "desc": "Beverages, tea, green, brewed, decaffeinated",
+"count": 1
+},
+"Greek Feta Salmon": {
+"fdc": "173688",
+"score": 0.393,
+"desc": "Fish, salmon, chinook, raw",
 "count": 1
 },
 "Rigatoni Noodles": {
@@ -6328,6 +6258,12 @@
 "desc": "Kale, raw",
 "count": 1
 },
+"Impossible Mapo Tofu Bento Box": {
+"fdc": "167722",
+"score": 0.295,
+"desc": "Tofu yogurt",
+"count": 1
+},
 "Pomegranate & Date Compote": {
 "fdc": "167787",
 "score": 0.333,
@@ -6372,28 +6308,16 @@
 "count": 1,
 "curated": true
 },
-"Peanut Butter": {
-"fdc": "169869",
-"score": 0.917,
-"desc": "Peanut butter, reduced sodium",
-"count": 1
-},
-"Southwest Black Bean & Avocado Tortilla Pizza": {
-"fdc": "168068",
-"score": 0.35,
-"desc": "Restaurant, Latino, black bean soup",
-"count": 1
-},
 "Mini Maple Pecan Danish": {
 "fdc": "174653",
 "score": 0.438,
 "desc": "Cereals ready-to-eat, POST SELECTS Maple Pecan Crunch",
 "count": 1
 },
-"Coconut Tapioca": {
-"fdc": "170169",
-"score": 0.518,
-"desc": "Nuts, coconut meat, raw",
+"Teriyaki Chicken Bowl": {
+"fdc": "173339",
+"score": 0.808,
+"desc": "Rice bowl with chicken, frozen entree, prepared (includes fried, teriyaki, and sweet and sour varieties)",
 "count": 1
 },
 "Red Velvet Brownie": {
@@ -6439,6 +6363,12 @@
 "fdc": "169578",
 "score": 0.458,
 "desc": "Syrups, table blends, pancake",
+"count": 1
+},
+"Impossible Bowl": {
+"fdc": "173339",
+"score": 0.394,
+"desc": "Rice bowl with chicken, frozen entree, prepared (includes fried, teriyaki, and sweet and sour varieties)",
 "count": 1
 },
 "Double Chocolate Cookie": {
@@ -6490,6 +6420,12 @@
 "desc": "Cereals, CREAM OF WHEAT, instant, dry",
 "count": 1
 },
+"Tempeh, Potato, & Mushroom Burrito": {
+"fdc": "174272",
+"score": 0.458,
+"desc": "Tempeh",
+"count": 1
+},
 "Zucchini Chocolate Bar": {
 "fdc": "167993",
 "score": 0.625,
@@ -6502,22 +6438,10 @@
 "desc": "Cereals, QUAKER, Instant Oatmeal, Banana Bread, dry",
 "count": 1
 },
-"Pear Butter": {
-"fdc": "173410",
-"score": 0.5,
-"desc": "Butter, salted",
-"count": 1
-},
 "Garlic Coriander Grilled Pork": {
 "fdc": "167902",
 "score": 0.497,
 "desc": "Pork, fresh, ground, raw",
-"count": 1
-},
-"Bean & Cheese Bowl": {
-"fdc": "173336",
-"score": 0.625,
-"desc": "Burrito, bean and cheese, frozen",
 "count": 1
 },
 "Fluffy Potato Bun": {
@@ -6556,12 +6480,6 @@
 "desc": "Babyfood, cookies",
 "count": 1
 },
-"Vietnamese Grilled Pork Banh Mi Sandwich": {
-"fdc": "167902",
-"score": 0.46,
-"desc": "Pork, fresh, ground, raw",
-"count": 1
-},
 "Jalapeño Popper Pizza": {
 "fdc": "168957",
 "score": 0.333,
@@ -6578,6 +6496,30 @@
 "fdc": "168819",
 "score": 0.75,
 "desc": "Marmalade, orange",
+"count": 1
+},
+"Pho Noodle Soup": {
+"fdc": "171571",
+"score": 0.625,
+"desc": "Soup, chicken noodle, dry, mix",
+"count": 1
+},
+"Vegetable Pho Noodle Soup": {
+"fdc": "171166",
+"score": 0.5,
+"desc": "Soup, cream of vegetable, dry, powder",
+"count": 1
+},
+"Steak, Black Lentil & Butternut Squash Bowl": {
+"fdc": "169295",
+"score": 0.477,
+"desc": "Squash, winter, butternut, raw",
+"count": 1
+},
+"Beef Pho": {
+"fdc": "168608",
+"score": 0.518,
+"desc": "Beef, grass-fed, ground, raw",
 "count": 1
 },
 "Wild Mushroom Saute": {
@@ -6609,12 +6551,6 @@
 "fdc": "170865",
 "score": 0.458,
 "desc": "Dessert topping, powdered",
-"count": 1
-},
-"Roasted Pork, Sorrel, & Goat Cheese Pizza": {
-"fdc": "167902",
-"score": 0.435,
-"desc": "Pork, fresh, ground, raw",
 "count": 1
 },
 "Baja Caesar Salad w/ Chipotle Chicken": {
@@ -6652,12 +6588,6 @@
 "fdc": "173410",
 "score": 0.5,
 "desc": "Butter, salted",
-"count": 1
-},
-"Pineapple Water": {
-"fdc": "169125",
-"score": 0.833,
-"desc": "Pineapple, canned, water pack, solids and liquids",
 "count": 1
 },
 "Cuban Pork Pizza": {
@@ -6704,28 +6634,22 @@
 "desc": "Kale, raw",
 "count": 1
 },
-"Green Chile Eggs Benedict": {
-"fdc": "167745",
-"score": 0.372,
-"desc": "Turtle, green, raw",
-"count": 1
-},
-"Salvadorian Chicken": {
-"fdc": "171116",
-"score": 0.685,
-"desc": "Chicken, ground, raw",
-"count": 1
-},
-"Spicy Thai Coconut Curry Chicken Wrap": {
-"fdc": "171183",
-"score": 0.525,
-"desc": "SMART SOUP, Thai Coconut Curry",
+"Garlic Cumin Chicken Wings": {
+"fdc": "169230",
+"score": 0.497,
+"desc": "Garlic, raw",
 "count": 1
 },
 "Mixed Grain Pita": {
 "fdc": "172671",
 "score": 0.6,
 "desc": "Biscuits, mixed grain, refrigerated dough",
+"count": 1
+},
+"Southern Pork & Black-Eyed Pea Stew w/ Collard Greens Bowl": {
+"fdc": "167902",
+"score": 0.393,
+"desc": "Pork, fresh, ground, raw",
 "count": 1
 },
 "Grilled Salmon": {
@@ -6782,16 +6706,16 @@
 "desc": "Toppings, strawberry",
 "count": 1
 },
-"Vegan Jack Fruit Tinga": {
-"fdc": "170402",
-"score": 0.372,
-"desc": "Chayote, fruit, raw",
-"count": 1
-},
 "Cajun Shrimp Flatbread w/ BBQ Sauce": {
 "fdc": "175179",
 "score": 0.335,
 "desc": "Crustaceans, shrimp, raw",
+"count": 1
+},
+"Seafood Bianco Pizza": {
+"fdc": "168957",
+"score": 0.333,
+"desc": "Pizza rolls, frozen, unprepared",
 "count": 1
 },
 "Cuban-Style Tofu Escabeche": {
@@ -6826,13 +6750,6 @@
 "desc": "Beverages, cranberry-apple juice drink, bottled",
 "count": 1
 },
-"BBQ Plum and Chipotle Tofu": {
-"fdc": "169396",
-"score": 1.0,
-"desc": "Peppers, ancho, dried",
-"count": 1,
-"curated": true
-},
 "Malt-O-Meal": {
 "fdc": "171674",
 "score": 0.875,
@@ -6846,31 +6763,12 @@
 "count": 1,
 "curated": true
 },
-"Latin Beans & Rice": {
-"fdc": "174258",
-"score": 0.562,
-"desc": "Noodles, chinese, cellophane or long rice (mung beans), dehydrated",
-"count": 1
-},
-"Refried Beans w/ Cheese": {
-"fdc": "172438",
-"score": 1.0,
-"desc": "Refried beans, canned, traditional style",
-"count": 1,
-"curated": true
-},
 "Cilantro Lime Marmalade": {
 "fdc": "169997",
 "score": 1.0,
 "desc": "Coriander (cilantro) leaves, raw",
 "count": 1,
 "curated": true
-},
-"Roasted Cauliflower w/ Chile & Lime": {
-"fdc": "169986",
-"score": 0.497,
-"desc": "Cauliflower, raw",
-"count": 1
 },
 "Roasted Carrots w/ Smoked Jalapeño Butter": {
 "fdc": "170393",
@@ -7014,12 +6912,6 @@
 "desc": "Orange juice, frozen concentrate, unsweetened, diluted with 3 volume water",
 "count": 1
 },
-"Roasted Beet & Grilled Pineapple Butter": {
-"fdc": "170189",
-"score": 0.342,
-"desc": "Seeds, sesame butter, tahini, from roasted and toasted kernels (most common type)",
-"count": 1
-},
 "Chicken Tagine": {
 "fdc": "171116",
 "score": 0.685,
@@ -7042,12 +6934,6 @@
 "fdc": "174667",
 "score": 0.542,
 "desc": "Fruit cocktail, (peach and pineapple and pear and grape and cherry), canned, water pack, solids and liquids",
-"count": 1
-},
-"Spicy Coleslaw": {
-"fdc": "169020",
-"score": 0.5,
-"desc": "APPLEBEE'S, coleslaw",
 "count": 1
 },
 "Chicken Fettuccine": {
@@ -7090,12 +6976,6 @@
 "fdc": "169228",
 "score": 0.685,
 "desc": "Eggplant, raw",
-"count": 1
-},
-"Kiwi-Apple Compote": {
-"fdc": "172254",
-"score": 0.571,
-"desc": "Babyfood, GERBER, 3rd Foods, apple, mango and kiwi",
 "count": 1
 },
 "Grits": {
@@ -7148,6 +7028,19 @@
 "desc": "OLIVE GARDEN, spaghetti with pomodoro sauce",
 "count": 1
 },
+"Pumpkin Muffin": {
+"fdc": "168448",
+"score": 0.685,
+"desc": "Pumpkin, raw",
+"count": 1
+},
+"Zucchini Fritters w/ Cilantro Lime Cream": {
+"fdc": "169997",
+"score": 1.0,
+"desc": "Coriander (cilantro) leaves, raw",
+"count": 1,
+"curated": true
+},
 "Farro, White Bean, & Endive Flatbread": {
 "fdc": "168412",
 "score": 0.46,
@@ -7196,12 +7089,6 @@
 "desc": "Kielbasa, fully cooked, grilled",
 "count": 1
 },
-"Sweet Chile Eggplant & Arugula Flatbread": {
-"fdc": "169228",
-"score": 0.46,
-"desc": "Eggplant, raw",
-"count": 1
-},
 "Middle Eastern-Style Grilled Chicken w/ Cucumber Relish": {
 "fdc": "169225",
 "score": 0.417,
@@ -7219,6 +7106,12 @@
 "fdc": "174370",
 "score": 0.46,
 "desc": "Lamb, ground, raw",
+"count": 1
+},
+"Roasted Carrots w/ Honey & Pistachio": {
+"fdc": "170393",
+"score": 0.497,
+"desc": "Carrots, raw",
 "count": 1
 },
 "Thai Chilies w/ Vegan Fish Sauce": {
@@ -7324,6 +7217,12 @@
 "desc": "Orange juice, frozen concentrate, unsweetened, diluted with 3 volume water",
 "count": 1
 },
+"Bruin Waffle Plate": {
+"fdc": "172137",
+"score": 0.331,
+"desc": "Beef, plate steak, boneless, inside skirt, separable lean only, trimmed to 0\" fat, choice, raw",
+"count": 1
+},
 "Strawberry Sensation Smoothie": {
 "fdc": "168213",
 "score": 0.643,
@@ -7402,18 +7301,6 @@
 "fdc": "168448",
 "score": 0.56,
 "desc": "Pumpkin, raw",
-"count": 1
-},
-"Vegetable Shoyu Ramen": {
-"fdc": "169277",
-"score": 0.393,
-"desc": "Salsify, (vegetable oyster), raw",
-"count": 1
-},
-"Egg Banh Mi": {
-"fdc": "171287",
-"score": 0.685,
-"desc": "Egg, whole, raw, fresh",
 "count": 1
 },
 "Craft Your Own Breakfast Skillet": {
@@ -7508,6 +7395,13 @@
 "desc": "Pork, fresh, loin, country-style ribs, separable lean only, raw",
 "count": 1
 },
+"Chickpea Stacker w/ Yogurt-Tahini Sauce": {
+"fdc": "173757",
+"score": 1.0,
+"desc": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
+"count": 1,
+"curated": true
+},
 "Chicken Ranch & Swiss Sandwich": {
 "fdc": "170770",
 "score": 0.5,
@@ -7539,12 +7433,6 @@
 "count": 1,
 "curated": true
 },
-"Garlic Pepper Tofu": {
-"fdc": "169230",
-"score": 0.56,
-"desc": "Garlic, raw",
-"count": 1
-},
 "Pumpkin Pie": {
 "fdc": "169273",
 "score": 0.875,
@@ -7557,17 +7445,16 @@
 "desc": "Waffle, buttermilk, frozen, ready-to-heat, toasted",
 "count": 1
 },
-"Baby Arugula, Chickpea & Avocado Salad": {
-"fdc": "173757",
-"score": 1.0,
-"desc": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
-"count": 1,
-"curated": true
-},
 "Warm Lentil & Arugula Salad": {
 "fdc": "169387",
 "score": 0.497,
 "desc": "Arugula, raw",
+"count": 1
+},
+"Thai Coconut Chicken Curry": {
+"fdc": "171183",
+"score": 0.713,
+"desc": "SMART SOUP, Thai Coconut Curry",
 "count": 1
 },
 "Pastrami & Swiss Sandwich": {
@@ -7777,10 +7664,23 @@
 "desc": "Pasta, dry, unenriched",
 "count": 1
 },
+"Summer Roasted Red Pepper Bisque": {
+"fdc": "170108",
+"score": 1.0,
+"desc": "Peppers, sweet, red, raw",
+"count": 1,
+"curated": true
+},
 "Italian Cream Cake": {
 "fdc": "172696",
 "score": 0.583,
 "desc": "Cake, boston cream pie, commercially prepared",
+"count": 1
+},
+"Spaghetti Squash, Cauliflower, & Escarole Sauté Bowl": {
+"fdc": "169298",
+"score": 0.477,
+"desc": "Squash, winter, spaghetti, raw",
 "count": 1
 },
 "Baked Potato, Spinach, Poached Egg, & Tomato Cruda": {
@@ -7849,12 +7749,6 @@
 "desc": "Lamb, ground, raw",
 "count": 1
 },
-"Lamb, Citrus Couscous, & Sunchoke Bowl": {
-"fdc": "174370",
-"score": 0.46,
-"desc": "Lamb, ground, raw",
-"count": 1
-},
 "Chicken, Sweet Potato, Cauliflower Over Wheatberry Bowl": {
 "fdc": "169303",
 "score": 0.441,
@@ -7886,7 +7780,7 @@
 "desc": "Salad dressing, coleslaw",
 "count": 1
 },
-"Romesco Cod w/ Saffron & Green Chickpea Risotto": {
+"Saffron Chickpea Risotto": {
 "fdc": "173757",
 "score": 1.0,
 "desc": "Chickpeas (garbanzo beans, bengal gram), mature seeds, cooked, boiled, without salt",
@@ -7909,12 +7803,6 @@
 "fdc": "173473",
 "score": 0.4,
 "desc": "Rosemary, fresh",
-"count": 1
-},
-"Warm Rosemary Shrimp, White Bean, & Arugula Salad Bowl": {
-"fdc": "169387",
-"score": 0.404,
-"desc": "Arugula, raw",
 "count": 1
 },
 "Vietnamese Shredded Green Papaya Salad": {
@@ -7965,6 +7853,12 @@
 "desc": "Beverages, tea, hibiscus, brewed",
 "count": 1
 },
+"Chicken Tenders w/ Mac-n-Cheese": {
+"fdc": "169841",
+"score": 0.5,
+"desc": "APPLEBEE'S, chicken tenders platter",
+"count": 1
+},
 "Fuji Apple": {
 "fdc": "169909",
 "score": 0.518,
@@ -7977,6 +7871,12 @@
 "desc": "Restaurant, Latino, arroz con leche (rice pudding)",
 "count": 1
 },
+"Granny Smith Apple": {
+"fdc": "168203",
+"score": 0.602,
+"desc": "Apples, raw, granny smith, with skin (Includes foods for USDA's Food Distribution Program)",
+"count": 1
+},
 "Vietnamese Coffee Jello Cubes": {
 "fdc": "175224",
 "score": 0.333,
@@ -7987,12 +7887,6 @@
 "fdc": "169046",
 "score": 0.688,
 "desc": "Snacks, potato chips, white, restructured, baked",
-"count": 1
-},
-"Spaghetti w/ Broccoli Pesto": {
-"fdc": "170379",
-"score": 0.56,
-"desc": "Broccoli, raw",
 "count": 1
 },
 "Latin Topping Selections": {
@@ -8214,13 +8108,6 @@
 "desc": "Soup, hot and sour, Chinese restaurant",
 "count": 1
 },
-"Chicken Parmesan Sandwich": {
-"fdc": "171247",
-"score": 1.0,
-"desc": "Cheese, parmesan, grated",
-"count": 1,
-"curated": true
-},
 "Moroccan Couscous Salad": {
 "fdc": "169699",
 "score": 0.5,
@@ -8243,18 +8130,6 @@
 "fdc": "168935",
 "score": 0.458,
 "desc": "Rice, white, long-grain, regular, cooked, unenriched, with salt",
-"count": 1
-},
-"Bulgogi Korean Beef": {
-"fdc": "168608",
-"score": 0.393,
-"desc": "Beef, grass-fed, ground, raw",
-"count": 1
-},
-"Croffle Chicken Sandwich": {
-"fdc": "170770",
-"score": 0.625,
-"desc": "WEND'YS, Crispy Chicken Sandwich",
 "count": 1
 },
 "Cucumber Sunomono Salad": {
@@ -8337,12 +8212,6 @@
 "desc": "Cake, pudding-type, chocolate, dry mix",
 "count": 1
 },
-"White Polenta, Egg & Shrimp Bowl": {
-"fdc": "172183",
-"score": 0.61,
-"desc": "Egg, white, raw, fresh",
-"count": 1
-},
 "Jalapeno Egg, Plantain & Black Bean Bowl": {
 "fdc": "171287",
 "score": 0.435,
@@ -8404,16 +8273,16 @@
 "desc": "Ice cream cookie sandwich",
 "count": 1
 },
-"Pasta w/ Eggplant, Tomatoes, & Olives": {
-"fdc": "169228",
-"score": 0.497,
-"desc": "Eggplant, raw",
-"count": 1
-},
 "Butternut Squash & Cranberry Salad": {
 "fdc": "169295",
 "score": 0.602,
 "desc": "Squash, winter, butternut, raw",
+"count": 1
+},
+"General Mills Cereal": {
+"fdc": "173884",
+"score": 0.583,
+"desc": "Cereals ready-to-eat, GENERAL MILLS, CHEERIOS",
 "count": 1
 },
 "Chopped Mediterranean Salad": {
@@ -8434,10 +8303,10 @@
 "desc": "Cheese, goat, hard type",
 "count": 1
 },
-"Chinese Freestyle Bowl": {
-"fdc": "169404",
-"score": 0.435,
-"desc": "Broccoli, chinese, raw",
+"Korean Freestyle Bowl": {
+"fdc": "173339",
+"score": 0.269,
+"desc": "Rice bowl with chicken, frozen entree, prepared (includes fried, teriyaki, and sweet and sour varieties)",
 "count": 1
 },
 "Build-Your-Own Burrito": {
@@ -8452,16 +8321,28 @@
 "desc": "Sauce, cheese sauce mix, dry",
 "count": 1
 },
-"Fish w/ Black Bean Sauce": {
-"fdc": "174531",
-"score": 0.5,
-"desc": "Sauce, fish, ready-to-serve",
+"Kimchi Fried Rice": {
+"fdc": "167668",
+"score": 0.583,
+"desc": "Restaurant, Chinese, fried rice, without meat",
 "count": 1
 },
-"Eggplant & Tofu w/ Spicy Garlic Sauce": {
-"fdc": "169228",
-"score": 0.46,
-"desc": "Eggplant, raw",
+"Kimchi Stir Fry w/ Tofu & Bell Pepper": {
+"fdc": "169394",
+"score": 0.31,
+"desc": "Pepper, banana, raw",
+"count": 1
+},
+"Vegetable Stir Fry": {
+"fdc": "169277",
+"score": 0.393,
+"desc": "Salsify, (vegetable oyster), raw",
+"count": 1
+},
+"Beef Birria Plate": {
+"fdc": "172137",
+"score": 0.602,
+"desc": "Beef, plate steak, boneless, inside skirt, separable lean only, trimmed to 0\" fat, choice, raw",
 "count": 1
 },
 "Salsa Bar": {
@@ -8470,12 +8351,6 @@
 "desc": "Sauce, salsa, ready-to-serve",
 "count": 1,
 "curated": true
-},
-"Mezze Special": {
-"fdc": "172775",
-"score": 0.438,
-"desc": "Pancakes, special dietary, dry mix",
-"count": 1
 },
 "Lavash Chips": {
 "fdc": "168849",
@@ -8513,6 +8388,18 @@
 "desc": "DENNY'S, hash browns",
 "count": 1
 },
+"Pork Riblets": {
+"fdc": "167902",
+"score": 0.685,
+"desc": "Pork, fresh, ground, raw",
+"count": 1
+},
+"Miso Soup": {
+"fdc": "172442",
+"score": 0.645,
+"desc": "Miso",
+"count": 1
+},
 "Belgian Waffles": {
 "fdc": "167516",
 "score": 0.438,
@@ -8529,12 +8416,6 @@
 "fdc": "171610",
 "score": 0.5,
 "desc": "Sauce, worcestershire",
-"count": 1
-},
-"Capri Vegetarian Special": {
-"fdc": "169068",
-"score": 0.395,
-"desc": "Vegetarian fillets",
 "count": 1
 },
 "Sun Dried Tomato Cream Sauce": {
@@ -8579,22 +8460,34 @@
 "desc": "Strawberry-flavor beverage mix, powder",
 "count": 1
 },
-"Crispy Pork Belly": {
-"fdc": "167812",
-"score": 0.81,
-"desc": "Pork, fresh, belly, raw",
-"count": 1
-},
 "Simply Grilled Vegetarian Special": {
 "fdc": "169068",
 "score": 0.333,
 "desc": "Vegetarian fillets",
 "count": 1
 },
+"Stove Fired Vegetarian Special": {
+"fdc": "169068",
+"score": 0.333,
+"desc": "Vegetarian fillets",
+"count": 1
+},
+"Chef's Special": {
+"fdc": "172775",
+"score": 0.438,
+"desc": "Pancakes, special dietary, dry mix",
+"count": 1
+},
 "Hearty Vegetable Stew": {
 "fdc": "169277",
 "score": 0.393,
 "desc": "Salsify, (vegetable oyster), raw",
+"count": 1
+},
+"Carne Asada Bowl": {
+"fdc": "172097",
+"score": 0.286,
+"desc": "Chili con carne with beans, canned entree",
 "count": 1
 },
 "Beyond Beef Bowl": {
@@ -8634,16 +8527,28 @@
 "count": 1,
 "curated": true
 },
-"Chicken & Sweet Tomato Saute": {
-"fdc": "170705",
-"score": 0.62,
-"desc": "SUBWAY, sweet onion chicken teriyaki sub on white bread with lettuce, tomato and sweet onion sauce",
-"count": 1
-},
 "Edamame": {
 "fdc": "168410",
 "score": 0.875,
 "desc": "Edamame, frozen, unprepared",
+"count": 1
+},
+"Char Siu Pork Ramen Bowl": {
+"fdc": "167902",
+"score": 0.46,
+"desc": "Pork, fresh, ground, raw",
+"count": 1
+},
+"Build-Your-Own Breakfast Bowl": {
+"fdc": "168278",
+"score": 0.273,
+"desc": "Pork, cured, breakfast strips, raw or unheated",
+"count": 1
+},
+"Build-Your-Own Breakfast Burrito": {
+"fdc": "170787",
+"score": 0.356,
+"desc": "Fast foods, breakfast burrito, with egg, cheese, and sausage",
 "count": 1
 },
 "Build-Your-Own Taco Salad": {
@@ -8658,6 +8563,12 @@
 "desc": "McDONALD'S, Sausage Burrito",
 "count": 1
 },
+"Spicy Shrimp and Okra Stew": {
+"fdc": "169260",
+"score": 0.46,
+"desc": "Okra, raw",
+"count": 1
+},
 "Chicken Caesar": {
 "fdc": "171116",
 "score": 0.685,
@@ -8668,6 +8579,24 @@
 "fdc": "170786",
 "score": 0.545,
 "desc": "Fast foods, grilled chicken in tortilla, with lettuce, cheese, and ranch sauce",
+"count": 1
+},
+"Avery Island Pasta": {
+"fdc": "168927",
+"score": 0.375,
+"desc": "Pasta, dry, unenriched",
+"count": 1
+},
+"Mushroom & Spinach Penne Pasta": {
+"fdc": "169729",
+"score": 0.5,
+"desc": "Pasta, fresh-refrigerated, spinach, as purchased",
+"count": 1
+},
+"Blackened Salmon": {
+"fdc": "173688",
+"score": 0.518,
+"desc": "Fish, salmon, chinook, raw",
 "count": 1
 },
 "Honey Roasted Chicken": {
@@ -8688,13 +8617,6 @@
 "score": 0.497,
 "desc": "Onions, raw",
 "count": 1
-},
-"Grilled Dijon Chicken Thigh": {
-"fdc": "173627",
-"score": 1.0,
-"desc": "Chicken, broilers or fryers, dark meat, thigh, meat only, raw",
-"count": 1,
-"curated": true
 },
 "Tabouli Vegetable Lavash": {
 "fdc": "169277",
@@ -8769,16 +8691,34 @@
 "desc": "Bagels, wheat",
 "count": 1
 },
+"Cajun Chicken Wings": {
+"fdc": "171116",
+"score": 0.56,
+"desc": "Chicken, ground, raw",
+"count": 1
+},
 "Vegetarian Tagliata Salad": {
 "fdc": "169068",
 "score": 0.395,
 "desc": "Vegetarian fillets",
 "count": 1
 },
+"Lamb Kabsa": {
+"fdc": "174370",
+"score": 0.685,
+"desc": "Lamb, ground, raw",
+"count": 1
+},
 "Stewed Cannellini Beans": {
 "fdc": "169885",
 "score": 0.6,
 "desc": "Beans, liquid from stewed kidney beans",
+"count": 1
+},
+"Hush Puppy": {
+"fdc": "170301",
+"score": 0.438,
+"desc": "Fast foods, hush puppies",
 "count": 1
 },
 "Everything Bagel": {
@@ -8922,12 +8862,6 @@
 "desc": "Candies, milk chocolate",
 "count": 1
 },
-"Italian Broccoli & Cauliflower": {
-"fdc": "169986",
-"score": 0.56,
-"desc": "Cauliflower, raw",
-"count": 1
-},
 "Create Your Own Breakfast Croissant": {
 "fdc": "168278",
 "score": 0.273,
@@ -8970,6 +8904,12 @@
 "desc": "Turkey, Ground, raw",
 "count": 1
 },
+"Steel Cut Oatmeal": {
+"fdc": "172678",
+"score": 0.5,
+"desc": "Bread, oatmeal",
+"count": 1
+},
 "Baharat Grilled Tofu": {
 "fdc": "167722",
 "score": 0.395,
@@ -8983,16 +8923,22 @@
 "count": 1,
 "curated": true
 },
+"Blackened BBQ Chicken Pizza": {
+"fdc": "171116",
+"score": 0.497,
+"desc": "Chicken, ground, raw",
+"count": 1
+},
 "Sun-Dried Tomato Pesto": {
 "fdc": "170461",
 "score": 0.395,
 "desc": "Tomato powder",
 "count": 1
 },
-"Oregano Lemon Fries": {
-"fdc": "167747",
-"score": 0.435,
-"desc": "Lemon juice, raw",
+"Onion & Garlic Salt Fries": {
+"fdc": "169230",
+"score": 0.497,
+"desc": "Garlic, raw",
 "count": 1
 },
 "Korean Braised Short Ribs": {
@@ -9031,6 +8977,12 @@
 "desc": "Parsley, fresh",
 "count": 1
 },
+"Miso Ramen": {
+"fdc": "172442",
+"score": 0.645,
+"desc": "Miso",
+"count": 1
+},
 "Dole Whip Bowl": {
 "fdc": "171004",
 "score": 0.286,
@@ -9065,12 +9017,6 @@
 "fdc": "175035",
 "score": 0.497,
 "desc": "Toaster pastries, fruit (includes apple, blueberry, cherry, strawberry)",
-"count": 1
-},
-"Vegetable Egg Roll": {
-"fdc": "172105",
-"score": 0.625,
-"desc": "Egg rolls, vegetable, frozen, prepared",
 "count": 1
 },
 "Artichokes": {
@@ -9130,6 +9076,12 @@
 "count": 1,
 "curated": true
 },
+"Spicy Braised Lentils with Potato": {
+"fdc": "172420",
+"score": 0.46,
+"desc": "Lentils, raw",
+"count": 1
+},
 "Tuna Salad": {
 "fdc": "175160",
 "score": 0.917,
@@ -9160,16 +9112,16 @@
 "desc": "Chilchen (Red Berry Beverage) (Navajo)",
 "count": 1
 },
-"Taiwanese Beef Noodle Soup": {
-"fdc": "171539",
-"score": 0.713,
-"desc": "Soup, beef noodle, canned, condensed",
-"count": 1
-},
 "Peanut Butter and Egg Protein Box": {
 "fdc": "172459",
 "score": 0.482,
 "desc": "Peanut butter, smooth, vitamin and mineral fortified",
+"count": 1
+},
+"Cheerios Cereal": {
+"fdc": "174650",
+"score": 0.458,
+"desc": "Milk and cereal bar",
 "count": 1
 },
 "Bircher Muesli w/ Nuts": {
@@ -9252,10 +9204,23 @@
 "desc": "Cabbage, red, raw",
 "count": 1
 },
+"Honey Nut Cheerios Cereal": {
+"fdc": "169640",
+"score": 1.0,
+"desc": "Honey",
+"count": 1,
+"curated": true
+},
 "Cheese & Cracker Protein Box": {
 "fdc": "169849",
 "score": 0.5,
 "desc": "CRACKER BARREL, macaroni n' cheese",
+"count": 1
+},
+"Cinnamon Toast Crunch Cereal": {
+"fdc": "174632",
+"score": 0.438,
+"desc": "Cereals ready-to-eat, QUAKER, MOTHER'S Cinnamon Oat Crunch",
 "count": 1
 },
 "Honey Habanero Pulled Pork Sandwich": {
@@ -9264,12 +9229,6 @@
 "desc": "Honey",
 "count": 1,
 "curated": true
-},
-"Habanero Chicken Sandwich": {
-"fdc": "170770",
-"score": 0.625,
-"desc": "WEND'YS, Crispy Chicken Sandwich",
-"count": 1
 },
 "Salted": {
 "fdc": "170893",
@@ -9374,6 +9333,12 @@
 "desc": "Tofu yogurt",
 "count": 1
 },
+"Crab Roll Sandwich": {
+"fdc": "171968",
+"score": 0.393,
+"desc": "Crustaceans, crab, dungeness, raw",
+"count": 1
+},
 "Cilantro Rice": {
 "fdc": "169997",
 "score": 1.0,
@@ -9391,6 +9356,12 @@
 "fdc": "169673",
 "score": 0.6,
 "desc": "Snacks, crisped rice bar, almond",
+"count": 1
+},
+"Cajun Red Beans & Rice": {
+"fdc": "168065",
+"score": 0.637,
+"desc": "Restaurant, Latino, Arroz con habichuelas colorados (Rice And Red Beans)",
 "count": 1
 },
 "Garlic Flavored Rice": {
@@ -9534,10 +9505,46 @@
 "desc": "Mango, dried, sweetened",
 "count": 1
 },
+"Poke Tuna Roll Sandwich": {
+"fdc": "170299",
+"score": 0.42,
+"desc": "Fast foods, submarine sandwich, tuna on white bread with lettuce and tomato",
+"count": 1
+},
 "Roasted Vegetable & Ricotta Cheese Wrap": {
 "fdc": "170851",
 "score": 0.467,
 "desc": "Cheese, ricotta, whole milk",
+"count": 1
+},
+"Multi Grain Cheerios": {
+"fdc": "168013",
+"score": 0.625,
+"desc": "Bread, multi-grain (includes whole-grain)",
+"count": 1
+},
+"Lucky Charms Cereal": {
+"fdc": "174650",
+"score": 0.333,
+"desc": "Milk and cereal bar",
+"count": 1
+},
+"Cocoa Puffs": {
+"fdc": "169593",
+"score": 0.458,
+"desc": "Cocoa, dry powder, unsweetened",
+"count": 1
+},
+"Trix Cereal": {
+"fdc": "174650",
+"score": 0.458,
+"desc": "Milk and cereal bar",
+"count": 1
+},
+"Rice Chex Cereal": {
+"fdc": "170969",
+"score": 0.625,
+"desc": "Babyfood, cereal, rice, dry fortified",
 "count": 1
 },
 "Bavarian Pretzel and Sausage Platter": {
@@ -9576,23 +9583,18 @@
 "desc": "DENNY'S, french fries",
 "count": 1
 },
-"Japanese Tofu Cutlet Curry Bowl": {
-"fdc": "169941",
-"score": 0.335,
-"desc": "Persimmons, japanese, raw",
-"count": 1
-},
-"Teriyaki Tofu Bowl": {
-"fdc": "173339",
-"score": 0.538,
-"desc": "Rice bowl with chicken, frozen entree, prepared (includes fried, teriyaki, and sweet and sour varieties)",
-"count": 1
-},
 "Marinated Shaking Beef": {
 "fdc": "168608",
 "score": 0.393,
 "desc": "Beef, grass-fed, ground, raw",
 "count": 1
+},
+"Honey Chicken Wings": {
+"fdc": "169640",
+"score": 1.0,
+"desc": "Honey",
+"count": 1,
+"curated": true
 },
 "Italian Sausage": {
 "fdc": "171631",
@@ -9651,11 +9653,18 @@
 "desc": "Fast foods, croissant, with egg, cheese, and bacon",
 "count": 1
 },
-"Beef Pita Shawarma": {
-"fdc": "168608",
-"score": 0.393,
-"desc": "Beef, grass-fed, ground, raw",
+"Roasted Rosemary Pork Loin": {
+"fdc": "168233",
+"score": 0.67,
+"desc": "Pork, fresh, loin, whole, separable lean only, cooked, roasted",
 "count": 1
+},
+"Honey Gochujang Chicken": {
+"fdc": "169640",
+"score": 1.0,
+"desc": "Honey",
+"count": 1,
+"curated": true
 },
 "Swiss Fondue Frites": {
 "fdc": "169991",
@@ -9673,12 +9682,6 @@
 "fdc": "168000",
 "score": 0.445,
 "desc": "Chocolate-flavored hazelnut spread",
-"count": 1
-},
-"Pork Sausage, Peppers, and Polenta": {
-"fdc": "174579",
-"score": 0.6,
-"desc": "Sausage, pork and beef, fresh, cooked",
 "count": 1
 },
 "Chocolate-Hazelnut & Seasonal Fresh Fruit Belgian Waffle": {
@@ -9729,12 +9732,6 @@
 "desc": "Beverages, The COCA-COLA company, Minute Maid, Lemonade",
 "count": 1
 },
-"Jackfruit Pozole Rojo": {
-"fdc": "174687",
-"score": 0.56,
-"desc": "Jackfruit, raw",
-"count": 1
-},
 "Thai Sweet & Spicy Chicken Wing": {
 "fdc": "171116",
 "score": 0.46,
@@ -9745,6 +9742,12 @@
 "fdc": "175076",
 "score": 0.227,
 "desc": "Archway Home Style Cookies, Strawberry Filled",
+"count": 1
+},
+"Spaghetti & Meatballs": {
+"fdc": "169845",
+"score": 0.875,
+"desc": "DENNY'S, spaghetti and meatballs",
 "count": 1
 },
 "Roasted Zucchini": {
@@ -9769,6 +9772,18 @@
 "fdc": "169869",
 "score": 0.542,
 "desc": "Peanut butter, reduced sodium",
+"count": 1
+},
+"Seared Salmon Bowl": {
+"fdc": "173688",
+"score": 0.393,
+"desc": "Fish, salmon, chinook, raw",
+"count": 1
+},
+"Santa Maria Tofu Bowl": {
+"fdc": "167722",
+"score": 0.333,
+"desc": "Tofu yogurt",
 "count": 1
 },
 "Jalapeno": {
@@ -9835,6 +9850,12 @@
 "fdc": "169726",
 "score": 0.61,
 "desc": "Wild rice, raw",
+"count": 1
+},
+"Mexican Street Corn Salad": {
+"fdc": "171029",
+"score": 0.431,
+"desc": "Oil, corn, industrial and retail, all purpose salad or cooking",
 "count": 1
 },
 "Frozen Yogurt Bar": {
@@ -9963,6 +9984,12 @@
 "desc": "Bacon, turkey, low sodium",
 "count": 1
 },
+"Pork Meatball Banh Mi": {
+"fdc": "167902",
+"score": 0.56,
+"desc": "Pork, fresh, ground, raw",
+"count": 1
+},
 "Roasted Plantains": {
 "fdc": "168215",
 "score": 0.56,
@@ -9981,10 +10008,16 @@
 "desc": "Garlic, raw",
 "count": 1
 },
-"Buffalo Chicken Wings": {
-"fdc": "171116",
-"score": 0.56,
-"desc": "Chicken, ground, raw",
+"Vegetable Jambalaya": {
+"fdc": "169277",
+"score": 0.518,
+"desc": "Salsify, (vegetable oyster), raw",
+"count": 1
+},
+"Spaghetti w/ Eggplant, Tomatoes & Olives": {
+"fdc": "169228",
+"score": 0.497,
+"desc": "Eggplant, raw",
 "count": 1
 },
 "Avocado Spring Roll": {
@@ -10020,6 +10053,18 @@
 "desc": "Pickle relish, sweet",
 "count": 1
 },
+"Italian Fried Chicken": {
+"fdc": "167719",
+"score": 0.625,
+"desc": "Chicken, meatless, breaded, fried",
+"count": 1
+},
+"Lemon Pepper Chicken Wings": {
+"fdc": "167674",
+"score": 0.5,
+"desc": "Restaurant, Chinese, lemon chicken",
+"count": 1
+},
 "Build and Go Frozen Yogurt": {
 "fdc": "170775",
 "score": 0.602,
@@ -10048,6 +10093,12 @@
 "fdc": "168421",
 "score": 0.56,
 "desc": "Kale, raw",
+"count": 1
+},
+"BBQ Pork Ribs": {
+"fdc": "168305",
+"score": 0.623,
+"desc": "Pork, fresh, loin, country-style ribs, separable lean only, raw",
 "count": 1
 },
 "Cacao Butter": {
@@ -10090,12 +10141,6 @@
 "fdc": "169977",
 "score": 0.435,
 "desc": "Cabbage, red, raw",
-"count": 1
-},
-"Beef Lasagna": {
-"fdc": "173489",
-"score": 0.85,
-"desc": "Babyfood, dinner, beef lasagna, toddler",
 "count": 1
 },
 "Brown Rice": {
@@ -10142,12 +10187,6 @@
 "count": 1,
 "curated": true
 },
-"Imogene's Black Bean & Potato Saute": {
-"fdc": "168068",
-"score": 0.4,
-"desc": "Restaurant, Latino, black bean soup",
-"count": 1
-},
 "Greek Lemon Herb Potatoes": {
 "fdc": "171310",
 "score": 0.458,
@@ -10167,12 +10206,6 @@
 "desc": "Peppers, ancho, dried",
 "count": 1,
 "curated": true
-},
-"White Chocolate Chip Matcha Cookie": {
-"fdc": "167571",
-"score": 0.467,
-"desc": "Candies, white chocolate",
-"count": 1
 },
 "Build-Your-Own Poke Bowl": {
 "fdc": "170432",
@@ -10199,16 +10232,16 @@
 "count": 1,
 "curated": true
 },
-"Roasted Herbed Chicken": {
-"fdc": "174608",
-"score": 0.6,
-"desc": "Chicken breast, roll, oven-roasted",
-"count": 1
-},
 "Coconut Quinoa Pancakes": {
 "fdc": "170092",
 "score": 0.395,
 "desc": "Potato pancakes",
+"count": 1
+},
+"Hearts of Palm Ceviche": {
+"fdc": "167714",
+"score": 0.81,
+"desc": "Hearts of palm, raw",
 "count": 1
 },
 "Korean Spicy Bibim Noodles": {
@@ -10223,10 +10256,22 @@
 "desc": "Egg, whole, raw, fresh",
 "count": 1
 },
+"Panang Tofu Curry": {
+"fdc": "167722",
+"score": 0.395,
+"desc": "Tofu yogurt",
+"count": 1
+},
 "Grilled Lemongrass Chili Chicken": {
 "fdc": "171116",
 "score": 0.497,
 "desc": "Chicken, ground, raw",
+"count": 1
+},
+"Mango Shrimp Ceviche": {
+"fdc": "175179",
+"score": 0.435,
+"desc": "Crustaceans, shrimp, raw",
 "count": 1
 },
 "Thai Basil Tofu Sandwich": {
@@ -10313,24 +10358,6 @@
 "desc": "Ham salad spread",
 "count": 1
 },
-"Szechuan Style Cashew Shrimp": {
-"fdc": "169838",
-"score": 0.446,
-"desc": "Restaurant, family style, shrimp, breaded and fried",
-"count": 1
-},
-"Szechuan Pepper Fries": {
-"fdc": "169394",
-"score": 0.435,
-"desc": "Pepper, banana, raw",
-"count": 1
-},
-"Japanese Beef Bowl": {
-"fdc": "169941",
-"score": 0.435,
-"desc": "Persimmons, japanese, raw",
-"count": 1
-},
 "Red Lentil Daal": {
 "fdc": "169977",
 "score": 0.435,
@@ -10374,12 +10401,6 @@
 "desc": "Snacks, potato sticks",
 "count": 1
 },
-"Barley Pilaf": {
-"fdc": "170284",
-"score": 0.56,
-"desc": "Barley, pearled, raw",
-"count": 1
-},
 "Brown Calrose Rice": {
 "fdc": "168898",
 "score": 0.667,
@@ -10414,12 +10435,6 @@
 "fdc": "170876",
 "score": 0.438,
 "desc": "Milk, dry, whole, with added vitamin D",
-"count": 1
-},
-"Poblano Chicken": {
-"fdc": "171116",
-"score": 0.685,
-"desc": "Chicken, ground, raw",
 "count": 1
 },
 "Tri-Tip, Arugula, & Parmesan Flatbread": {
@@ -10460,22 +10475,10 @@
 "desc": "Soup, chili beef, canned, condensed",
 "count": 1
 },
-"Mahi Mahi with Tomatillo": {
-"fdc": "168409",
-"score": 0.393,
-"desc": "Cucumber, with peel, raw",
-"count": 1
-},
 "Bulgur Bean Stacker": {
 "fdc": "170688",
 "score": 0.5,
 "desc": "Bulgur, dry",
-"count": 1
-},
-"Elote Pizza": {
-"fdc": "168957",
-"score": 0.458,
-"desc": "Pizza rolls, frozen, unprepared",
 "count": 1
 },
 "Seared Mahi Mahi with Spicy Fresno Pickled Vegetables": {
@@ -10551,12 +10554,6 @@
 "desc": "Kale, raw",
 "count": 1
 },
-"Roasted Potatoes": {
-"fdc": "170031",
-"score": 0.833,
-"desc": "Potatoes, roasted, salt added in processing, frozen, unprepared",
-"count": 1
-},
 "Chimichurri Shrimp": {
 "fdc": "175179",
 "score": 0.56,
@@ -10580,6 +10577,12 @@
 "fdc": "170787",
 "score": 0.556,
 "desc": "Fast foods, breakfast burrito, with egg, cheese, and sausage",
+"count": 1
+},
+"Breakfast Taco": {
+"fdc": "168278",
+"score": 0.497,
+"desc": "Pork, cured, breakfast strips, raw or unheated",
 "count": 1
 },
 "Oat & Whole Wheat Waffle": {
@@ -10675,10 +10678,22 @@
 "desc": "Restaurant, Mexican, spanish rice",
 "count": 1
 },
+"Vegetable Kimchi Fried Rice": {
+"fdc": "167668",
+"score": 0.458,
+"desc": "Restaurant, Chinese, fried rice, without meat",
+"count": 1
+},
 "Herbed Artichokes": {
 "fdc": "169236",
 "score": 0.56,
 "desc": "Jerusalem-artichokes, raw",
+"count": 1
+},
+"Kimchi Stir Fry W/ Tofu & Bell Pepper": {
+"fdc": "169394",
+"score": 0.31,
+"desc": "Pepper, banana, raw",
 "count": 1
 },
 "Sun-dried Tomato Cream Cheese": {
@@ -10806,10 +10821,10 @@
 "desc": "Rice noodles, dry",
 "count": 1
 },
-"Eggplant & Tofu W/ Spicy Garlic Sauce": {
-"fdc": "169228",
-"score": 0.46,
-"desc": "Eggplant, raw",
+"Vegetable Stir-fry": {
+"fdc": "169277",
+"score": 0.393,
+"desc": "Salsify, (vegetable oyster), raw",
 "count": 1
 },
 "Barbecue Shreds": {
@@ -10988,16 +11003,41 @@
 "desc": "Babyfood, dinner, mixed vegetable, junior",
 "count": 1
 },
+"Cheddar Cheese": {
+"fdc": "173414",
+"score": 1.0,
+"desc": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
+"count": 1,
+"curated": true
+},
+"Roasted Potatoes": {
+"fdc": "170031",
+"score": 0.833,
+"desc": "Potatoes, roasted, salt added in processing, frozen, unprepared",
+"count": 1
+},
+"Chorizo": {
+"fdc": "173859",
+"score": 0.873,
+"desc": "Sausage, pork, chorizo, link or ground, raw",
+"count": 1
+},
+"De La Olla Beans": {
+"fdc": "168574",
+"score": 0.518,
+"desc": "Beans, fava, in pod, raw",
+"count": 1
+},
+"Roasted Peppers & Onions": {
+"fdc": "170000",
+"score": 0.56,
+"desc": "Onions, raw",
+"count": 1
+},
 "Diced Tomatoes": {
 "fdc": "170096",
 "score": 0.935,
 "desc": "Tomatoes, yellow, raw",
-"count": 1
-},
-"Feta Cheese": {
-"fdc": "173420",
-"score": 1.0,
-"desc": "Cheese, feta",
 "count": 1
 },
 "Tri-color Bell Pepper Sliced": {
@@ -11023,6 +11063,12 @@
 "fdc": "170595",
 "score": 0.458,
 "desc": "Seeds, breadfruit seeds, roasted",
+"count": 1
+},
+"Crispy Pork Belly": {
+"fdc": "167812",
+"score": 0.81,
+"desc": "Pork, fresh, belly, raw",
 "count": 1
 },
 "Kidney Beans": {
@@ -11172,10 +11218,10 @@
 "desc": "Milk and cereal bar",
 "count": 1
 },
-"Cinnamon Toast Crunch Cereal": {
-"fdc": "174632",
-"score": 0.438,
-"desc": "Cereals ready-to-eat, QUAKER, MOTHER'S Cinnamon Oat Crunch",
+"Scrambled Eggs W/ Oil": {
+"fdc": "169904",
+"score": 0.667,
+"desc": "Eggs, scrambled, frozen mixture",
 "count": 1
 },
 "Honey Mustard Dressing": {
@@ -11360,6 +11406,12 @@
 "desc": "DENNY'S, onion rings",
 "count": 1
 },
+"Fresh Roasted Mushroom": {
+"fdc": "169376",
+"score": 0.485,
+"desc": "Mushroom, white, exposed to ultraviolet light, raw",
+"count": 1
+},
 "Edamame With Shell": {
 "fdc": "169417",
 "score": 0.55,
@@ -11451,6 +11503,12 @@
 "desc": "Cheese, Mexican blend",
 "count": 1
 },
+"Egg": {
+"fdc": "171287",
+"score": 1.06,
+"desc": "Egg, whole, raw, fresh",
+"count": 1
+},
 "Wheat Corn Tortilla": {
 "fdc": "175036",
 "score": 1.0,
@@ -11462,13 +11520,6 @@
 "fdc": "173414",
 "score": 1.0,
 "desc": "Cheese, cheddar (Includes foods for USDA's Food Distribution Program)",
-"count": 1,
-"curated": true
-},
-"Flour Tortilla": {
-"fdc": "175037",
-"score": 1.0,
-"desc": "Tortillas, ready-to-bake or -fry, flour, refrigerated",
 "count": 1,
 "curated": true
 },
