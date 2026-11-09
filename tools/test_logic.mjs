@@ -165,9 +165,12 @@ const byName = n => Object.entries(db.items).find(([, v]) => v.n === n);
 {
   const fnSrc = n => src.match(new RegExp(`\\nfunction ${n}\\([\\s\\S]*?\\n\\}`))[0];
   const Real = Date;
+  // fake a weekday that is in the scraped hours: weekend brunch hours break the 8am checks
+  const [Y, Mo, D] = Object.keys(db.venues.find(v => v.n === "De Neve").hours).sort()
+    .find(k => new Real(k + "T12:00").getDay() % 6).split("-").map(Number);
   const at = h => new Function("Real", "H", `var DAY_START_HOUR = 5;
-    function Date(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)); }
-    Date.now = function(){ return new Real(2026, 8, 29, Math.floor(H), Math.round((H % 1) * 60)).getTime(); };
+    function Date(){ return new Real(${Y}, ${Mo - 1}, ${D}, Math.floor(H), Math.round((H % 1) * 60)); }
+    Date.now = function(){ return new Real(${Y}, ${Mo - 1}, ${D}, Math.floor(H), Math.round((H % 1) * 60)).getTime(); };
     ${["dayKey","mealAt","currentMeal","mealMatchesNow","nowMins","clock","windowsFor",
        "mealWindow","servingNow","venueStatus","focusMeal"].map(fnSrc).join("\n")}
     return { venueStatus, servingNow, focusMeal };`)(Real, h);
