@@ -52,6 +52,12 @@ def build_vocab(items):
         n = clean(v["name"])
         if n:
             c[n] += 1
+    # names stay known after their dish rotates off the menu: "Cheddar Cheese" is what
+    # lets "Cheddar Cheese Mild Sliced" parse, whether or not it's a recipe this week
+    vp = ROOT / "data" / "vocab.json"
+    if vp.exists():
+        for n, _ in json.loads(vp.read_text()):
+            c.setdefault(n, 0)
     return c
 
 def parse(raw, vocab_sorted, vocab_set):
