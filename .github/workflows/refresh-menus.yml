@@ -4,7 +4,7 @@ name: Refresh menus
 
 on:
   schedule:
-    - cron: "0 11 * * *"     # 11:00 UTC = 3-4am in LA
+    - cron: "17 8 * * *"     # 08:17 UTC = 12-1am in LA; off the hour, GitHub queues :00 jobs longest
   workflow_dispatch:
 
 permissions:
