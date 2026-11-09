@@ -25,6 +25,9 @@ CANON = {
     "bruin-plate": "Bruin Plate",
 }
 AYCE = {"De Neve Dining", "Covel Dining", "Feast at Rieber", "Bruin Plate"}
+# kinds of build-your-own component, for putting UCLA's misplaced ones back in their group
+BREAD = re.compile(r"\b(bread|roll|ciabatta|bagel|croissant|baguette|focaccia|sourdough)\b", re.I)
+PROTEIN = re.compile(r"\b(links?|sausage|turkey|ham|roast beef|prosciutto|pepperoni|bacon|salami)\b", re.I)
 VENUE_NAME = {
     "De Neve Dining": "De Neve", "Covel Dining": "Epicuria at Covel",
     "Feast at Rieber": "Feast at Rieber", "Bruin Plate": "Bruin Plate",
@@ -187,7 +190,21 @@ def main():
         if pf:
             rec["p"] = pf
         if v.get("build_groups"):
-            rec["b"] = [[c["id"] for c in g if c["id"] in items] for g in v["build_groups"]]
+            # UCLA's accordions are sometimes off by one: the last bread opens the cheese
+            # group, the last meat the veg group. Each stray goes back to the group where
+            # most of its kind sits.
+            groups = [[c for c in g if c["id"] in items] for g in v["build_groups"]]
+            for kind in (BREAD, PROTEIN):
+                hits = [sum(1 for c in g if kind.search(c["name"])) for g in groups]
+                home = max(range(len(groups)), key=hits.__getitem__) if groups else 0
+                if not groups or hits[home] < 2:
+                    continue
+                for i, g in enumerate(groups):
+                    stray = [c for c in g if kind.search(c["name"])]
+                    if i != home and len(stray) < len(g):     # never empty a group
+                        groups[i] = [c for c in g if c not in stray]
+                        groups[home] += stray
+            rec["b"] = [[c["id"] for c in g] for g in groups if g]
         if v.get("tags"):
             rec["t"] = [t for t in v["tags"] if t not in ("low-carbon", "high-carbon")]
         if v.get("allergens"):
