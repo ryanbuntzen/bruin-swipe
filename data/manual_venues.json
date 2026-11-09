@@ -1563,6 +1563,55 @@
       "parts": [
         ["Candies, semisweet chocolate", 56.7]
       ]
+    },
+    {
+      "key": "fix-251",
+      "name": "White Hoagie Torpedo Roll",
+      "serving": "1 roll (6 inch)",
+      "parts": [
+        ["Rolls, french", 75]
+      ]
+    },
+    {
+      "key": "fix-7658",
+      "name": "Sliced Mozzarella Cheese",
+      "serving": "3oz",
+      "parts": [
+        ["Cheese, mozzarella, low moisture, part-skim", 85]
+      ]
+    },
+    {
+      "key": "fix-195",
+      "name": "Roast Beef",
+      "serving": "3oz",
+      "parts": [
+        ["Beef, round, top round steak, boneless, separable lean only, trimmed to 0\" fat, all grades, cooked, grilled", 85]
+      ]
+    },
+    {
+      "key": "fix-7629",
+      "name": "Honey Gochujang Chicken",
+      "serving": "4oz",
+      "parts": [
+        ["Chicken, broilers or fryers, thigh, meat and skin, cooked, fried, batter", 90],
+        ["Honey", 23]
+      ]
+    },
+    {
+      "key": "fix-112",
+      "name": "Caesar Salad Dressing",
+      "serving": "2oz",
+      "parts": [
+        ["Salad dressing, caesar dressing, regular", 56.7]
+      ]
+    },
+    {
+      "key": "fix-8115",
+      "name": "Chocolate Sauce",
+      "serving": "1oz",
+      "parts": [
+        ["Syrups, chocolate, fudge-type", 28.3]
+      ]
     }
   ]
 }

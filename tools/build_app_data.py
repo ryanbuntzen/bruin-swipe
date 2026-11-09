@@ -310,6 +310,14 @@ def main():
         "2031": EST, "6527": EST, "6553": EST, "7056": EST, "7361": EST, "7362": EST, "7225": EST,
         "5611": EST, "1627": EST, "1631": EST, "5610": EST, "1643": EST, "1642": EST,
         "7226": "UCLA lists 0 g of carbs for chocolate chips, so these are USDA's numbers.",
+        "251": "UCLA lists this roll as 6 oz / 547 kcal, denser than any baked bread. "
+               "It's a 6-inch sub roll, about 75 g; this is a French roll from USDA, estimated.",
+        "7658": "UCLA's panel is about half of what part-skim mozzarella is, so these are USDA's numbers.",
+        "195": "UCLA lists this as 1 lb / 45 kcal. This is 3 oz of roast top round from USDA, estimated.",
+        "7629": "UCLA's numbers are the sauce alone, without the battered chicken. "
+                "This is fried chicken thigh plus the honey glaze, estimated.",
+        "112": "UCLA's panel has more fat than the dressing weighs, so these are USDA's numbers.",
+        "8115": "UCLA lists this as 0 kcal, so these are USDA's numbers for chocolate fudge sauce.",
     }
     # Servings UCLA weighs as several of what you're handed. The per-gram panel is fine;
     # the serving is cut down to one piece, so a serving in the app is what's on the plate.
@@ -321,6 +329,15 @@ def main():
             "UCLA lists one serving as {g:.0f} g / {k} kcal, but what's handed out is 5-6 small "
             "pieces (~12 g each). Same recipe per gram, sized to 6 pieces -- and UCLA's recipe "
             "counts a lot of spicy mayo, which is most of the fat."),
+        # build-your-own components UCLA lists as the whole pan
+        "Balsamic Tomato Sauce": (125, "1/2 cup", [0, "", "", "whole"],
+            "UCLA lists one serving as {g:.0f} g / {k} kcal, the whole batch. Same recipe per gram, sized to 1/2 cup."),
+        "Barbecue Shreds": (85, "1 portion (3 oz)", [0, "portion", "portions", "piece"],
+            "UCLA lists one serving as {g:.0f} g / {k} kcal, the whole pan. Same recipe per gram, sized to 3 oz."),
+        "Korean Eggplant": (100, "1 portion (3.5 oz)", [0, "portion", "portions", "piece"],
+            "UCLA lists one serving as {g:.0f} g / {k} kcal, the whole pan. Same recipe per gram, sized to one side."),
+        "Oat Crumble": (28, "1 oz", [0, "", "", "whole"],
+            "UCLA lists one serving as {g:.0f} g / {k} kcal, the whole tray. Same recipe per gram, sized to a 1 oz topping."),
     }
     for rec in out.values():
         if rec["n"] in PIECE and rec.get("g"):
@@ -328,6 +345,7 @@ def main():
             rec["note"] = note.format(g=rec["g"], k=round(rec["v"][0]))
             rec["v"] = [round_sig(x * g / rec["g"]) for x in rec["v"]]
             rec.update({"g": g, "s": serving, "p": p})
+            rec.pop("batch", None)
 
     # The same pattern, everywhere else: a hall hands out one portion, while some of UCLA's
     # "servings" are several. The yardstick is the FDA's reference amount for one portion
@@ -425,8 +443,14 @@ def main():
             out[rid]["note"] = "UCLA's numbers for this were broken, so it uses De Neve's (same scoop)."
             out[rid]["v"] = list(out[twin]["v"])
             out[rid].pop("e", None)
-    for rid, rec in out.items():                   # custom recipes UCLA posts nothing for
-        if rec.get("v") is not None and not rec["v"][0] and "Custom Recipe" in (items.get(rid, {}).get("ingredients_raw") or ""):
+    # Unreal Turkey's panel is all zeros; its sibling, same brand and base, is not
+    if "7659" in out and "7660" in out and not out["7659"]["v"][0]:
+        out["7659"]["v"] = list(out["7660"]["v"])
+        out["7659"]["note"] = "UCLA lists this as 0 kcal, so it uses Unreal Roast Beef's numbers (same brand, same base)."
+    for rid, rec in out.items():                   # custom recipes, or a 0 with no panel behind it
+        raw = items.get(rid, {})
+        if rec.get("v") is not None and not rec["v"][0] and not rec.get("note") and \
+           ("Custom Recipe" in (raw.get("ingredients_raw") or "") or raw.get("protein") is None):
             rec["note"], rec["bad"] = "UCLA doesn't post nutrition for this one.", 1
 
     for rid, note in FIX.items():
@@ -435,6 +459,7 @@ def main():
             rec = out[rid]
             rec["note"] = note
             rec.update({"v": fix["v"], "g": fix["g"], "s": fix["s"], "src": "recipe", "e": 1})
+            rec.pop("bad", None)
     if "2031" in out:
         out["2031"]["p"] = [20, "link", "links", "count"]     # cooked link, so 1 serving reads "2 links"
 
