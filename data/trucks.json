@@ -1,30 +1,25 @@
 {
- "Smile Hot Dog": [
+ "Cerda Vega Tacos": [
   [
    "Sproul",
-   "Sun Nov 8",
+   "Sun Nov 15",
    "9:00 p.m. – 12:00 a.m."
   ],
   [
    "Sproul",
-   "Wed Nov 11",
-   "9:00 p.m. – 12:00 a.m."
-  ]
- ],
- "BittieBitez Mini-Donuts": [
-  [
-   "Sproul",
-   "Sun Nov 8",
+   "Mon Nov 9",
    "9:00 p.m. – 12:00 a.m."
   ],
   [
    "Sproul",
    "Thu Nov 12",
    "9:00 p.m. – 12:00 a.m."
-  ],
+  ]
+ ],
+ "Vchos Pupusería Moderna": [
   [
    "Sproul",
-   "Fri Nov 6",
+   "Sun Nov 15",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
@@ -32,18 +27,6 @@
   [
    "Sproul",
    "Mon Nov 9",
-   "9:00 p.m. – 12:00 a.m."
-  ]
- ],
- "Cerda Vega": [
-  [
-   "Sproul",
-   "Mon Nov 9",
-   "9:00 p.m. – 12:00 a.m."
-  ],
-  [
-   "Sproul",
-   "Thu Nov 12",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
@@ -55,7 +38,7 @@
   ],
   [
    "Sproul",
-   "Fri Nov 6",
+   "Fri Nov 13",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
@@ -66,10 +49,31 @@
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
+ "Smile Hot Dog": [
+  [
+   "Sproul",
+   "Wed Nov 11",
+   "9:00 p.m. – 12:00 a.m."
+  ]
+ ],
  "Don Pollon": [
   [
    "Sproul",
    "Wed Nov 11",
+   "9:00 p.m. – 12:00 a.m."
+  ]
+ ],
+ "BittieBitez Mini-Donuts": [
+  [
+   "Sproul",
+   "Thu Nov 12",
+   "9:00 p.m. – 12:00 a.m."
+  ]
+ ],
+ "Pinch of Flavor": [
+  [
+   "Sproul",
+   "Fri Nov 13",
    "9:00 p.m. – 12:00 a.m."
   ]
  ]
