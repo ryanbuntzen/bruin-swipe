@@ -16,7 +16,15 @@ DATA = ROOT / "data"
 ZERO = "__zero__"        # nutritionally nil: plain water, ice
 
 OVERRIDES = [
-    (r"^water$|^ice$|^water\b.*\bfilter", ZERO),
+    (r"^water$|^ice$|^water\b.*\bfilter|^filtered water|^purified water", ZERO),
+    # names from bought-in products' own ingredient lists
+    (r"potato starch|tapioca starch|food starch|starch.?modified|modified.*starch", "Cornstarch"),
+    (r"dehydrated onion|dried onion", "Spices, onion powder"),
+    (r"dehydrated garlic", "Spices, garlic powder"),
+    (r"bok choy", "Cabbage, chinese (pak-choi), raw"),
+    (r"water chestnut", "Waterchestnuts, chinese, canned, solids and liquids"),
+    (r"corn syrup solids", "Syrups, corn, light"),
+    (r"mung bean protein|pea protein|faba bean protein", "Soy protein isolate"),
     (r"granulated sugar|^sugar$|cane sugar", "Sugars, granulated"),
     (r"brown sugar", "Sugars, brown"),
     (r"powdered sugar|confectioner", "Sugars, powdered"),

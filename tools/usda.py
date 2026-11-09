@@ -114,7 +114,9 @@ def main():
             print(f"  {i}/{len(vocab)}", file=sys.stderr)
         fid, sc = match(name, usda, idx)
         if fid:
-            out[name] = {"fdc": fid, "score": sc, "desc": usda[fid]["d"], "count": count}
+            # "full": the USDA name covers every word of ours (White Tamari is not white mushrooms)
+            out[name] = {"fdc": fid, "score": sc, "desc": usda[fid]["d"], "count": count,
+                         "full": set(norm(name)) <= idx[fid]}
     (DATA / "ing_map.json").write_text(json.dumps(out, ensure_ascii=False, indent=0))
     good = sum(1 for v in out.values() if v["score"] >= 0.5)
     print(f"\nmatched {len(out)}/{len(vocab)}; {good} at score >= 0.5", file=sys.stderr)

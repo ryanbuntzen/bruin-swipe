@@ -73,7 +73,8 @@ def main():
         picks, cols = [], []
         for n in names:
             m = imap.get(n)
-            if not m:
+            # a product's own list is spelled however the maker likes; only trust a sure match
+            if not m or n in v.get("list_leaves", ()) and not (m.get("curated") or m.get("full")):
                 continue
             if m["fdc"] == "__zero__":
                 picks.append((n, None))
