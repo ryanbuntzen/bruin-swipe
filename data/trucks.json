@@ -7,11 +7,6 @@
   ],
   [
    "Sproul",
-   "Mon Nov 9",
-   "9:00 p.m. – 12:00 a.m."
-  ],
-  [
-   "Sproul",
    "Thu Nov 12",
    "9:00 p.m. – 12:00 a.m."
   ]
@@ -23,17 +18,22 @@
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
- "Fat Boys": [
+ "8E8 Thai Street Food": [
   [
    "Sproul",
-   "Mon Nov 9",
+   "Mon Nov 16",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
- "Kalamaki Greek Street Food": [
+ "Pinch of Flavor": [
   [
    "Sproul",
-   "Tue Nov 10",
+   "Mon Nov 16",
+   "9:00 p.m. – 12:00 a.m."
+  ],
+  [
+   "Sproul",
+   "Wed Nov 18",
    "9:00 p.m. – 12:00 a.m."
   ],
   [
@@ -45,21 +45,21 @@
  "The Taco Cartel": [
   [
    "Sproul",
-   "Tue Nov 10",
-   "9:00 p.m. – 12:00 a.m."
-  ]
- ],
- "Smile Hot Dog": [
-  [
-   "Sproul",
-   "Wed Nov 11",
+   "Tue Nov 17",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
  "Don Pollon": [
   [
    "Sproul",
-   "Wed Nov 11",
+   "Tue Nov 17",
+   "9:00 p.m. – 12:00 a.m."
+  ]
+ ],
+ "Smile Hot Dog": [
+  [
+   "Sproul",
+   "Wed Nov 18",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
@@ -70,7 +70,7 @@
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
- "Pinch of Flavor": [
+ "Kalamaki Greek Street Food": [
   [
    "Sproul",
    "Fri Nov 13",
