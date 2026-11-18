@@ -1,58 +1,22 @@
 {
- "Cerda Vega Tacos": [
-  [
-   "Sproul",
-   "Sun Nov 15",
-   "9:00 p.m. – 12:00 a.m."
-  ]
- ],
  "Vchos Pupusería Moderna": [
   [
    "Sproul",
-   "Sun Nov 15",
+   "Sun Nov 22",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
- "8E8 Thai Street Food": [
+ "Smile Hotdog": [
   [
    "Sproul",
-   "Mon Nov 16",
-   "9:00 p.m. – 12:00 a.m."
-  ],
-  [
-   "Sproul",
-   "Thu Nov 19",
+   "Sun Nov 22",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
  "Pinch of Flavor": [
   [
    "Sproul",
-   "Mon Nov 16",
-   "9:00 p.m. – 12:00 a.m."
-  ],
-  [
-   "Sproul",
    "Wed Nov 18",
-   "9:00 p.m. – 12:00 a.m."
-  ],
-  [
-   "Sproul",
-   "Fri Nov 13",
-   "9:00 p.m. – 12:00 a.m."
-  ]
- ],
- "The Taco Cartel": [
-  [
-   "Sproul",
-   "Tue Nov 17",
-   "9:00 p.m. – 12:00 a.m."
-  ]
- ],
- "Don Pollon": [
-  [
-   "Sproul",
-   "Tue Nov 17",
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
@@ -63,15 +27,31 @@
    "9:00 p.m. – 12:00 a.m."
   ]
  ],
+ "8E8 Thai Street Food": [
+  [
+   "Sproul",
+   "Thu Nov 19",
+   "9:00 p.m. – 12:00 a.m."
+  ]
+ ],
  "Kalamaki Greek Street Food": [
   [
    "Sproul",
    "Thu Nov 19",
    "9:00 p.m. – 12:00 a.m."
-  ],
+  ]
+ ],
+ "Fat Boys": [
   [
    "Sproul",
-   "Fri Nov 13",
+   "Fri Nov 20",
+   "9:00 p.m. – 12:00 a.m."
+  ]
+ ],
+ "BittieBitez Mini-Donuts": [
+  [
+   "Sproul",
+   "Fri Nov 20",
    "9:00 p.m. – 12:00 a.m."
   ]
  ]
